@@ -1,50 +1,127 @@
 import React from "react";
 import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
-import Block from "./Block";
+import Inspector from "./Inspector";
+import data from "./data";
+// import _ from "lodash";
 
 function App() {
-  return (
-    <div className="App">
-      <TechTree>
-        <div className="row">
-          <Block name="Trim" parents={[]} />
+  return <Calculator />;
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trimAmount: 10,
+      trimUnit: "pounds",
+      potency: 25,
+      marketValueTrim: 100,
+      marketValueDistillate: 1000,
+      startItem: "",
+      blocks: data
+    };
+    // const names = data.map(item => {
+    //   return item.name;
+    // });
+    // const parents = _.uniq(
+    //   data.flatMap((current, index, array) => {
+    //     return current.parents;
+    //   })
+    // );
+    // const startDisabled = _.difference(names, parents);
+    // console.log(names);
+    // console.log(parents);
+    // console.log(startDisabled);
+    // console.log(data);
+  }
+  onTrimAmountChange(e) {
+    this.setState({
+      trimAmount: e.target.value
+    });
+  }
+  onPotencyChange(e) {
+    this.setState({
+      potency: e.target.value
+    });
+  }
+  onRecalculate() {}
+
+  render() {
+    // const { children } = this.props;
+    // return (
+    //   <div className="tech-tree">
+    //     {data.map((item, key) => {
+    //       return <Block name={item.name} parents={item.parents} key={key} />;
+    //     })}
+    //     {children}
+    //   </div>
+    // );
+    const marketValueTrim = this.props.marketValueTrim;
+    const marketValueDistillate = this.props.marketValueDistillate;
+    return (
+      <div className="App">
+        <TechTree data={this.state.blocks} />
+        <div className="inputs">
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          >
+            <div>
+              <label htmlFor="trim">Pounds of Trim: </label>
+              <input
+                type="text"
+                name="trim"
+                value={this.state.trimAmount}
+                onChange={e => {
+                  this.onTrimAmountChange(e);
+                }}
+              />
+            </div>
+            <RangeInput
+              name="potency"
+              displayValue={this.state.potency}
+              value={10}
+              onChangeHandler={e => {
+                this.onPotencyChange(e);
+              }}
+            />
+          </form>
         </div>
-      </TechTree>
-      <div className="inputs">
         <form
+          className="outputs"
           onSubmit={e => {
             e.preventDefault();
           }}
         >
           <div>
-            <label htmlFor="trim">Pounds of Trim: </label>
-            <input type="text" name="trim" />
+            <label htmlFor="trim">
+              Market Value of <strong>trim</strong>:{" "}
+            </label>
+            <input
+              type="text"
+              name="trim"
+              value={`$${marketValueTrim}`}
+              readOnly
+            />
           </div>
-          <RangeInput />
+          <div>
+            <label htmlFor="trim">
+              Market Value of <strong>distillate</strong>:{" "}
+            </label>
+            <input
+              type="text"
+              name="trim"
+              value={`$${marketValueDistillate}`}
+              readOnly
+            />
+          </div>
         </form>
+        <Inspector data={this.state} />
       </div>
-      <form
-        className="outputs"
-        onSubmit={e => {
-          e.preventDefault();
-        }}
-      >
-        <div>
-          <label htmlFor="trim">
-            Market Value of <strong>trim</strong>:{" "}
-          </label>
-          <input type="text" name="trim" value={`$${100}`} readOnly />
-        </div>
-        <div>
-          <label htmlFor="trim">
-            Market Value of <strong>distillate</strong>:{" "}
-          </label>
-          <input type="text" name="trim" value={`$${1000}`} readOnly />
-        </div>
-      </form>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

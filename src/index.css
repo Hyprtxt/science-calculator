@@ -41,7 +41,8 @@ label {
   margin: 0 1em 1em 0;
   text-align: center;
   border: 3px solid lightBlue;
-  cursor: pointer;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .item.selected,
@@ -50,9 +51,10 @@ label {
 }
 
 .item.hidden,
-.item.available {
-  opacity: 0.5;
-  cursor: not-allowed;
+.item.available,
+.item.enabled {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .row {

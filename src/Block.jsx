@@ -1,8 +1,15 @@
 import React from "react";
 
-const Item = ({ name, className, onClick }) => {
+const Item = ({ name, onClick, active, enabled }) => {
+  let extraClassName = "";
+  if (active) {
+    extraClassName = "active";
+  }
+  if (enabled) {
+    extraClassName = "enabled";
+  }
   return (
-    <div className={`item ${className}`} onClick={onClick}>
+    <div className={`item ${extraClassName}`} onClick={onClick}>
       {name}
     </div>
   );
@@ -12,8 +19,8 @@ class Block extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
-      available: false
+      active: false
+      // enabled: false
     };
   }
   handleActiveToggle() {
@@ -22,33 +29,19 @@ class Block extends React.Component {
       active: !this.state.active
     });
   }
-  handleAvailableToggle() {
-    console.log("Was Click");
-    this.setState({
-      available: !this.state.available
-    });
-  }
+  // handleAvailableToggle() {
+  //   console.log("Was Click");
+  //   this.setState({
+  //     enabled: !this.state.enabled
+  //   });
+  // }
   render(props) {
-    // const parent = this.props.parent;
-    const active = this.state.active;
-    const available = this.state.available;
-    let className = "";
-    if (active) {
-      className = "active";
-    }
-    if (available) {
-      className = "available";
-    }
-    // if (parent === true) {
-    //   className = "";
-    // } else {
-    //   className = "available";
-    // }
     return (
       <Item
         onClick={() => this.handleActiveToggle()}
-        className={className}
         name={this.props.name}
+        active={this.state.active}
+        enabled={this.props.enabled}
       />
     );
   }
