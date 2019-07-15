@@ -10,7 +10,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,4 +30,32 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.item {
+  width: 200px;
+  max-height: 100px;
+  line-height: 30px;
+  padding: 20px 0;
+  background: lightBlue;
+  float: left;
+  margin: 0 1em 1em 0;
+  text-align: center;
+  border: 3px solid lightBlue;
+  cursor: pointer;
+}
+
+.item.selected,
+.item.active {
+  border: 3px solid black;
+}
+
+.item.hidden,
+.item.available {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.row {
+  clear: both;
 }
