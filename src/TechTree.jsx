@@ -32,7 +32,7 @@ class TechTree extends React.Component {
       })
     );
     const startDisabled = _.difference(names, parents);
-    console.log("startDisabled", startDisabled);
+    // console.log("startDisabled", startDisabled);
     return (
       <div className="tech-tree">
         {data.map((item, key) => {

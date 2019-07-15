@@ -18,7 +18,9 @@ class Calculator extends React.Component {
       potency: 25,
       marketValueTrim: 100,
       marketValueDistillate: 1000,
-      startItem: "",
+      activeItems: [],
+      inputItem: "",
+      outputItem: "",
       blocks: data
     };
     // const names = data.map(item => {
@@ -35,6 +37,8 @@ class Calculator extends React.Component {
     // console.log(startDisabled);
     // console.log(data);
   }
+  onClickItem() {}
+  onClickClearItems() {}
   onTrimAmountChange(e) {
     this.setState({
       trimAmount: e.target.value
@@ -97,7 +101,7 @@ class Calculator extends React.Component {
         >
           <div>
             <label htmlFor="trim">
-              Market Value of <strong>trim</strong>:{" "}
+              Market Value of <strong>input</strong>:{" "}
             </label>
             <input
               type="text"
@@ -108,7 +112,7 @@ class Calculator extends React.Component {
           </div>
           <div>
             <label htmlFor="trim">
-              Market Value of <strong>distillate</strong>:{" "}
+              Market Value of <strong>output</strong>:{" "}
             </label>
             <input
               type="text"

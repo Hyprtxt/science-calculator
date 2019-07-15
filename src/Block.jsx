@@ -3,10 +3,10 @@ import React from "react";
 const Item = ({ name, onClick, active, enabled }) => {
   let extraClassName = "";
   if (active) {
-    extraClassName = "active";
+    extraClassName += " active";
   }
   if (enabled) {
-    extraClassName = "enabled";
+    extraClassName += " enabled";
   }
   return (
     <div className={`item ${extraClassName}`} onClick={onClick}>
@@ -23,11 +23,13 @@ class Block extends React.Component {
       // enabled: false
     };
   }
-  handleActiveToggle() {
-    console.log("Was Click");
-    this.setState({
-      active: !this.state.active
-    });
+  handleActiveToggle(e) {
+    // console.log("Was Click", e, this.state);
+    if (this.props.enabled) {
+      this.setState({
+        active: !this.state.active
+      });
+    }
   }
   // handleAvailableToggle() {
   //   console.log("Was Click");
@@ -38,7 +40,7 @@ class Block extends React.Component {
   render(props) {
     return (
       <Item
-        onClick={() => this.handleActiveToggle()}
+        onClick={e => this.handleActiveToggle(e)}
         name={this.props.name}
         active={this.state.active}
         enabled={this.props.enabled}
