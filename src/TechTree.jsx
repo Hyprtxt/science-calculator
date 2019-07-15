@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./item.css";
+import Block from "./Block";
+import data from "./data";
 
 class TechTree extends React.Component {
   constructor(props) {
@@ -8,11 +9,29 @@ class TechTree extends React.Component {
     this.state = {
       selected: []
     };
+    const names = data.map(item => {
+      return item.name;
+    });
+    const parents = data.map(item => {
+      return item.parents.map(parent => {
+        return parent;
+      });
+    });
+    console.log(names);
+    console.log(parents);
+    console.log(data);
   }
 
   render() {
     const { children } = this.props;
-    return <div className="tech-tree">{children}</div>;
+    return (
+      <div className="tech-tree">
+        {data.map((item, key) => {
+          return <Block name={item.name} parents={item.parents} key={key} />;
+        })}
+        {children}
+      </div>
+    );
   }
 }
 
