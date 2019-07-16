@@ -69,6 +69,7 @@ class Calculator extends React.Component {
         currentItem: e.target.innerText,
         inputItem: inputItemValue,
         outputItem: outputItemValue,
+        // calculator: {},
         // marketValueInput: 10,
         // marketValueOutput: newMarketValueOutput,
         // blocks.map(item => {
@@ -130,26 +131,32 @@ class Calculator extends React.Component {
     // currentItem
     const { state } = this;
     const { activeItems, blocks, trimAmount, potency } = state;
+    // Put all the functions we need into an array.
     const stuff = activeItems.concat([currentItem]).map(itemName => {
       return blocks.reduce((result, element) => {
         if (element.name === itemName) {
+          // These functions seem to be wrapped in an array that I can't get rid of.
           result.push(element.function);
         }
         return result;
       }, []);
     });
+    // @TODO
+    // Need to calculate and update the base MarketValue (marketValueInput) here.
+    // stuff;
     // Initialize MarketValueOutput
-    let input = initializeCalculator(state);
+    let calculator = initializeCalculator(state);
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
-        // console.log(item, index, input);
-        input = item[0](input, potency);
+        // console.log(item, index, calculator);
+        // The [0] is cause the pushed functions get an array wrapper... magic?
+        calculator = item[0](calculator, potency);
       });
     }
     this.setState({
-      marketValueOutput: input.price,
-      marketWeight: input.outputWeight
+      marketValueOutput: calculator.price,
+      marketWeight: calculator.outputWeight
     });
   };
 
