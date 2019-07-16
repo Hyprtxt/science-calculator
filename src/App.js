@@ -137,17 +137,18 @@ class Calculator extends React.Component {
       }, []);
     });
     // Initialize MarketValueOutput
-    let newMarketValueOutput = {};
-    newMarketValueOutput.outputPrice = trimAmount * (potency / 100);
+    let input = {};
+    input.outputPrice = trimAmount * (potency / 100);
+    input.outputGrams = trimAmount;
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
-        // console.log(item, index, newMarketValueOutput);
-        newMarketValueOutput = item[0](newMarketValueOutput, potency);
+        // console.log(item, index, input);
+        input = item[0](input, potency);
       });
     }
     this.setState({
-      marketValueOutput: newMarketValueOutput.outputPrice
+      marketValueOutput: input.outputPrice
     });
   };
 
@@ -230,7 +231,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${marketValueOutput}`}
+              value={`$${marketValueOutput.outputPrice}`}
               readOnly
             />
           </div>
