@@ -133,6 +133,7 @@ class Calculator extends React.Component {
     );
   };
   recalculate = () => {
+    console.log("THINGS");
     const { state } = this;
     const { calculator, currentItem, activeItems, blocks, potency } = state;
     let mutableCalc = calculator;
