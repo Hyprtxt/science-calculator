@@ -46,6 +46,7 @@ class Calculator extends React.Component {
       // Do Nothing
       return;
       // Should Probably Reverse Click Action Here
+      // remove last item from active items and update?
     }
     // console.log(blocks, activeItems);
     // e.persist();
@@ -133,13 +134,12 @@ class Calculator extends React.Component {
     );
   };
   recalculate = () => {
-    console.log("THINGS");
+    console.log("recalculate");
     const { state } = this;
-    const { calculator, currentItem, activeItems, blocks, potency } = state;
-    let mutableCalc = calculator;
+    const { calculator, activeItems, blocks, potency } = state;
 
     // Put all the functions we need into an array.
-    const stuff = activeItems.concat([currentItem]).map(itemName => {
+    const stuff = activeItems.map(itemName => {
       return blocks.reduce((result, element) => {
         if (element.name === itemName) {
           // These functions seem to be wrapped in an array that I can't get rid of.
@@ -148,12 +148,13 @@ class Calculator extends React.Component {
         return result;
       }, []);
     });
+    let mutableCalc = calculator;
     // @TODO
     // Need to calculate and update the base MarketValue (baseMarketValue) here.
     // stuff;
     // Initialize processedMarketValue
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
-    // console.log(typeof stuff[0]);
+
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
         // console.log(item, index, calculator);
@@ -172,7 +173,7 @@ class Calculator extends React.Component {
     const { state, onClickItem, onClickReset } = this;
     const {
       baseMarketValue,
-      processedMarketValue,
+      // processedMarketValue,
       inputItem,
       outputItem,
       calculator

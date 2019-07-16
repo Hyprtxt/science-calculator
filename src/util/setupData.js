@@ -5,15 +5,15 @@ const data = [
   {
     name: "Trim",
     parents: [],
-    function: (calc, potency) => {
-      calc.price = calc.grams * 10 * potency;
+    function: calc => {
+      calc.price = calc.grams * 10 * calc.potency;
       return calc;
     }
   },
   {
     name: "Ethanol Crude",
     parents: ["Trim"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.2;
       calc.price = calc.grams * 3;
       return calc;
@@ -22,7 +22,7 @@ const data = [
   {
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.2;
       calc.price = calc.grams * 4;
       return calc;
@@ -31,15 +31,15 @@ const data = [
   {
     name: "Dried Flower",
     parents: [],
-    function: (calc, potency) => {
-      calc.price = calc * 1000 + 10 * potency;
+    function: calc => {
+      calc.price = calc * 1000 + 10 * calc.potency;
       return calc;
     }
   },
   {
     name: "Fresh Frozen",
     parents: [],
-    function: (calc, potency) => {
+    function: calc => {
       calc.price = calc.pounds * 300;
       return calc;
     }
@@ -47,7 +47,7 @@ const data = [
   {
     name: "Cured Resin",
     parents: ["Dried Flower"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.grams = poundsToGrams(calc.pounds);
       calc.price = calc.grams * 8;
       return calc;
@@ -56,7 +56,7 @@ const data = [
   {
     name: "Live Resin",
     parents: ["Fresh Frozen"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.04;
       calc.price = calc.grams * 8;
       return calc;
@@ -65,7 +65,7 @@ const data = [
   {
     name: "Distillate",
     parents: ["Ethanol Crude"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.grams = calc.grams * 0.8;
       calc.price = calc.grams * 7;
       return calc;
@@ -74,7 +74,7 @@ const data = [
   {
     name: "Distillate Cartridge",
     parents: ["Distillate"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.price = calc.grams * 14;
       // calc.grams = calc.grams;
       return calc;
@@ -83,7 +83,7 @@ const data = [
   {
     name: "Sauce Cartridge",
     parents: ["Distillate", "Cured Resin", "Live Resin"],
-    function: (calc, potency) => {
+    function: calc => {
       calc.cartridges = calc.grams * 2;
       calc.price = calc.cartridges * 18;
       return calc;
@@ -92,7 +92,7 @@ const data = [
   {
     name: "Jarred Concentrates",
     parents: ["Cured Resin", "Live Resin"],
-    function: (calc, potency) => {
+    function: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.grams * 10;
       return calc;
@@ -101,7 +101,7 @@ const data = [
   {
     name: "Branded Distillate Cartridge",
     parents: ["Distillate Cartridge"],
-    function: (calc, potency) => {
+    function: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.cartridges * 17;
       return calc;
@@ -110,7 +110,7 @@ const data = [
   {
     name: "Branded Sauce Cartridge",
     parents: ["Sauce Cartridge"],
-    function: (calc, potency) => {
+    function: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.cartridges * 21;
       return calc;
@@ -119,7 +119,7 @@ const data = [
   {
     name: "Branded Jarred Concentrates",
     parents: ["Jarred Concentrates"],
-    function: (calc, potency) => {
+    function: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.grams * 15;
       return calc;
