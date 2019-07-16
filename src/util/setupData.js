@@ -1,7 +1,5 @@
 import _ from "lodash";
-const poundstograms = thing => {
-  return thing * 16 * 28.5;
-};
+import poundsToGrams from "./poundsToGrams";
 
 const data = [
   {
@@ -16,7 +14,7 @@ const data = [
     name: "Ethanol Crude",
     parents: ["Trim"],
     function: (input, potency) => {
-      input.grams = poundstograms(input.pounds) * 0.2;
+      input.grams = poundsToGrams(input.pounds) * 0.2;
       input.price = input.grams * 3;
       return input;
     }
@@ -25,7 +23,7 @@ const data = [
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
     function: (input, potency) => {
-      input.grams = poundstograms(input.pounds) * 0.2;
+      input.grams = poundsToGrams(input.pounds) * 0.2;
       input.price = input.grams * 4;
       return input;
     }
@@ -50,7 +48,7 @@ const data = [
     name: "Cured Resin",
     parents: ["Dried Flower"],
     function: (input, potency) => {
-      input.grams = poundstograms(input.pounds);
+      input.grams = poundsToGrams(input.pounds);
       input.price = input.grams * 8;
       return input;
     }
@@ -59,7 +57,7 @@ const data = [
     name: "Live Resin",
     parents: ["Fresh Frozen"],
     function: (input, potency) => {
-      input.grams = poundstograms(input.pounds) * 0.04;
+      input.grams = poundsToGrams(input.pounds) * 0.04;
       input.price = input.grams * 8;
     }
   },

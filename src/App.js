@@ -2,8 +2,8 @@ import React from "react";
 import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
 import Inspector from "./Inspector";
-import setupData from "./util/data";
-import initializeCalculator from "./util/initialize";
+import setupData from "./util/setupData";
+import initializeCalculator from "./util/initializeCalculator";
 // import _ from "lodash";
 
 function App() {
@@ -16,15 +16,18 @@ class Calculator extends React.Component {
 
     this.state = {
       trimAmount: 10,
-      trimUnit: "pounds",
       potency: 25,
-      marketValueInput: 100,
-      marketValueOutput: 1000,
+      baseMarketValue: 100,
+      processedMarketValue: 1000,
       marketWeight: 1,
       activeItems: [],
       currentItem: "",
       inputItem: "",
       outputItem: "",
+      calculator: initializeCalculator({
+        trimAmount: 10,
+        potency: 25
+      }),
       blocks: setupData()
     };
     // console.log(names, parent, startDisable, data);
@@ -37,7 +40,7 @@ class Calculator extends React.Component {
       // outputItem,
       activeItems,
       currentItem,
-      // marketValueOutput,
+      // processedMarketValue,
       potency,
       blocks
     } = state;
@@ -70,8 +73,8 @@ class Calculator extends React.Component {
         inputItem: inputItemValue,
         outputItem: outputItemValue,
         // calculator: {},
-        // marketValueInput: 10,
-        // marketValueOutput: newMarketValueOutput,
+        // baseMarketValue: 10,
+        // processedMarketValue: newprocessedMarketValue,
         // blocks.map(item => {
         //   return item.function(trimAmount)
         // })
@@ -107,9 +110,12 @@ class Calculator extends React.Component {
     );
   };
   onTrimAmountChange = e => {
+    const { calculator } = this.state;
+    calculator.pounds = e.target.value;
     this.setState(
       {
-        trimAmount: e.target.value
+        trimAmount: e.target.value,
+        calculator: calculator
       },
       () => {
         this.recalculate();
@@ -117,9 +123,12 @@ class Calculator extends React.Component {
     );
   };
   onPotencyChange = e => {
+    const { calculator } = this.state;
+    calculator.potency = e.target.value;
     this.setState(
       {
-        potency: e.target.value
+        potency: e.target.value,
+        calculator: calculator
       },
       () => {
         this.recalculate();
@@ -142,9 +151,9 @@ class Calculator extends React.Component {
       }, []);
     });
     // @TODO
-    // Need to calculate and update the base MarketValue (marketValueInput) here.
+    // Need to calculate and update the base MarketValue (baseMarketValue) here.
     // stuff;
-    // Initialize MarketValueOutput
+    // Initialize processedMarketValue
     let calculator = initializeCalculator(state);
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     if (stuff.length > 1) {
@@ -155,7 +164,7 @@ class Calculator extends React.Component {
       });
     }
     this.setState({
-      marketValueOutput: calculator.price,
+      processedMarketValue: calculator.price,
       marketWeight: calculator.outputWeight
     });
   };
@@ -172,8 +181,8 @@ class Calculator extends React.Component {
     // );
     const { state, onClickItem, onClickReset } = this;
     const {
-      marketValueInput,
-      marketValueOutput,
+      baseMarketValue,
+      processedMarketValue,
       inputItem,
       outputItem
     } = state;
@@ -228,7 +237,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${marketValueInput}`}
+              value={`$${baseMarketValue}`}
               readOnly
             />
           </div>
@@ -239,7 +248,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${marketValueOutput.price}`}
+              value={`$${processedMarketValue.price}`}
               readOnly
             />
           </div>
