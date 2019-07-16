@@ -28,15 +28,17 @@ class Calculator extends React.Component {
     // console.log(names, parent, startDisable, data);
   }
   onClickItem = e => {
+    const { state } = this;
     const {
       trimAmount,
       inputItem,
       // outputItem,
       activeItems,
       currentItem,
-      marketValueOutput,
+      // marketValueOutput,
+      potency,
       blocks
-    } = this.state;
+    } = state;
     if (currentItem === e.target.innerText) {
       // Clicked Active Item
       // Do Nothing
@@ -86,31 +88,15 @@ class Calculator extends React.Component {
       outputItemValue = e.target.innerText;
     }
 
-    const stuff = activeItems.concat([e.target.innerText]).map(itemName => {
-      return blocks.reduce((result, element) => {
-        if (element.name === itemName) {
-          result.push(element.function);
-        }
-        return result;
-      }, []);
-    });
-    let newMarketValueOutput = trimAmount;
-    if (stuff.length > 0) {
-      stuff.forEach((item, index) => {
-        console.log(item, index, newMarketValueOutput);
-        newMarketValueOutput = item[0](newMarketValueOutput);
-      });
-    }
-
-    console.log("Market Value Functions", stuff);
+    this.recalculate(e, state);
 
     this.setState({
       activeItems: activeItems.concat([e.target.innerText]),
       currentItem: e.target.innerText,
       inputItem: inputItemValue,
       outputItem: outputItemValue,
-      marketValueInput: 10,
-      marketValueOutput: newMarketValueOutput,
+      // marketValueInput: 10,
+      // marketValueOutput: newMarketValueOutput,
       // blocks.map(item => {
       //   return item.function(trimAmount)
       // })
@@ -145,9 +131,38 @@ class Calculator extends React.Component {
     this.setState({
       potency: e.target.value
     });
+    e.target.innerText = this.state.currentItem;
+    this.recalculate(e);
   };
-  recalculate = e => {
-    console.log("recalculate");
+  recalculate = event => {
+    let theThing;
+    if (event.target.innerText) {
+      theThing = event.target.innerText;
+    } else {
+      theThing = this.state.currentItem;
+    }
+    // currentItem
+    const { state } = this;
+    const { activeItems, blocks, trimAmount, potency } = state;
+    const stuff = activeItems.concat([theThing]).map(itemName => {
+      return blocks.reduce((result, element) => {
+        if (element.name === itemName) {
+          result.push(element.function);
+        }
+        return result;
+      }, []);
+    });
+    let newMarketValueOutput = trimAmount * (potency / 100);
+    if (stuff.length > 0) {
+      stuff.forEach((item, index) => {
+        // console.log(item, index, newMarketValueOutput);
+        newMarketValueOutput = item[0](newMarketValueOutput);
+      });
+    }
+    // console.log("recalculate Market Value Functions", stuff);
+    this.setState({
+      marketValueOutput: newMarketValueOutput
+    });
   };
 
   render() {
