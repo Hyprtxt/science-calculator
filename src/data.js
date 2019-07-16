@@ -4,98 +4,98 @@ const data = [
   {
     name: "Trim",
     parents: [],
-    function: input => {
+    function: (input, potency) => {
       return input + input * 0;
     }
   },
   {
     name: "Ethanol Crude",
     parents: ["Trim"],
-    function: input => {
+    function: (input, potency) => {
       return input + input * 0.5;
     }
   },
   {
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
-    function: input => {
+    function: (input, potency) => {
       return input + input * 0.5;
     }
   },
   {
     name: "Dried Flower",
     parents: [],
-    function: input => {
+    function: (input, potency) => {
       return input + input * 2;
     }
   },
   {
     name: "Fresh Frozen",
     parents: [],
-    function: input => {
+    function: (input, potency) => {
       return input + input * 3;
     }
   },
   {
     name: "Cured Resin",
     parents: ["Dried Flower"],
-    function: input => {
+    function: (input, potency) => {
       return input + 10;
     }
   },
   {
     name: "Live Resin",
     parents: ["Fresh Frozen"],
-    function: input => {
+    function: (input, potency) => {
       return input + 10;
     }
   },
   {
     name: "Distillate",
     parents: ["Ethanol Crude"],
-    function: input => {
+    function: (input, potency) => {
       return input + 10;
     }
   },
   {
     name: "Distillate Cartridge",
     parents: ["Distillate"],
-    function: input => {
+    function: (input, potency) => {
       return input + 50;
     }
   },
   {
     name: "Sauce Cartridge",
     parents: ["Distillate", "Cured Resin", "Live Resin"],
-    function: input => {
+    function: (input, potency) => {
       return input + 50;
     }
   },
   {
     name: "Jarred Concentrates",
     parents: ["Cured Resin", "Live Resin"],
-    function: input => {
+    function: (input, potency) => {
       return input + 50;
     }
   },
   {
     name: "Branded Distillate Cartridge",
     parents: ["Distillate Cartridge"],
-    function: input => {
+    function: (input, potency) => {
       return input + 8;
     }
   },
   {
     name: "Branded Sauce Cartridge",
     parents: ["Sauce Cartridge"],
-    function: input => {
+    function: (input, potency) => {
       return input + 8;
     }
   },
   {
     name: "Branded Jarred Concentrates",
     parents: ["Jarred Concentrates"],
-    function: input => {
+    function: (input, potency) => {
       return input + 8;
     }
   }

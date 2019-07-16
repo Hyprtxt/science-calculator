@@ -45,35 +45,8 @@ class Calculator extends React.Component {
       return;
       // Should Probably Reverse Click Action Here
     }
-    console.log(blocks, activeItems);
-    // const here = this;
+    // console.log(blocks, activeItems);
     // e.persist();
-    // console.log("onClickItem", e, e.target.innerText);
-
-    // const names = blocks.map(item => {
-    //   return item.name;
-    // });
-    // const parents = _.uniq(
-    //   blocks.flatMap((current, index, array) => {
-    //     return current.parents;
-    //   })
-    // );
-    // const startDisabled = _.difference(names, parents);
-    // let enabled = false;
-    // if (startDisabled.indexOf(item.name) === -1) {
-    //   enabled = true;
-    // }
-    // console.log(startDisabled.indexOf(item.name), item.name);
-    // console.log(item.name, enabled);
-
-    // Reverse Current Selection...
-    // if (e.target.innerText === activeItems[0]) {
-    //   this.setState({
-    //     activeItems: [],
-    //     currentItem: ""
-    //   });
-    // } else {
-    // }
 
     // Set or Keep inputItem value
     let inputItemValue;
@@ -119,11 +92,16 @@ class Calculator extends React.Component {
     );
   };
   onClickReset = e => {
-    this.setState({
-      blocks: setupData(),
-      activeItems: [],
-      currentItem: ""
-    });
+    this.setState(
+      {
+        blocks: setupData(),
+        activeItems: [],
+        currentItem: ""
+      },
+      () => {
+        this.recalculate();
+      }
+    );
   };
   onTrimAmountChange = e => {
     this.setState(
@@ -145,7 +123,7 @@ class Calculator extends React.Component {
       }
     );
   };
-  recalculate = event => {
+  recalculate = () => {
     const { currentItem } = this.state;
     // currentItem
     const { state } = this;
@@ -163,7 +141,7 @@ class Calculator extends React.Component {
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
         // console.log(item, index, newMarketValueOutput);
-        newMarketValueOutput = item[0](newMarketValueOutput);
+        newMarketValueOutput = item[0](newMarketValueOutput, potency);
       });
     }
     this.setState({
