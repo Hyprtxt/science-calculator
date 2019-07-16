@@ -58,6 +58,7 @@ label {
   border: 3px dashed black;
 }
 
-.row {
+.row,
+.clearfix {
   clear: both;
 }

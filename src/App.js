@@ -89,7 +89,7 @@ class Calculator extends React.Component {
         return result;
       }, []);
     });
-    let newMarketValueOutput = marketValueOutput;
+    let newMarketValueOutput = trimAmount;
     if (stuff.length > 0) {
       stuff.forEach((item, index) => {
         console.log(item, index, newMarketValueOutput);
@@ -97,7 +97,8 @@ class Calculator extends React.Component {
       });
     }
 
-    console.log("NOTHING", stuff);
+    console.log("Market Value Functions", stuff);
+
     this.setState({
       activeItems: activeItems.concat([e.target.innerText]),
       currentItem: e.target.innerText,
@@ -157,8 +158,6 @@ class Calculator extends React.Component {
     const { marketValueInput, marketValueOutput } = state;
     return (
       <div className="App">
-        <h2>2. Select Your Process</h2>
-        <TechTree data={this.state.blocks} onClickItem={onClickItem} />
         <div className="inputs">
           <h2>1. Input Starting Material</h2>
           <form
@@ -187,9 +186,11 @@ class Calculator extends React.Component {
               }}
             />
           </form>
-          <div>
-            <button onClick={onClickReset}>Reset Process Selection</button>
-          </div>
+        </div>
+        <h2>2. Select Your Process</h2>
+        <TechTree data={this.state.blocks} onClickItem={onClickItem} />
+        <div className="clearfix">
+          <button onClick={onClickReset}>Reset Process Selection</button>
         </div>
         <form
           className="outputs"

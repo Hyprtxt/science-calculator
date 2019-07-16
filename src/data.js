@@ -5,35 +5,35 @@ const data = [
     name: "Trim",
     parents: [],
     function: input => {
-      return input + 10;
+      return input + input * 0;
     }
   },
   {
     name: "Ethanol Crude",
     parents: ["Trim"],
     function: input => {
-      return input + 10;
+      return input + input * 0.5;
     }
   },
   {
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
     function: input => {
-      return input + 10;
+      return input + input * 0.5;
     }
   },
   {
     name: "Dried Flower",
     parents: [],
     function: input => {
-      return input + 10;
+      return input + input * 2;
     }
   },
   {
     name: "Fresh Frozen",
     parents: [],
     function: input => {
-      return input + 10;
+      return input + input * 3;
     }
   },
   {
@@ -61,42 +61,42 @@ const data = [
     name: "Distillate Cartridge",
     parents: ["Distillate"],
     function: input => {
-      return input + 10;
+      return input + 50;
     }
   },
   {
     name: "Sauce Cartridge",
     parents: ["Distillate", "Cured Resin", "Live Resin"],
     function: input => {
-      return input + 10;
+      return input + 50;
     }
   },
   {
     name: "Jarred Concentrates",
     parents: ["Cured Resin", "Live Resin"],
     function: input => {
-      return input + 10;
+      return input + 50;
     }
   },
   {
     name: "Branded Distillate Cartridge",
     parents: ["Distillate Cartridge"],
     function: input => {
-      return input + 10;
+      return input + 8;
     }
   },
   {
     name: "Branded Sauce Cartridge",
     parents: ["Sauce Cartridge"],
     function: input => {
-      return input + 10;
+      return input + 8;
     }
   },
   {
     name: "Branded Jarred Concentrates",
     parents: ["Jarred Concentrates"],
     function: input => {
-      return input + 10;
+      return input + 8;
     }
   }
 ];
