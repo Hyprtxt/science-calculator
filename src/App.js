@@ -88,32 +88,35 @@ class Calculator extends React.Component {
       outputItemValue = e.target.innerText;
     }
 
-    this.recalculate(e, state);
-
-    this.setState({
-      activeItems: activeItems.concat([e.target.innerText]),
-      currentItem: e.target.innerText,
-      inputItem: inputItemValue,
-      outputItem: outputItemValue,
-      // marketValueInput: 10,
-      // marketValueOutput: newMarketValueOutput,
-      // blocks.map(item => {
-      //   return item.function(trimAmount)
-      // })
-      blocks: blocks.map(item => {
-        if (item.name === e.target.innerText) {
-          item.active = true;
-          item.enabled = true;
-        } else {
-          // item.active = false;
-          item.enabled = false;
-          if (item.parents.indexOf(e.target.innerText) !== -1) {
+    this.setState(
+      {
+        activeItems: activeItems.concat([e.target.innerText]),
+        currentItem: e.target.innerText,
+        inputItem: inputItemValue,
+        outputItem: outputItemValue,
+        // marketValueInput: 10,
+        // marketValueOutput: newMarketValueOutput,
+        // blocks.map(item => {
+        //   return item.function(trimAmount)
+        // })
+        blocks: blocks.map(item => {
+          if (item.name === e.target.innerText) {
+            item.active = true;
             item.enabled = true;
+          } else {
+            // item.active = false;
+            item.enabled = false;
+            if (item.parents.indexOf(e.target.innerText) !== -1) {
+              item.enabled = true;
+            }
           }
-        }
-        return item;
-      })
-    });
+          return item;
+        })
+      },
+      () => {
+        this.recalculate();
+      }
+    );
   };
   onClickReset = e => {
     this.setState({
@@ -123,28 +126,31 @@ class Calculator extends React.Component {
     });
   };
   onTrimAmountChange = e => {
-    this.setState({
-      trimAmount: e.target.value
-    });
-    this.recalculate(e);
+    this.setState(
+      {
+        trimAmount: e.target.value
+      },
+      () => {
+        this.recalculate();
+      }
+    );
   };
   onPotencyChange = e => {
-    this.setState({
-      potency: e.target.value
-    });
-    this.recalculate(e);
+    this.setState(
+      {
+        potency: e.target.value
+      },
+      () => {
+        this.recalculate();
+      }
+    );
   };
   recalculate = event => {
-    let theThing;
-    if (event.target.innerText) {
-      theThing = event.target.innerText;
-    } else {
-      theThing = this.state.currentItem;
-    }
+    const { currentItem } = this.state;
     // currentItem
     const { state } = this;
     const { activeItems, blocks, trimAmount, potency } = state;
-    const stuff = activeItems.concat([theThing]).map(itemName => {
+    const stuff = activeItems.concat([currentItem]).map(itemName => {
       return blocks.reduce((result, element) => {
         if (element.name === itemName) {
           result.push(element.function);
