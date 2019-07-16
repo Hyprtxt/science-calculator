@@ -126,12 +126,12 @@ class Calculator extends React.Component {
     this.setState({
       trimAmount: e.target.value
     });
+    this.recalculate(e);
   };
   onPotencyChange = e => {
     this.setState({
       potency: e.target.value
     });
-    e.target.innerText = this.state.currentItem;
     this.recalculate(e);
   };
   recalculate = event => {
@@ -153,13 +153,13 @@ class Calculator extends React.Component {
       }, []);
     });
     let newMarketValueOutput = trimAmount * (potency / 100);
-    if (stuff.length > 0) {
+    // console.log("recalculate Market Value Functions", stuff, stuff.length);
+    if (stuff.length > 1) {
       stuff.forEach((item, index) => {
         // console.log(item, index, newMarketValueOutput);
         newMarketValueOutput = item[0](newMarketValueOutput);
       });
     }
-    // console.log("recalculate Market Value Functions", stuff);
     this.setState({
       marketValueOutput: newMarketValueOutput
     });
