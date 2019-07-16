@@ -148,7 +148,7 @@ class Calculator extends React.Component {
       });
     }
     this.setState({
-      marketValueOutput: input.outputPrice,
+      marketValueOutput: input.price,
       marketWeight: input.outputWeight
     });
   };
@@ -232,7 +232,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${marketValueOutput.outputPrice}`}
+              value={`$${marketValueOutput.price}`}
               readOnly
             />
           </div>
