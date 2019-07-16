@@ -91,7 +91,7 @@ class Calculator extends React.Component {
     });
     let newMarketValueOutput = marketValueOutput;
     if (stuff.length > 0) {
-      stuff.map((item, index) => {
+      stuff.forEach((item, index) => {
         console.log(item, index, newMarketValueOutput);
         newMarketValueOutput = item[0](newMarketValueOutput);
       });
