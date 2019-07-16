@@ -21,7 +21,11 @@ class Calculator extends React.Component {
       activeItems: [],
       inputItem: "",
       outputItem: "",
-      blocks: data
+      blocks: data.map(item => {
+        item.active = false;
+        item.enabled = false;
+        return item;
+      })
     };
     // const names = data.map(item => {
     //   return item.name;
@@ -37,19 +41,51 @@ class Calculator extends React.Component {
     // console.log(startDisabled);
     // console.log(data);
   }
-  onClickItem() {}
-  onClickClearItems() {}
-  onTrimAmountChange(e) {
+  onClickItem = e => {
+    const { activeItems, inputItem, blocks } = this.state;
+    console.log(blocks);
+    // const here = this;
+    // e.persist();
+    // console.log("onClickItem", e, e.target.innerText);
+
+    if (e.target.innerText === activeItems[0]) {
+      this.setState({
+        activeItems: [],
+        inputItem: ""
+      });
+    } else {
+      this.setState({
+        activeItems: [e.target.innerText],
+        inputItem: e.target.innerText,
+        blocks: blocks.map(item => {
+          if (item.name === e.target.innerText) {
+            item.active = true;
+            item.enabled = true;
+          } else {
+            if (item.parents.indexOf(e.target.innerText) !== -1) {
+              item.enabled = true;
+            }
+          }
+          return item;
+        })
+      });
+    }
+  };
+  onClickReset = e => {
+    console.log("onClickReset", e);
+  };
+  onClickClearItems = e => {};
+  onTrimAmountChange = e => {
     this.setState({
       trimAmount: e.target.value
     });
-  }
-  onPotencyChange(e) {
+  };
+  onPotencyChange = e => {
     this.setState({
       potency: e.target.value
     });
-  }
-  onRecalculate() {}
+  };
+  onRecalculate = e => {};
 
   render() {
     // const { children } = this.props;
@@ -61,12 +97,14 @@ class Calculator extends React.Component {
     //     {children}
     //   </div>
     // );
-    const marketValueTrim = this.props.marketValueTrim;
-    const marketValueDistillate = this.props.marketValueDistillate;
+    const { props, onClickItem, onClickReset } = this;
+    const { marketValueTrim, marketValueDistillate } = props;
     return (
       <div className="App">
-        <TechTree data={this.state.blocks} />
+        <h2>2. Select Your Process</h2>
+        <TechTree data={this.state.blocks} onClickItem={onClickItem} />
         <div className="inputs">
+          <h2>1. Input Starting Material</h2>
           <form
             onSubmit={e => {
               e.preventDefault();
@@ -82,6 +120,7 @@ class Calculator extends React.Component {
                   this.onTrimAmountChange(e);
                 }}
               />
+              &nbsp;lbs.
             </div>
             <RangeInput
               name="potency"
@@ -92,6 +131,9 @@ class Calculator extends React.Component {
               }}
             />
           </form>
+          <div>
+            <button onClick={onClickReset}>Reset Process Selection</button>
+          </div>
         </div>
         <form
           className="outputs"

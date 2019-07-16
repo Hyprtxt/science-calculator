@@ -22,7 +22,7 @@ class TechTree extends React.Component {
   // }
 
   render() {
-    const { data } = this.props;
+    const { data, onClickItem } = this.props;
     const names = data.map(item => {
       return item.name;
     });
@@ -36,18 +36,20 @@ class TechTree extends React.Component {
     return (
       <div className="tech-tree">
         {data.map((item, key) => {
-          let enabled = false;
-          if (startDisabled.indexOf(item.name) === -1) {
-            enabled = true;
-          }
+          // let enabled = false;
+          // if (startDisabled.indexOf(item.name) === -1) {
+          //   enabled = true;
+          // }
           // console.log(startDisabled.indexOf(item.name), item.name);
           // console.log(item.name, enabled);
           return (
             <Block
+              onClickItem={onClickItem}
               name={item.name}
               parents={item.parents}
               key={key}
-              enabled={enabled}
+              enabled={item.enabled}
+              active={item.active}
             />
           );
         })}
