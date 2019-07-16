@@ -17,9 +17,10 @@ class Calculator extends React.Component {
       trimAmount: 10,
       trimUnit: "pounds",
       potency: 25,
-      marketValueTrim: 100,
-      marketValueDistillate: 1000,
+      marketValueInput: 100,
+      marketValueOutput: 1000,
       activeItems: [],
+      currentItem: "",
       inputItem: "",
       outputItem: "",
       blocks: setupData()
@@ -27,9 +28,17 @@ class Calculator extends React.Component {
     // console.log(names, parent, startDisable, data);
   }
   onClickItem = e => {
-    const { activeItems, inputItem, blocks } = this.state;
-    if (inputItem === e.target.innerText) {
+    const {
+      inputItem,
+      // outputItem,
+      activeItems,
+      currentItem,
+      blocks
+    } = this.state;
+    if (currentItem === e.target.innerText) {
       // Clicked Active Item
+      // Do Nothing
+      return;
       // Should Probably Reverse Click Action Here
     }
     console.log(blocks, activeItems);
@@ -57,14 +66,22 @@ class Calculator extends React.Component {
     // if (e.target.innerText === activeItems[0]) {
     //   this.setState({
     //     activeItems: [],
-    //     inputItem: ""
+    //     currentItem: ""
     //   });
     // } else {
     // }
 
+    // Set or Keep inputItem value
+    let inputItemValue;
+    if (inputItem === "") {
+      inputItemValue = e.target.innerText;
+    } else {
+      inputItemValue = inputItem;
+    }
     this.setState({
       activeItems: activeItems.concat([e.target.innerText]),
-      inputItem: e.target.innerText,
+      currentItem: e.target.innerText,
+      inputItem: inputItemValue,
       blocks: blocks.map(item => {
         if (item.name === e.target.innerText) {
           item.active = true;
@@ -82,7 +99,9 @@ class Calculator extends React.Component {
   };
   onClickReset = e => {
     this.setState({
-      blocks: setupData()
+      blocks: setupData(),
+      activeItems: [],
+      currentItem: ""
     });
   };
   onTrimAmountChange = e => {
@@ -95,7 +114,9 @@ class Calculator extends React.Component {
       potency: e.target.value
     });
   };
-  onRecalculate = e => {};
+  recalculate = e => {
+    console.log("recalculate");
+  };
 
   render() {
     // const { children } = this.props;
@@ -107,8 +128,8 @@ class Calculator extends React.Component {
     //     {children}
     //   </div>
     // );
-    const { props, onClickItem, onClickReset } = this;
-    const { marketValueTrim, marketValueDistillate } = props;
+    const { state, onClickItem, onClickReset } = this;
+    const { marketValueInput, marketValueOutput } = state;
     return (
       <div className="App">
         <h2>2. Select Your Process</h2>
@@ -158,7 +179,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${marketValueTrim}`}
+              value={`$${marketValueInput}`}
               readOnly
             />
           </div>
@@ -169,7 +190,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${marketValueDistillate}`}
+              value={`$${marketValueOutput}`}
               readOnly
             />
           </div>
