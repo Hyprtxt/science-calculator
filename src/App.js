@@ -168,15 +168,6 @@ class Calculator extends React.Component {
   };
 
   render() {
-    // const { children } = this.props;
-    // return (
-    //   <div className="tech-tree">
-    //     {data.map((item, key) => {
-    //       return <Block name={item.name} parents={item.parents} key={key} />;
-    //     })}
-    //     {children}
-    //   </div>
-    // );
     const { state, onClickItem, onClickReset } = this;
     const {
       baseMarketValue,
@@ -185,7 +176,6 @@ class Calculator extends React.Component {
       outputItem,
       calculator
     } = state;
-    console.log(calculator);
     return (
       <div className="App">
         <div className="inputs">
