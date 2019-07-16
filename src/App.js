@@ -3,7 +3,7 @@ import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
 import Inspector from "./Inspector";
 import setupData from "./data";
-import _ from "lodash";
+// import _ from "lodash";
 
 function App() {
   return <Calculator />;
@@ -28,6 +28,10 @@ class Calculator extends React.Component {
   }
   onClickItem = e => {
     const { activeItems, inputItem, blocks } = this.state;
+    if (inputItem === e.target.innerText) {
+      // Clicked Active Item
+      // Should Probably Reverse Click Action Here
+    }
     console.log(blocks, activeItems);
     // const here = this;
     // e.persist();
@@ -81,7 +85,6 @@ class Calculator extends React.Component {
       blocks: setupData()
     });
   };
-  onClickClearItems = e => {};
   onTrimAmountChange = e => {
     this.setState({
       trimAmount: e.target.value
