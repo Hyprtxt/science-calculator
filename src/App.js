@@ -136,7 +136,9 @@ class Calculator extends React.Component {
         return result;
       }, []);
     });
-    let newMarketValueOutput = trimAmount * (potency / 100);
+    // Initialize MarketValueOutput
+    let newMarketValueOutput = {};
+    newMarketValueOutput.outputPrice = trimAmount * (potency / 100);
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
@@ -145,7 +147,7 @@ class Calculator extends React.Component {
       });
     }
     this.setState({
-      marketValueOutput: newMarketValueOutput
+      marketValueOutput: newMarketValueOutput.outputPrice
     });
   };
 

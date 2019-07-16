@@ -1,14 +1,13 @@
 import _ from "lodash";
-const crude_yield = ( thing ) => {
-  return thing * 28.5 * 16 * .2;
-}
+const crude_yield = thing => {
+  return thing * 28.5 * 16 * 0.2;
+};
 
-const input = {
-  outputGrams: 50,
-  outputPrice: 100
-}
+// const input = {
+//   outputGrams: 50,
+//   outputPrice: 100
+// };
 
-input.thing1
 const data = [
   {
     name: "Trim",
@@ -22,8 +21,8 @@ const data = [
     name: "Ethanol Crude",
     parents: ["Trim"],
     function: (input, potency) => {
-      input.outputPrice = crude_yield(input.outputGrams) * 3
-      input.outputGrams = crude_yield(inputGrams);
+      input.outputGrams = crude_yield(input.outputGrams);
+      input.outputPrice = input.outputGrams * 3;
       return input;
     }
   },
@@ -31,8 +30,8 @@ const data = [
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
     function: (input, potency) => {
-      input.outputPrice = crude_yield(input.outputGrams) * 4
-      input.outputGrams = crude_yield(inputGrams);
+      input.outputGrams = crude_yield(input.outputGrams);
+      input.outputPrice = input.outputGrams * 4;
       return input;
     }
   },
@@ -40,7 +39,7 @@ const data = [
     name: "Dried Flower",
     parents: [],
     function: (input, potency) => {
-      input.outputPrice = input * 1000 + 10 * (potency);
+      input.outputPrice = input * 1000 + 10 * potency;
       return input;
     }
   },
@@ -64,7 +63,7 @@ const data = [
     name: "Live Resin",
     parents: ["Fresh Frozen"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams + 16 * 28.5 * .04
+      input.outputGrams = input.outputGrams + 16 * 28.5 * 0.04;
       input.outputPrice = input.outputGrams * 8;
     }
   },
@@ -72,7 +71,7 @@ const data = [
     name: "Distillate",
     parents: ["Ethanol Crude"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams * .8
+      input.outputGrams = input.outputGrams * 0.8;
       input.outputPrice = input.outputGrams * 7;
       return input;
     }
@@ -82,7 +81,7 @@ const data = [
     parents: ["Distillate"],
     function: (input, potency) => {
       input.outputPrice = input.outputGrams * 14;
-      input.outputGrams = input.outputGrams
+      // input.outputGrams = input.outputGrams;
       return input;
     }
   },
@@ -90,7 +89,7 @@ const data = [
     name: "Sauce Cartridge",
     parents: ["Distillate", "Cured Resin", "Live Resin"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams * 2
+      input.outputGrams = input.outputGrams * 2;
       input.outputPrice = input.outputGrams * 18;
       return input;
     }
@@ -99,7 +98,7 @@ const data = [
     name: "Jarred Concentrates",
     parents: ["Cured Resin", "Live Resin"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams
+      // input.outputGrams = input.outputGrams;
       input.outputPrice = input.outputGrams * 13;
       return input;
     }
@@ -108,7 +107,7 @@ const data = [
     name: "Branded Distillate Cartridge",
     parents: ["Distillate Cartridge"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams
+      // input.outputGrams = input.outputGrams;
       input.outputPrice = input.outputGrams * 17;
       return input;
     }
@@ -117,7 +116,7 @@ const data = [
     name: "Branded Sauce Cartridge",
     parents: ["Sauce Cartridge"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams
+      // input.outputGrams = input.outputGrams;
       input.outputPrice = input.outputGrams * 21;
       return input;
     }
@@ -126,7 +125,7 @@ const data = [
     name: "Branded Jarred Concentrates",
     parents: ["Jarred Concentrates"],
     function: (input, potency) => {
-      input.outputGrams = input.outputGrams
+      // input.outputGrams = input.outputGrams;
       input.outputPrice = input.outputGrams * 18;
       return input;
     }
