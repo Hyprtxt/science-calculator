@@ -45,16 +45,17 @@ label {
   cursor: not-allowed;
 }
 
-.item.selected,
 .item.active {
   border: 3px solid black;
 }
 
-.item.hidden,
-.item.available,
 .item.enabled {
   opacity: 1;
   cursor: pointer;
+}
+
+.item.enabled.active {
+  border: 3px dashed black;
 }
 
 .row {

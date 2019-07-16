@@ -2,8 +2,8 @@ import React from "react";
 import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
 import Inspector from "./Inspector";
-import data from "./data";
-// import _ from "lodash";
+import setupData from "./data";
+import _ from "lodash";
 
 function App() {
   return <Calculator />;
@@ -12,6 +12,7 @@ function App() {
 class Calculator extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       trimAmount: 10,
       trimUnit: "pounds",
@@ -21,58 +22,64 @@ class Calculator extends React.Component {
       activeItems: [],
       inputItem: "",
       outputItem: "",
-      blocks: data.map(item => {
-        item.active = false;
-        item.enabled = false;
-        return item;
-      })
+      blocks: setupData()
     };
-    // const names = data.map(item => {
-    //   return item.name;
-    // });
-    // const parents = _.uniq(
-    //   data.flatMap((current, index, array) => {
-    //     return current.parents;
-    //   })
-    // );
-    // const startDisabled = _.difference(names, parents);
-    // console.log(names);
-    // console.log(parents);
-    // console.log(startDisabled);
-    // console.log(data);
+    // console.log(names, parent, startDisable, data);
   }
   onClickItem = e => {
     const { activeItems, inputItem, blocks } = this.state;
-    console.log(blocks);
+    console.log(blocks, activeItems);
     // const here = this;
     // e.persist();
     // console.log("onClickItem", e, e.target.innerText);
 
-    if (e.target.innerText === activeItems[0]) {
-      this.setState({
-        activeItems: [],
-        inputItem: ""
-      });
-    } else {
-      this.setState({
-        activeItems: [e.target.innerText],
-        inputItem: e.target.innerText,
-        blocks: blocks.map(item => {
-          if (item.name === e.target.innerText) {
-            item.active = true;
+    // const names = blocks.map(item => {
+    //   return item.name;
+    // });
+    // const parents = _.uniq(
+    //   blocks.flatMap((current, index, array) => {
+    //     return current.parents;
+    //   })
+    // );
+    // const startDisabled = _.difference(names, parents);
+    // let enabled = false;
+    // if (startDisabled.indexOf(item.name) === -1) {
+    //   enabled = true;
+    // }
+    // console.log(startDisabled.indexOf(item.name), item.name);
+    // console.log(item.name, enabled);
+
+    // Reverse Current Selection...
+    // if (e.target.innerText === activeItems[0]) {
+    //   this.setState({
+    //     activeItems: [],
+    //     inputItem: ""
+    //   });
+    // } else {
+    // }
+
+    this.setState({
+      activeItems: activeItems.concat([e.target.innerText]),
+      inputItem: e.target.innerText,
+      blocks: blocks.map(item => {
+        if (item.name === e.target.innerText) {
+          item.active = true;
+          item.enabled = true;
+        } else {
+          // item.active = false;
+          item.enabled = false;
+          if (item.parents.indexOf(e.target.innerText) !== -1) {
             item.enabled = true;
-          } else {
-            if (item.parents.indexOf(e.target.innerText) !== -1) {
-              item.enabled = true;
-            }
           }
-          return item;
-        })
-      });
-    }
+        }
+        return item;
+      })
+    });
   };
   onClickReset = e => {
-    console.log("onClickReset", e);
+    this.setState({
+      blocks: setupData()
+    });
   };
   onClickClearItems = e => {};
   onTrimAmountChange = e => {
