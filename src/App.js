@@ -29,10 +29,12 @@ class Calculator extends React.Component {
   }
   onClickItem = e => {
     const {
+      trimAmount,
       inputItem,
       // outputItem,
       activeItems,
       currentItem,
+      marketValueOutput,
       blocks
     } = this.state;
     if (currentItem === e.target.innerText) {
@@ -78,10 +80,33 @@ class Calculator extends React.Component {
     } else {
       inputItemValue = inputItem;
     }
+
+    const stuff = activeItems.concat([e.target.innerText]).map(itemName => {
+      return blocks.reduce((result, element) => {
+        if (element.name === itemName) {
+          result.push(element.function);
+        }
+        return result;
+      }, []);
+    });
+    let newMarketValueOutput = marketValueOutput;
+    if (stuff.length > 0) {
+      stuff.map((item, index) => {
+        console.log(item, index, newMarketValueOutput);
+        newMarketValueOutput = item[0](newMarketValueOutput);
+      });
+    }
+
+    console.log("NOTHING", stuff);
     this.setState({
       activeItems: activeItems.concat([e.target.innerText]),
       currentItem: e.target.innerText,
       inputItem: inputItemValue,
+      marketValueInput: 10,
+      marketValueOutput: newMarketValueOutput,
+      // blocks.map(item => {
+      //   return item.function(trimAmount)
+      // })
       blocks: blocks.map(item => {
         if (item.name === e.target.innerText) {
           item.active = true;
