@@ -80,6 +80,11 @@ class Calculator extends React.Component {
     } else {
       inputItemValue = inputItem;
     }
+    // Set outputItem Value
+    let outputItemValue;
+    if (inputItem !== "") {
+      outputItemValue = e.target.innerText;
+    }
 
     const stuff = activeItems.concat([e.target.innerText]).map(itemName => {
       return blocks.reduce((result, element) => {
@@ -103,6 +108,7 @@ class Calculator extends React.Component {
       activeItems: activeItems.concat([e.target.innerText]),
       currentItem: e.target.innerText,
       inputItem: inputItemValue,
+      outputItem: outputItemValue,
       marketValueInput: 10,
       marketValueOutput: newMarketValueOutput,
       // blocks.map(item => {
@@ -155,7 +161,12 @@ class Calculator extends React.Component {
     //   </div>
     // );
     const { state, onClickItem, onClickReset } = this;
-    const { marketValueInput, marketValueOutput } = state;
+    const {
+      marketValueInput,
+      marketValueOutput,
+      inputItem,
+      outputItem
+    } = state;
     return (
       <div className="App">
         <div className="inputs">
@@ -190,7 +201,9 @@ class Calculator extends React.Component {
         <h2>2. Select Your Process</h2>
         <TechTree data={this.state.blocks} onClickItem={onClickItem} />
         <div className="clearfix">
-          <button onClick={onClickReset}>Reset Process Selection</button>
+          <button className="reset" onClick={onClickReset}>
+            Reset Process Selection
+          </button>
         </div>
         <form
           className="outputs"
@@ -200,7 +213,7 @@ class Calculator extends React.Component {
         >
           <div>
             <label htmlFor="trim">
-              Market Value of <strong>input</strong>:{" "}
+              Market Value of <strong>{inputItem}</strong>:{" "}
             </label>
             <input
               type="text"
@@ -211,7 +224,7 @@ class Calculator extends React.Component {
           </div>
           <div>
             <label htmlFor="trim">
-              Market Value of <strong>output</strong>:{" "}
+              Market Value of <strong>{outputItem}</strong>:{" "}
             </label>
             <input
               type="text"

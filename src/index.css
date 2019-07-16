@@ -31,6 +31,13 @@ label {
   margin-top: 10px;
 }
 
+.reset {
+  padding: 10px;
+  background: lightBlue;
+  border: 3px solid lightBlue;
+  margin: 10px;
+}
+
 .item {
   width: 200px;
   max-height: 100px;
