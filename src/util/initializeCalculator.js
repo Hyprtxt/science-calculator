@@ -1,5 +1,3 @@
-import React from "react";
-
 // Potency is an integer from 1-100
 // Trim amount is input number
 

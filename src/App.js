@@ -15,8 +15,6 @@ class Calculator extends React.Component {
     super(props);
 
     this.state = {
-      trimAmount: 10,
-      potency: 25,
       baseMarketValue: 100,
       processedMarketValue: 1000,
       marketWeight: 1,
@@ -35,13 +33,12 @@ class Calculator extends React.Component {
   onClickItem = e => {
     const { state } = this;
     const {
-      trimAmount,
       inputItem,
       // outputItem,
       activeItems,
       currentItem,
       // processedMarketValue,
-      potency,
+      // potency,
       blocks
     } = state;
     if (currentItem === e.target.innerText) {
@@ -136,10 +133,10 @@ class Calculator extends React.Component {
     );
   };
   recalculate = () => {
-    const { currentItem } = this.state;
-    // currentItem
     const { state } = this;
-    const { activeItems, blocks, trimAmount, potency } = state;
+    const { calculator, currentItem, activeItems, blocks, potency } = state;
+    let mutableCalc = calculator;
+
     // Put all the functions we need into an array.
     const stuff = activeItems.concat([currentItem]).map(itemName => {
       return blocks.reduce((result, element) => {
@@ -154,16 +151,17 @@ class Calculator extends React.Component {
     // Need to calculate and update the base MarketValue (baseMarketValue) here.
     // stuff;
     // Initialize processedMarketValue
-    let calculator = initializeCalculator(state);
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
+    // console.log(typeof stuff[0]);
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
         // console.log(item, index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
-        calculator = item[0](calculator, potency);
+        mutableCalc = item[0](calculator, potency);
       });
     }
     this.setState({
+      calculator: mutableCalc,
       processedMarketValue: calculator.price,
       marketWeight: calculator.outputWeight
     });
@@ -184,8 +182,10 @@ class Calculator extends React.Component {
       baseMarketValue,
       processedMarketValue,
       inputItem,
-      outputItem
+      outputItem,
+      calculator
     } = state;
+    console.log(calculator);
     return (
       <div className="App">
         <div className="inputs">
@@ -200,7 +200,7 @@ class Calculator extends React.Component {
               <input
                 type="text"
                 name="trim"
-                value={this.state.trimAmount}
+                value={calculator.pounds}
                 onChange={e => {
                   this.onTrimAmountChange(e);
                 }}
@@ -209,7 +209,7 @@ class Calculator extends React.Component {
             </div>
             <RangeInput
               name="potency"
-              displayValue={this.state.potency}
+              displayValue={calculator.potency}
               value={10}
               onChangeHandler={e => {
                 this.onPotencyChange(e);
@@ -248,7 +248,7 @@ class Calculator extends React.Component {
             <input
               type="text"
               name="trim"
-              value={`$${processedMarketValue.price}`}
+              value={`$${calculator.price}`}
               readOnly
             />
           </div>
