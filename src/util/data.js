@@ -1,4 +1,5 @@
 import _ from "lodash";
+
 const crude_yield = thing => {
   return thing * 28.5 * 16 * 0.2;
 };

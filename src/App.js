@@ -2,7 +2,8 @@ import React from "react";
 import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
 import Inspector from "./Inspector";
-import setupData from "./data";
+import setupData from "./util/data";
+import initializeCalculator from "./util/initialize";
 // import _ from "lodash";
 
 function App() {
@@ -19,6 +20,7 @@ class Calculator extends React.Component {
       potency: 25,
       marketValueInput: 100,
       marketValueOutput: 1000,
+      marketWeight: 1,
       activeItems: [],
       currentItem: "",
       inputItem: "",
@@ -137,9 +139,7 @@ class Calculator extends React.Component {
       }, []);
     });
     // Initialize MarketValueOutput
-    let input = {};
-    input.outputPrice = trimAmount * (potency / 100);
-    input.outputGrams = trimAmount;
+    let input = initializeCalculator(state);
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     if (stuff.length > 1) {
       stuff.forEach((item, index) => {
@@ -148,7 +148,8 @@ class Calculator extends React.Component {
       });
     }
     this.setState({
-      marketValueOutput: input.outputPrice
+      marketValueOutput: input.outputPrice,
+      marketWeight: input.outputWeight
     });
   };
 
