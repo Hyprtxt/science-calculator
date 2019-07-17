@@ -134,14 +134,15 @@ class Calculator extends React.Component {
     );
   };
   recalculate = () => {
-    console.log("recalculate");
     const { state } = this;
+    // console.log("recalculate", state);
     const { calculator, activeItems, blocks, potency } = state;
 
     // Put all the functions we need into an array.
     const stuff = activeItems.map(itemName => {
-      return blocks.reduce((result, element) => {
+      return blocks.reduce((result, element, index) => {
         if (element.name === itemName) {
+          // console.log(typeof element.function, element.function, result);
           // These functions seem to be wrapped in an array that I can't get rid of.
           result.push(element.function);
         }
@@ -154,12 +155,12 @@ class Calculator extends React.Component {
     // stuff;
     // Initialize processedMarketValue
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
-
+    // console.log(stuff);
     if (stuff.length > 1) {
-      stuff.forEach((item, index) => {
-        // console.log(item, index, calculator);
+      stuff.forEach((thing, index) => {
+        // console.log(thing, typeof thing, index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
-        mutableCalc = item[0](calculator, potency);
+        mutableCalc = thing[0](calculator, potency);
       });
     }
     this.setState({
