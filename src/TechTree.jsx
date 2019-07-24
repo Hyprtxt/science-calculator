@@ -10,9 +10,7 @@ const TechTree = props => {
       {data.map((item, key) => {
         return (
           <Block
-            onClickItem={e => {
-              onClickItem(e);
-            }}
+            onClickItem={onClickItem}
             name={item.name}
             parents={item.parents}
             key={key}

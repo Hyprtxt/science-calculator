@@ -19,14 +19,14 @@ class Calculator extends React.Component {
       processedMarketValue: 1000,
       marketWeight: 1,
       activeItems: [],
-      techTreeBlocks: setupData(),
       currentItem: "",
       inputItem: "",
       outputItem: "",
       calculator: initializeCalculator({
         trimAmount: 10,
         potency: 25
-      })
+      }),
+      techTreeBlocks: setupData()
     };
     // console.log(names, parent, startDisable, data);
   }
@@ -166,35 +166,12 @@ class Calculator extends React.Component {
     } = state;
     return (
       <div className="App">
-        <div className="inputs">
-          <h2>1. Input Starting Material</h2>
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-            }}
-          >
-            <div>
-              <label htmlFor="trim">Pounds of Trim: </label>
-              <input
-                type="text"
-                name="trim"
-                value={calculator.pounds}
-                onChange={e => {
-                  this.onTrimAmountChange(e);
-                }}
-              />
-              &nbsp;lbs.
-            </div>
-            <RangeInput
-              name="potency"
-              displayValue={calculator.potency}
-              value={10}
-              onChangeHandler={e => {
-                this.onPotencyChange(e);
-              }}
-            />
-          </form>
-        </div>
+        <CalculatorInputs
+          onTrimAmountChange={this.onTrimAmountChange}
+          pounds={calculator.pounds}
+          onPotencyChange={this.onPotencyChange}
+          potency={calculator.potency}
+        />
         <h2>2. Select Your Process</h2>
         <TechTree
           data={this.state.techTreeBlocks}
@@ -205,39 +182,67 @@ class Calculator extends React.Component {
             Reset Process Selection
           </button>
         </div>
-        <form
-          className="outputs"
-          onSubmit={e => {
-            e.preventDefault();
-          }}
-        >
-          <div>
-            <label htmlFor="trim">
-              Market Value of <strong>{inputItem}</strong>:{" "}
-            </label>
-            <input
-              type="text"
-              name="trim"
-              value={`$${baseMarketValue}`}
-              readOnly
-            />
-          </div>
-          <div>
-            <label htmlFor="trim">
-              Market Value of <strong>{outputItem}</strong>:{" "}
-            </label>
-            <input
-              type="text"
-              name="trim"
-              value={`$${calculator.price}`}
-              readOnly
-            />
-          </div>
-        </form>
+        <CalculatorOutput />
         <Inspector data={this.state} />
       </div>
     );
   }
 }
+
+const CalculatorOutput = props => {
+  const { inputItem, inputItemPrice, price, outputItemPrice } = props;
+  return (
+    <form
+      className="outputs"
+      onSubmit={e => {
+        e.preventDefault();
+      }}
+    >
+      <div>
+        <label htmlFor="trim">
+          Market Value of <strong>{inputItem}</strong>:{" "}
+        </label>
+        <input type="text" name="trim" value={`$${inputItemPrice}`} readOnly />
+      </div>
+      <div>
+        <label htmlFor="trim">
+          Market Value of <strong>{outputItem}</strong>:{" "}
+        </label>
+        <input type="text" name="trim" value={`$${outputItemPrice}`} readOnly />
+      </div>
+    </form>
+  );
+};
+
+const CalculatorInputs = props => {
+  const { onTrimAmountChange, pounds, onPotencyChange, potency } = props;
+  return (
+    <div className="inputs">
+      <h2>1. Input Starting Material</h2>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+        }}
+      >
+        <div>
+          <label htmlFor="trim">Pounds of Trim: </label>
+          <input
+            type="text"
+            name="trim"
+            value={pounds}
+            onChange={onTrimAmountChange}
+          />
+          &nbsp;lbs.
+        </div>
+        <RangeInput
+          name="potency"
+          displayValue={potency}
+          value={10}
+          onChangeHandler={onPotencyChange}
+        />
+      </form>
+    </div>
+  );
+};
 
 export default App;
