@@ -17,7 +17,7 @@ class Calculator extends React.Component {
     this.state = {
       baseMarketValue: 100,
       processedMarketValue: 1000,
-      marketWeight: 1,
+      // weightInputValue: 1,
       activeItems: [],
       currentItem: "",
       inputItem: "",
@@ -151,14 +151,14 @@ class Calculator extends React.Component {
     this.setState({
       calculator: mutableCalc,
       processedMarketValue: calculator.price,
-      marketWeight: calculator.outputWeight
+      weightInputValue: calculator.outputWeight
     });
   };
 
   render() {
-    const { state, onClickItem, onClickReset } = this;
+    const { state, onClickItemTechTree, onClickReset } = this;
     const {
-      baseMarketValue,
+      // baseMarketValue,
       // processedMarketValue,
       inputItem,
       outputItem,
@@ -174,15 +174,20 @@ class Calculator extends React.Component {
         />
         <h2>2. Select Your Process</h2>
         <TechTree
-          data={this.state.techTreeBlocks}
-          onClickItem={this.onClickItemTechTree}
+          data={state.techTreeBlocks}
+          onClickItem={onClickItemTechTree}
         />
         <div className="clearfix">
           <button className="reset" onClick={onClickReset}>
             Reset Process Selection
           </button>
         </div>
-        <CalculatorOutput />
+        <CalculatorOutput
+          inputItem={inputItem}
+          inputItemPrice={calculator.inputItemPrice}
+          outputItem={outputItem}
+          outputItemPrice={calculator.price}
+        />
         <Inspector data={this.state} />
       </div>
     );
@@ -190,7 +195,7 @@ class Calculator extends React.Component {
 }
 
 const CalculatorOutput = props => {
-  const { inputItem, inputItemPrice, price, outputItemPrice } = props;
+  const { inputItem, inputItemPrice, outputItem, outputItemPrice } = props;
   return (
     <form
       className="outputs"

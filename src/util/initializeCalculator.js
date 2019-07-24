@@ -1,10 +1,11 @@
 // Potency is an integer from 1-100
 // Trim amount is input number
 
-const initializeCalculator = state => {
-  const trimAmount = state.trimAmount;
-  const potency = state.potency;
+const initializeCalculator = init => {
+  const trimAmount = init.trimAmount;
+  const potency = init.potency;
   let calculator = {
+    inputItemPrice: 0,
     price: 0,
     grams: 0,
     cartridges: 0,
