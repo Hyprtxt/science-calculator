@@ -2,8 +2,8 @@ import React from "react";
 import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
 import Inspector from "./Inspector";
-import setupData from "./util/setupData";
 import initializeCalculator from "./util/initializeCalculator";
+import setupData from "./util/setupData";
 // import _ from "lodash";
 
 function App() {
@@ -19,91 +19,70 @@ class Calculator extends React.Component {
       processedMarketValue: 1000,
       marketWeight: 1,
       activeItems: [],
+      techTreeBlocks: setupData(),
       currentItem: "",
       inputItem: "",
       outputItem: "",
       calculator: initializeCalculator({
         trimAmount: 10,
         potency: 25
-      }),
-      blocks: setupData()
+      })
     };
     // console.log(names, parent, startDisable, data);
   }
-  onClickItem = e => {
-    const { state } = this;
-    const {
-      inputItem,
-      // outputItem,
+
+  onClickItemTechTree = e => {
+    const { activeItems, techTreeBlocks } = this.state;
+    const clicked = e.target.innerText;
+    let newActiveItems;
+    let newBlocks;
+    let targetReset = false;
+    console.log(
       activeItems,
-      currentItem,
-      // processedMarketValue,
-      // potency,
-      blocks
-    } = state;
-    if (currentItem === e.target.innerText) {
-      // Clicked Active Item
-      // Do Nothing
-
-      // Should Probably Reverse Click Action Here
-      // remove last item from active items and update?
-      console.log("activeItems", activeItems.length);
-      this.setState({
-        activeItems: activeItems[activeItems.length - 1]
-      });
-      return;
+      typeof activeItems,
+      activeItems[activeItems.length - 1]
+    );
+    if (clicked === activeItems[activeItems.length - 1]) {
+      newActiveItems = activeItems.splice(activeItems.length - 1, 1);
+      targetReset = true;
+    } else {
+      newActiveItems = activeItems.concat([clicked]);
     }
-    // console.log(blocks, activeItems);
-    // e.persist();
-
-    // Set or Keep inputItem value
-    // let inputItemValue;
-    // if (inputItem === "") {
-    //   inputItemValue = e.target.innerText;
-    // } else {
-    //   inputItemValue = inputItem;
-    // }
-    // // Set outputItem Value
-    // let outputItemValue;
-    // if (inputItem !== "") {
-    //   outputItemValue = e.target.innerText;
-    // }
-
+    if (targetReset) {
+      newBlocks = techTreeBlocks;
+    } else {
+      newBlocks = techTreeBlocks.map(item => {
+        if (item.name === e.target.innerText) {
+          item.active = true;
+          item.enabled = true;
+        } else {
+          // item.active = false;
+          item.enabled = false;
+          if (item.parents.indexOf(e.target.innerText) !== -1) {
+            item.enabled = true;
+          }
+        }
+        return item;
+      });
+    }
+    // if (typeof activeItems === "Array")
     this.setState(
       {
-        activeItems: activeItems.concat([e.target.innerText]),
-        currentItem: e.target.innerText,
-        // inputItem: inputItemValue,
-        // outputItem: outputItemValue,
-        // calculator: {},
-        // baseMarketValue: 10,
-        // processedMarketValue: newprocessedMarketValue,
-        // blocks.map(item => {
-        //   return item.function(trimAmount)
-        // })
-        blocks: blocks.map(item => {
-          if (item.name === e.target.innerText) {
-            item.active = true;
-            item.enabled = true;
-          } else {
-            // item.active = false;
-            item.enabled = false;
-            if (item.parents.indexOf(e.target.innerText) !== -1) {
-              item.enabled = true;
-            }
-          }
-          return item;
-        })
+        activeItems: newActiveItems,
+        techTreeBlocks: newBlocks
       },
       () => {
-        this.recalculate();
+        console.log("GOTCLICK", this.state);
       }
     );
+    // }
+    // Check for double Click
   };
+
   onClickReset = e => {
     this.setState(
       {
-        blocks: setupData(),
+        techTreeBlocks: setupData(),
         activeItems: [],
         currentItem: ""
       },
@@ -112,6 +91,7 @@ class Calculator extends React.Component {
       }
     );
   };
+
   onTrimAmountChange = e => {
     const { calculator } = this.state;
     calculator.pounds = e.target.value;
@@ -141,11 +121,11 @@ class Calculator extends React.Component {
   recalculate = () => {
     const { state } = this;
     // console.log("recalculate", state);
-    const { calculator, activeItems, blocks, potency } = state;
+    const { calculator, activeItems, techTreeBlocks, potency } = state;
 
     // Put all the functions we need into an array.
     const stuff = activeItems.map(itemName => {
-      return blocks.reduce((result, element, index) => {
+      return techTreeBlocks.reduce((result, element, index) => {
         if (element.name === itemName) {
           // console.log(typeof element.function, element.function, result);
           // These functions seem to be wrapped in an array that I can't get rid of.
@@ -216,7 +196,10 @@ class Calculator extends React.Component {
           </form>
         </div>
         <h2>2. Select Your Process</h2>
-        <TechTree data={this.state.blocks} onClickItem={onClickItem} />
+        <TechTree
+          data={this.state.techTreeBlocks}
+          onClickItem={this.onClickItemTechTree}
+        />
         <div className="clearfix">
           <button className="reset" onClick={onClickReset}>
             Reset Process Selection
