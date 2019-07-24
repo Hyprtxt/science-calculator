@@ -44,32 +44,37 @@ class Calculator extends React.Component {
     if (currentItem === e.target.innerText) {
       // Clicked Active Item
       // Do Nothing
-      return;
+
       // Should Probably Reverse Click Action Here
       // remove last item from active items and update?
+      console.log("activeItems", activeItems.length);
+      this.setState({
+        activeItems: activeItems[activeItems.length - 1]
+      });
+      return;
     }
     // console.log(blocks, activeItems);
     // e.persist();
 
     // Set or Keep inputItem value
-    let inputItemValue;
-    if (inputItem === "") {
-      inputItemValue = e.target.innerText;
-    } else {
-      inputItemValue = inputItem;
-    }
-    // Set outputItem Value
-    let outputItemValue;
-    if (inputItem !== "") {
-      outputItemValue = e.target.innerText;
-    }
+    // let inputItemValue;
+    // if (inputItem === "") {
+    //   inputItemValue = e.target.innerText;
+    // } else {
+    //   inputItemValue = inputItem;
+    // }
+    // // Set outputItem Value
+    // let outputItemValue;
+    // if (inputItem !== "") {
+    //   outputItemValue = e.target.innerText;
+    // }
 
     this.setState(
       {
         activeItems: activeItems.concat([e.target.innerText]),
         currentItem: e.target.innerText,
-        inputItem: inputItemValue,
-        outputItem: outputItemValue,
+        // inputItem: inputItemValue,
+        // outputItem: outputItemValue,
         // calculator: {},
         // baseMarketValue: 10,
         // processedMarketValue: newprocessedMarketValue,
