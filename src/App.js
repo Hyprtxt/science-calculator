@@ -193,9 +193,9 @@ class Calculator extends React.Component {
         </ResetButton>
         <CalculatorOutput
           inputItem={inputItem}
-          inputItemPrice={calculator.inputItemPrice.toFixed(2)}
+          inputItemPrice={calculator.inputItemPrice}
           outputItem={outputItem}
-          outputItemPrice={calculator.price.toFixed(2)}
+          outputItemPrice={calculator.price}
         />
         <Inspector data={this.state} />
       </div>
