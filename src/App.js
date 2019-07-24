@@ -2,6 +2,7 @@ import React from "react";
 import setupData from "./util/setupData";
 import TechTree from "./components/TechTree";
 import Inspector from "./components/Inspector";
+import ResetButton from "./components/ResetButton";
 import CalculatorOutput from "./components/CalculatorOutput";
 import CalculatorInputs from "./components/CalculatorInputs";
 // import _ from "lodash";
@@ -187,11 +188,9 @@ class Calculator extends React.Component {
           data={state.techTreeBlocks}
           onClickItem={onClickItemTechTree}
         />
-        <div className="clearfix">
-          <button className="reset" onClick={onClickReset}>
-            Reset Process Selection
-          </button>
-        </div>
+        <ResetButton onClick={onClickReset}>
+          Reset Process Selection
+        </ResetButton>
         <CalculatorOutput
           inputItem={inputItem}
           inputItemPrice={calculator.inputItemPrice.toFixed(2)}
