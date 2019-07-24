@@ -2,7 +2,6 @@ import React from "react";
 import TechTree from "./TechTree";
 import RangeInput from "./RangeInput";
 import Inspector from "./Inspector";
-import initializeCalculator from "./util/initializeCalculator";
 import setupData from "./util/setupData";
 // import _ from "lodash";
 
@@ -22,10 +21,14 @@ class Calculator extends React.Component {
       currentItem: "",
       inputItem: "",
       outputItem: "",
-      calculator: initializeCalculator({
-        trimAmount: 10,
+      calculator: {
+        inputItemPrice: 0,
+        price: 0,
+        grams: 0,
+        cartridges: 0,
+        pounds: 10,
         potency: 25
-      }),
+      },
       techTreeBlocks: setupData()
     };
     // console.log(names, parent, startDisable, data);
@@ -37,11 +40,11 @@ class Calculator extends React.Component {
     let newActiveItems;
     let newBlocks;
     let targetReset = false;
-    console.log(
-      activeItems,
-      typeof activeItems,
-      activeItems[activeItems.length - 1]
-    );
+    // console.log(
+    //   activeItems,
+    //   typeof activeItems,
+    //   activeItems[activeItems.length - 1]
+    // );
     if (clicked === activeItems[activeItems.length - 1]) {
       newActiveItems = activeItems.splice(activeItems.length - 1, 1);
       targetReset = true;
@@ -73,6 +76,7 @@ class Calculator extends React.Component {
       },
       () => {
         console.log("GOTCLICK", this.state);
+        this.recalculate();
       }
     );
     // }
@@ -135,19 +139,24 @@ class Calculator extends React.Component {
       }, []);
     });
     let mutableCalc = calculator;
+    let mutableCalc1 = calculator;
     // @TODO
     // Need to calculate and update the base MarketValue (baseMarketValue) here.
     // stuff;
     // Initialize processedMarketValue
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     // console.log(stuff);
+    console.log(mutableCalc);
     if (stuff.length > 1) {
       stuff.forEach((thing, index) => {
-        // console.log(thing, typeof thing, index, calculator);
+        console.log(thing, typeof thing, index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
         mutableCalc = thing[0](calculator, potency);
       });
+      console.log(stuff[0][0], stuff[0][0](calculator, potency));
+      mutableCalc1 = stuff[0][0](calculator, potency);
     }
+    console.log(mutableCalc, mutableCalc1);
     this.setState({
       calculator: mutableCalc,
       processedMarketValue: calculator.price,
@@ -184,9 +193,9 @@ class Calculator extends React.Component {
         </div>
         <CalculatorOutput
           inputItem={inputItem}
-          inputItemPrice={calculator.inputItemPrice}
+          inputItemPrice={calculator.inputItemPrice.toFixed(2)}
           outputItem={outputItem}
-          outputItemPrice={calculator.price}
+          outputItemPrice={calculator.price.toFixed(2)}
         />
         <Inspector data={this.state} />
       </div>
