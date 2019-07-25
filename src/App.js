@@ -16,13 +16,7 @@ class Calculator extends React.Component {
     super(props);
 
     this.state = {
-      baseMarketValue: 100,
-      processedMarketValue: 1000,
-      // weightInputValue: 1,
       activeItems: [],
-      currentItem: "",
-      inputItem: "",
-      outputItem: "",
       calculator: {
         inputItemPrice: 0,
         price: 0,
@@ -89,8 +83,7 @@ class Calculator extends React.Component {
     this.setState(
       {
         techTreeBlocks: setupData(),
-        activeItems: [],
-        currentItem: ""
+        activeItems: []
       },
       () => {
         this.recalculate();
@@ -141,43 +134,33 @@ class Calculator extends React.Component {
       }, []);
     });
     let mutableCalc = calculator;
-    let mutableCalc1 = calculator;
+    // let mutableCalc1 = calculator;
     // @TODO
     // Need to calculate and update the base MarketValue (baseMarketValue) here.
     // stuff;
     // Initialize processedMarketValue
     // console.log("recalculate Market Value Functions", stuff, stuff.length);
     // console.log(stuff);
-    console.log(mutableCalc);
     if (stuff.length > 1) {
       stuff.forEach((thing, index) => {
-        console.log(thing, typeof thing, index, calculator);
+        // console.log(thing, typeof thing, index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
         mutableCalc = thing[0](calculator, potency);
       });
-      console.log(stuff[0][0], stuff[0][0](calculator, potency));
-      mutableCalc1 = stuff[0][0](calculator, potency);
+      // console.log(stuff[0][0], stuff[0][0](calculator, potency));
+      // mutableCalc1 = stuff[0][0](calculator, potency);
     }
     if (stuff.length === 1) {
-      let something = _.find(techTreeBlocks, { name: activeItems[0] }).theMath;
-      console.log(
-        "ONE",
-        // stuff[0],
-        // stuff[0][0](calculator, potency),
-        // techTreeBlocks,
-        something,
-        _.find(techTreeBlocks, { name: activeItems[0] }).theMath(calculator)
-      );
+      mutableCalc.inputItemPrice = _.find(techTreeBlocks, {
+        name: activeItems[0]
+      }).theMath(calculator).price;
     }
-    mutableCalc.inputItemPrice = _.find(techTreeBlocks, {
-      name: activeItems[0]
-    }).theMath(calculator).price;
     // stuff[0][0](calculator, potency).price;
     // console.log(mutableCalc, mutableCalc1.price);
     this.setState({
-      calculator: mutableCalc,
-      processedMarketValue: calculator.price,
-      weightInputValue: calculator.outputWeight
+      calculator: mutableCalc
+      // processedMarketValue: calculator.price,
+      // weightInputValue: calculator.outputWeight
     });
   };
 
@@ -186,8 +169,9 @@ class Calculator extends React.Component {
     const {
       // baseMarketValue,
       // processedMarketValue,
-      inputItem,
-      outputItem,
+      // inputItem,
+      // outputItem,
+      activeItems,
       calculator
     } = state;
     return (
@@ -207,9 +191,9 @@ class Calculator extends React.Component {
           Reset Process Selection
         </ResetButton>
         <CalculatorOutput
-          inputItem={inputItem}
+          inputItem={activeItems[0]}
           inputItemPrice={calculator.inputItemPrice}
-          outputItem={outputItem}
+          outputItem={activeItems[activeItems.length - 1]}
           outputItemPrice={calculator.price}
         />
         <Inspector data={this.state} />
