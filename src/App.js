@@ -5,7 +5,7 @@ import Inspector from "./components/Inspector";
 import ResetButton from "./components/ResetButton";
 import CalculatorOutput from "./components/CalculatorOutput";
 import CalculatorInputs from "./components/CalculatorInputs";
-// import _ from "lodash";
+import _ from "lodash";
 
 function App() {
   return <Calculator />;
@@ -133,9 +133,9 @@ class Calculator extends React.Component {
     const stuff = activeItems.map(itemName => {
       return techTreeBlocks.reduce((result, element, index) => {
         if (element.name === itemName) {
-          // console.log(typeof element.function, element.function, result);
+          // console.log(typeof element.theMath, element.theMath, result);
           // These functions seem to be wrapped in an array that I can't get rid of.
-          result.push(element.function);
+          result.push(element.theMath);
         }
         return result;
       }, []);
@@ -158,7 +158,22 @@ class Calculator extends React.Component {
       console.log(stuff[0][0], stuff[0][0](calculator, potency));
       mutableCalc1 = stuff[0][0](calculator, potency);
     }
-    console.log(mutableCalc, mutableCalc1);
+    if (stuff.length === 1) {
+      let something = _.find(techTreeBlocks, { name: activeItems[0] }).theMath;
+      console.log(
+        "ONE",
+        // stuff[0],
+        // stuff[0][0](calculator, potency),
+        // techTreeBlocks,
+        something,
+        _.find(techTreeBlocks, { name: activeItems[0] }).theMath(calculator)
+      );
+    }
+    mutableCalc.inputItemPrice = _.find(techTreeBlocks, {
+      name: activeItems[0]
+    }).theMath(calculator).price;
+    // stuff[0][0](calculator, potency).price;
+    // console.log(mutableCalc, mutableCalc1.price);
     this.setState({
       calculator: mutableCalc,
       processedMarketValue: calculator.price,
