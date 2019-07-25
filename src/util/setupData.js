@@ -15,8 +15,11 @@ const data = [
     name: "Ethanol Crude",
     parents: ["Trim"],
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds) * 0.2;
-      calc.price = calc.grams * 3;
+      if (ActiveItems===[]) {
+       calc.price = calc.grams * 3;
+      } else {
+        calc.grams = poundsToGrams(calc.pounds) * 0.2;
+        calc.price = calc.grams * 3;
       return calc;
     }
   },
@@ -24,8 +27,11 @@ const data = [
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds) * 0.2;
-      calc.price = calc.grams * 4;
+      if (ActiveItems===[]) {
+        calc.price = calc.grams * 4;
+      } else {
+        calc.grams = poundsToGrams(calc.pounds) * 0.2;
+        calc.price = calc.grams * 4;
       return calc;
     }
   },
@@ -49,8 +55,11 @@ const data = [
     name: "Cured Resin",
     parents: ["Dried Flower"],
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds);
-      calc.price = calc.grams * 8;
+      if (ActiveItems===0) {
+        calc.price = calc.grams * 8;
+      } else {
+        calc.grams = poundsToGrams(calc.pounds);
+        calc.price = calc.grams * 8;
       return calc;
     }
   },
@@ -58,8 +67,11 @@ const data = [
     name: "Live Resin",
     parents: ["Fresh Frozen"],
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds) * 0.04;
-      calc.price = calc.grams * 8;
+      if (ActiveItems===0) {
+        calc.price = calc.grams * 8;
+      } else {
+        calc.grams = poundsToGrams(calc.pounds) * 0.04;
+        calc.price = calc.grams * 8;
       return calc;
     }
   },
@@ -67,8 +79,11 @@ const data = [
     name: "Distillate",
     parents: ["Ethanol Crude"],
     theMath: calc => {
-      calc.grams = calc.grams * 0.8;
-      calc.price = calc.grams * 7;
+      if (ActiveItems===0) {
+        calc.price = calc.grams * 7;
+      } else {
+        calc.grams = calc.grams * 0.8;
+        calc.price = calc.grams * 7;
       return calc;
     }
   },
@@ -85,8 +100,11 @@ const data = [
     name: "Sauce Cartridge",
     parents: ["Distillate", "Cured Resin", "Live Resin"],
     theMath: calc => {
-      calc.cartridges = calc.grams * 2;
-      calc.price = calc.cartridges * 18;
+      if (ActiveItems===0) {
+        calc.price = calc.cartridges * 18;
+      } else {
+        calc.cartridges = calc.grams * 2;
+        calc.price = calc.cartridges * 18;
       return calc;
     }
   },
