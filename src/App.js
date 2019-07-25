@@ -36,11 +36,6 @@ class Calculator extends React.Component {
     let newActiveItems;
     let newBlocks;
     let targetReset = false;
-    // console.log(
-    //   activeItems,
-    //   typeof activeItems,
-    //   activeItems[activeItems.length - 1]
-    // );
     if (clicked === activeItems[activeItems.length - 1]) {
       newActiveItems = activeItems.splice(activeItems.length - 1, 1);
       targetReset = true;
@@ -64,19 +59,15 @@ class Calculator extends React.Component {
         return item;
       });
     }
-    // if (typeof activeItems === "Array")
     this.setState(
       {
         activeItems: newActiveItems,
         techTreeBlocks: newBlocks
       },
       () => {
-        console.log("GOTCLICK", this.state);
         this.recalculate();
       }
     );
-    // }
-    // Check for double Click
   };
 
   onClickReset = e => {
@@ -104,6 +95,7 @@ class Calculator extends React.Component {
       }
     );
   };
+
   onPotencyChange = e => {
     const { calculator } = this.state;
     calculator.potency = e.target.value;
@@ -117,11 +109,10 @@ class Calculator extends React.Component {
       }
     );
   };
+
   recalculate = () => {
     const { state } = this;
-    // console.log("recalculate", state);
     const { calculator, activeItems, techTreeBlocks, potency } = state;
-
     // Put all the functions we need into an array.
     const stuff = activeItems.map(itemName => {
       return techTreeBlocks.reduce((result, element, index) => {
@@ -134,59 +125,42 @@ class Calculator extends React.Component {
       }, []);
     });
     let mutableCalc = calculator;
-    // let mutableCalc1 = calculator;
-    // @TODO
-    // Need to calculate and update the base MarketValue (baseMarketValue) here.
-    // stuff;
-    // Initialize processedMarketValue
-    // console.log("recalculate Market Value Functions", stuff, stuff.length);
-    // console.log(stuff);
     if (stuff.length > 1) {
       stuff.forEach((thing, index) => {
         // console.log(thing, typeof thing, index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
         mutableCalc = thing[0](calculator, potency);
       });
-      // console.log(stuff[0][0], stuff[0][0](calculator, potency));
-      // mutableCalc1 = stuff[0][0](calculator, potency);
     }
     if (stuff.length === 1) {
       mutableCalc.inputItemPrice = _.find(techTreeBlocks, {
         name: activeItems[0]
       }).theMath(calculator).price;
     }
-    // stuff[0][0](calculator, potency).price;
-    // console.log(mutableCalc, mutableCalc1.price);
     this.setState({
       calculator: mutableCalc
-      // processedMarketValue: calculator.price,
-      // weightInputValue: calculator.outputWeight
     });
   };
 
   render() {
-    const { state, onClickItemTechTree, onClickReset } = this;
     const {
-      // baseMarketValue,
-      // processedMarketValue,
-      // inputItem,
-      // outputItem,
-      activeItems,
-      calculator
-    } = state;
+      state,
+      onClickItemTechTree,
+      onClickReset,
+      onTrimAmountChange,
+      onPotencyChange
+    } = this;
+    const { techTreeBlocks, activeItems, calculator } = state;
     return (
       <div className="App">
         <CalculatorInputs
-          onTrimAmountChange={this.onTrimAmountChange}
+          onTrimAmountChange={onTrimAmountChange}
           pounds={calculator.pounds}
-          onPotencyChange={this.onPotencyChange}
+          onPotencyChange={onPotencyChange}
           potency={calculator.potency}
         />
         <h2>2. Select Your Process</h2>
-        <TechTree
-          data={state.techTreeBlocks}
-          onClickItem={onClickItemTechTree}
-        />
+        <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
         <ResetButton onClick={onClickReset}>
           Reset Process Selection
         </ResetButton>
@@ -196,7 +170,7 @@ class Calculator extends React.Component {
           outputItem={activeItems[activeItems.length - 1]}
           outputItemPrice={calculator.price}
         />
-        <Inspector data={this.state} />
+        <Inspector data={state} />
       </div>
     );
   }
