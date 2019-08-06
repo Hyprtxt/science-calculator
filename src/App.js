@@ -41,14 +41,25 @@ class Calculator extends React.Component {
     let newBlocks;
     let resetBlockString;
     let activeBlockString;
-    // let targetReset = false;
     if (clickedItemString === activeItems[activeItems.length - 1]) {
-      console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
+      // console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
       newActiveItems = activeItems;
       resetBlockString = activeItems.splice(activeItems.length - 1, 1)[0];
       activeBlockString = activeItems[activeItems.length - 1];
-      // targetReset = true;
-      console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
+      // console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
+      if (activeItems.length === 0) {
+        // RESET GRID FULLY && BAIL
+        this.setState(
+          {
+            activeItems: [],
+            techTreeBlocks: setupData()
+          },
+          () => {
+            this.recalculate();
+          }
+        );
+        return;
+      }
     } else {
       newActiveItems = activeItems.concat([clickedItemString]);
       activeBlockString = clickedItemString;
@@ -62,55 +73,38 @@ class Calculator extends React.Component {
       newActiveItems,
       activeItems
     );
-    // } else {
-    console.log("resetBlockString", resetBlockString);
+    // console.log("resetBlockString", resetBlockString);
     newBlocks = techTreeBlocks.map(item => {
-      if (resetBlockString !== undefined) {
-        if (item.name === clickedItemString) {
-          item.active = false;
-          item.enabled = true;
-        } else if (item.name === activeBlockString) {
-          item.active = true;
-          item.enabled = true;
-        } else {
-          // item.active = false;
-          item.enabled = false;
-          if (item.parents.indexOf(activeBlockString) !== -1) {
-            item.enabled = true;
-          }
-        }
+      // Need one more check if empty, need to setupData() to get START_DISABLED stuff
+      if (item.name === clickedItemString && resetBlockString !== undefined) {
+        // If Re Click, Setting CURRENT as Child
+        item.active = false;
+        item.enabled = true;
+      } else if (
+        item.name === activeBlockString &&
+        resetBlockString !== undefined
+      ) {
+        // If Re Click, Setting Parent as CURRENT
+        item.active = true;
+        item.enabled = true;
+      } else if (
+        item.name === clickedItemString &&
+        resetBlockString === undefined
+      ) {
+        // If New Click, Setting CURRENT as CURRENT
+        item.active = true;
+        item.enabled = true;
       } else {
-        if (item.name === clickedItemString) {
-          item.active = true;
+        // Everything Else
+        // item.active = false;
+        item.enabled = false;
+        if (item.parents.indexOf(activeBlockString) !== -1) {
+          // If parent is CURRENT, ENABLE
           item.enabled = true;
-        } else {
-          // item.active = false;
-          item.enabled = false;
-          if (item.parents.indexOf(activeBlockString) !== -1) {
-            item.enabled = true;
-          }
         }
       }
       return item;
     });
-    // if (resetBlockString !== "") {
-    //   newBlocks = newBlocks.map(item => {
-    //
-    //     //
-    //     //     if (item.name === resetBlockString) {
-    //     //       item.active = false;
-    //     //       item.enabled = false;
-    //     //     } else {
-    //     //       // item.active = false;
-    //     //       item.enabled = false;
-    //     //       if (item.parents.indexOf(activeBlockString) !== -1) {
-    //     //         item.enabled = true;
-    //     //       }
-    //     //     }
-    //     return item;
-    //   });
-    // }
-    // }
     this.setState(
       {
         activeItems: newActiveItems,
@@ -120,6 +114,7 @@ class Calculator extends React.Component {
         this.recalculate();
       }
     );
+    return;
   };
 
   onClickReset = e => {
