@@ -153,17 +153,20 @@ class Calculator extends React.Component {
     const { techTreeBlocks, activeItems, calculator } = state;
     return (
       <div className="App">
-        <CalculatorInputs
-          onTrimAmountChange={onTrimAmountChange}
-          pounds={calculator.pounds}
-          onPotencyChange={onPotencyChange}
-          potency={calculator.potency}
-        />
-        <h2>2. Select Your Process</h2>
+        <h2>1. Select Your Process</h2>
         <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
         <ResetButton onClick={onClickReset}>
           Reset Process Selection
         </ResetButton>
+        <div className="inputs">
+          <h2>2. Input Starting Material</h2>
+          <CalculatorInputs
+            onTrimAmountChange={onTrimAmountChange}
+            pounds={calculator.pounds}
+            onPotencyChange={onPotencyChange}
+            potency={calculator.potency}
+          />
+        </div>
         <CalculatorOutput
           inputItem={activeItems[0]}
           inputItemPrice={calculator.inputItemPrice}

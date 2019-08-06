@@ -4,8 +4,7 @@ import RangeInput from "./RangeInput";
 const CalculatorInputs = props => {
   const { onTrimAmountChange, pounds, onPotencyChange, potency } = props;
   return (
-    <div className="inputs">
-      <h2>1. Input Starting Material</h2>
+
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -28,7 +27,6 @@ const CalculatorInputs = props => {
           onChangeHandler={onPotencyChange}
         />
       </form>
-    </div>
   );
 };
 
