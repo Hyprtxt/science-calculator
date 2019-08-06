@@ -32,33 +32,81 @@ class Calculator extends React.Component {
 
   onClickItemTechTree = e => {
     const { activeItems, techTreeBlocks } = this.state;
-    const clicked = e.target.innerText;
+    const clickedItemString = e.target.innerText;
     let newActiveItems;
     let newBlocks;
-    let targetReset = false;
-    if (clicked === activeItems[activeItems.length - 1]) {
-      newActiveItems = activeItems.splice(activeItems.length - 1, 1);
-      targetReset = true;
+    let resetBlockString;
+    let activeBlockString;
+    // let targetReset = false;
+    if (clickedItemString === activeItems[activeItems.length - 1]) {
+      console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
+      newActiveItems = activeItems;
+      resetBlockString = activeItems.splice(activeItems.length - 1, 1)[0];
+      activeBlockString = activeItems[activeItems.length - 1];
+      // targetReset = true;
+      console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
     } else {
-      newActiveItems = activeItems.concat([clicked]);
+      newActiveItems = activeItems.concat([clickedItemString]);
+      activeBlockString = clickedItemString;
     }
-    if (targetReset) {
-      newBlocks = techTreeBlocks;
-    } else {
-      newBlocks = techTreeBlocks.map(item => {
-        if (item.name === e.target.innerText) {
+    console.log(
+      // targetReset,
+      clickedItemString,
+      resetBlockString,
+      activeBlockString,
+      "targetReset",
+      newActiveItems,
+      activeItems
+    );
+    // } else {
+    console.log("resetBlockString", resetBlockString);
+    newBlocks = techTreeBlocks.map(item => {
+      if (resetBlockString !== undefined) {
+        if (item.name === clickedItemString) {
+          item.active = false;
+          item.enabled = true;
+        } else if (item.name === activeBlockString) {
           item.active = true;
           item.enabled = true;
         } else {
           // item.active = false;
           item.enabled = false;
-          if (item.parents.indexOf(e.target.innerText) !== -1) {
+          if (item.parents.indexOf(activeBlockString) !== -1) {
             item.enabled = true;
           }
         }
-        return item;
-      });
-    }
+      } else {
+        if (item.name === clickedItemString) {
+          item.active = true;
+          item.enabled = true;
+        } else {
+          // item.active = false;
+          item.enabled = false;
+          if (item.parents.indexOf(activeBlockString) !== -1) {
+            item.enabled = true;
+          }
+        }
+      }
+      return item;
+    });
+    // if (resetBlockString !== "") {
+    //   newBlocks = newBlocks.map(item => {
+    //
+    //     //
+    //     //     if (item.name === resetBlockString) {
+    //     //       item.active = false;
+    //     //       item.enabled = false;
+    //     //     } else {
+    //     //       // item.active = false;
+    //     //       item.enabled = false;
+    //     //       if (item.parents.indexOf(activeBlockString) !== -1) {
+    //     //         item.enabled = true;
+    //     //       }
+    //     //     }
+    //     return item;
+    //   });
+    // }
+    // }
     this.setState(
       {
         activeItems: newActiveItems,
