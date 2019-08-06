@@ -1,7 +1,11 @@
 import React from "react";
 
+const Capitalize = str => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const WeightInput = props => {
-  const { pounds, grams, units, onTrimAmountChange, currentInputType } = props;
+  const { onAmountChange, currentInputType } = props;
   console.log("WeightInput", currentInputType);
   let theGoods = <h1>NOTHING</h1>;
   if (currentInputType === "grams") {
@@ -11,8 +15,10 @@ const WeightInput = props => {
         <input
           type="text"
           name="grams"
-          value={grams}
-          onChange={onTrimAmountChange}
+          // value={grams}
+          onChange={e => {
+            onAmountChange(e, "grams");
+          }}
         />
         &nbsp;g.
       </React.Fragment>
@@ -25,8 +31,10 @@ const WeightInput = props => {
         <input
           type="text"
           name="units"
-          value={units}
-          onChange={onTrimAmountChange}
+          // value={units}
+          onChange={e => {
+            onAmountChange(e, "units");
+          }}
         />
         &nbsp;carts.
       </React.Fragment>
@@ -35,12 +43,15 @@ const WeightInput = props => {
   if (currentInputType === "pounds") {
     theGoods = (
       <React.Fragment>
-        <label htmlFor="trim">Pounds of $STUFF: </label>
+        <label htmlFor={currentInputType}>
+          {`${Capitalize(currentInputType)} of $STUFF:`}
+        </label>
         <input
           type="text"
-          name="trim"
-          value={pounds}
-          onChange={onTrimAmountChange}
+          name={currentInputType}
+          onChange={e => {
+            onAmountChange(e, "pounds");
+          }}
         />
         &nbsp;lbs.
       </React.Fragment>

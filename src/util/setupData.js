@@ -7,8 +7,7 @@ const data = [
     parents: [],
     inputType: "pounds",
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds);
-      calc.price = calc.grams * 10 * calc.potency;
+      calc.price = poundsToGrams(calc.input.pounds) * 10 * calc.potency;
       return calc;
     }
   },
