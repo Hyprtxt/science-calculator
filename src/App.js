@@ -22,8 +22,12 @@ class Calculator extends React.Component {
         price: 0,
         grams: 0,
         cartridges: 0,
-        pounds: 10,
-        potency: 25
+        potency: 25,
+        input: {
+          pounds: 10,
+          grams: 10,
+          units: 10
+        }
       },
       techTreeBlocks: setupData()
     };
@@ -199,6 +203,7 @@ class Calculator extends React.Component {
       onPotencyChange
     } = this;
     const { techTreeBlocks, activeItems, calculator } = state;
+    const { pounds, grams, units } = calculator.input;
     return (
       <div className="App">
         <h2>1. Select Your Process</h2>
@@ -210,7 +215,9 @@ class Calculator extends React.Component {
           <h2>2. Input Starting Material</h2>
           <CalculatorInputs
             onTrimAmountChange={onTrimAmountChange}
-            pounds={calculator.pounds}
+            pounds={pounds}
+            grams={grams}
+            units={units}
             onPotencyChange={onPotencyChange}
             potency={calculator.potency}
           />
