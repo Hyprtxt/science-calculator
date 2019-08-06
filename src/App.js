@@ -17,13 +17,13 @@ class Calculator extends React.Component {
 
     this.state = {
       activeItems: [],
+      currentInputType: undefined, // string
       calculator: {
         inputItemPrice: 0,
         price: 0,
         grams: 0,
         cartridges: 0,
         potency: 25,
-        currentInputType: undefined, // string
         input: {
           pounds: 10,
           grams: 10,
@@ -42,6 +42,8 @@ class Calculator extends React.Component {
     let newBlocks;
     let resetBlockString;
     let activeBlockString;
+    let theInputType;
+    // check if (this) TechTree is empty, need to setupData() to get START_DISABLED stuff
     if (clickedItemString === activeItems[activeItems.length - 1]) {
       // console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
       newActiveItems = activeItems;
@@ -52,6 +54,7 @@ class Calculator extends React.Component {
         // RESET GRID FULLY && BAIL
         this.setState(
           {
+            currentInputType: undefined,
             activeItems: [],
             techTreeBlocks: setupData()
           },
@@ -65,18 +68,20 @@ class Calculator extends React.Component {
       newActiveItems = activeItems.concat([clickedItemString]);
       activeBlockString = clickedItemString;
     }
-    console.log(
-      // targetReset,
-      clickedItemString,
-      resetBlockString,
-      activeBlockString,
-      "targetReset",
-      newActiveItems,
-      activeItems
-    );
+    // console.log(
+    //   // targetReset,
+    //   clickedItemString,
+    //   resetBlockString,
+    //   activeBlockString,
+    //   "targetReset",
+    //   newActiveItems,
+    //   activeItems
+    // );
     // console.log("resetBlockString", resetBlockString);
     newBlocks = techTreeBlocks.map(item => {
-      // Need one more check if empty, need to setupData() to get START_DISABLED stuff
+      if (item.name === newActiveItems[0]) {
+        theInputType = item.inputType;
+      }
       if (item.name === clickedItemString && resetBlockString !== undefined) {
         // If Re Click, Setting CURRENT as Child
         item.active = false;
@@ -108,6 +113,7 @@ class Calculator extends React.Component {
     });
     this.setState(
       {
+        currentInputType: theInputType,
         activeItems: newActiveItems,
         techTreeBlocks: newBlocks
       },
@@ -198,7 +204,7 @@ class Calculator extends React.Component {
       onTrimAmountChange,
       onPotencyChange
     } = this;
-    const { techTreeBlocks, activeItems, calculator } = state;
+    const { techTreeBlocks, activeItems, calculator, currentInputType } = state;
     const { pounds, grams, units } = calculator.input;
     return (
       <div className="App">
@@ -210,6 +216,7 @@ class Calculator extends React.Component {
         <div className="inputs">
           <h2>2. Input Starting Material</h2>
           <CalculatorInputs
+            currentInputType={currentInputType}
             onTrimAmountChange={onTrimAmountChange}
             pounds={pounds}
             grams={grams}

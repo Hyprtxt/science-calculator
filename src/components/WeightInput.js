@@ -2,9 +2,11 @@ import React from "react";
 
 const WeightInput = props => {
   const { pounds, grams, units, onTrimAmountChange, currentInputType } = props;
+  console.log("WeightInput", currentInputType);
+  let theGoods = <h1>NOTHING</h1>;
   if (currentInputType === "grams") {
-    return (
-      <div>
+    theGoods = (
+      <React.Fragment>
         <label htmlFor="grams">Grams of $STUFF: </label>
         <input
           type="text"
@@ -13,12 +15,12 @@ const WeightInput = props => {
           onChange={onTrimAmountChange}
         />
         &nbsp;g.
-      </div>
+      </React.Fragment>
     );
   }
   if (currentInputType === "units") {
-    return (
-      <div>
+    theGoods = (
+      <React.Fragment>
         <label htmlFor="units">Units of $STUFF: </label>
         <input
           type="text"
@@ -27,12 +29,12 @@ const WeightInput = props => {
           onChange={onTrimAmountChange}
         />
         &nbsp;carts.
-      </div>
+      </React.Fragment>
     );
   }
-  if (currentInputType === "trim") {
-    return (
-      <div>
+  if (currentInputType === "pounds") {
+    theGoods = (
+      <React.Fragment>
         <label htmlFor="trim">Pounds of $STUFF: </label>
         <input
           type="text"
@@ -41,10 +43,10 @@ const WeightInput = props => {
           onChange={onTrimAmountChange}
         />
         &nbsp;lbs.
-      </div>
+      </React.Fragment>
     );
   }
-  return <h1>NOTHING</h1>;
+  return <div>{theGoods}</div>;
 };
 
 export default WeightInput;

@@ -12,6 +12,7 @@ const CalculatorInputs = props => {
     potency,
     currentInputType
   } = props;
+  // <h2>{`currentInputType:${currentInputType} potency:${potency}`}</h2>
   return (
     <form
       onSubmit={e => {
