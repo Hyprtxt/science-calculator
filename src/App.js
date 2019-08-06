@@ -23,6 +23,7 @@ class Calculator extends React.Component {
         grams: 0,
         cartridges: 0,
         potency: 25,
+        currentInputType: undefined, // string
         input: {
           pounds: 10,
           grams: 10,

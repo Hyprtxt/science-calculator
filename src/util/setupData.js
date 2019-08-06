@@ -5,6 +5,7 @@ const data = [
   {
     name: "Trim",
     parents: [],
+    inputType: "pounds",
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds);
       calc.price = calc.grams * 10 * calc.potency;
@@ -14,6 +15,7 @@ const data = [
   {
     name: "Ethanol Crude",
     parents: ["Trim"],
+    inputType: "grams",
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.2;
       calc.price = calc.grams * 3;
@@ -23,6 +25,7 @@ const data = [
   {
     name: "Hydrocarbon Crude",
     parents: ["Trim"],
+    inputType: "grams",
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.2;
       calc.price = calc.grams * 4;
@@ -32,6 +35,7 @@ const data = [
   {
     name: "Dried Flower",
     parents: [],
+    inputType: "grams",
     theMath: calc => {
       calc.price = calc * 1000 + 10 * calc.potency;
       return calc;
@@ -40,6 +44,7 @@ const data = [
   {
     name: "Fresh Frozen",
     parents: [],
+    inputType: "pounds",
     theMath: calc => {
       calc.price = calc.pounds * 300;
       return calc;
@@ -48,6 +53,7 @@ const data = [
   {
     name: "Cured Resin",
     parents: ["Dried Flower"],
+    inputType: "grams",
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds);
       calc.price = calc.grams * 8;
@@ -57,6 +63,7 @@ const data = [
   {
     name: "Live Resin",
     parents: ["Fresh Frozen"],
+    inputType: "pounds",
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.04;
       calc.price = calc.grams * 8;
@@ -66,6 +73,7 @@ const data = [
   {
     name: "Distillate",
     parents: ["Ethanol Crude"],
+    inputType: "grams",
     theMath: calc => {
       calc.grams = calc.grams * 0.8;
       calc.price = calc.grams * 7;
@@ -75,6 +83,7 @@ const data = [
   {
     name: "Distillate Cartridge",
     parents: ["Distillate"],
+    inputType: "grams",
     theMath: calc => {
       calc.price = calc.grams * 14;
       // calc.grams = calc.grams;
@@ -84,6 +93,7 @@ const data = [
   {
     name: "Sauce Cartridge",
     parents: ["Distillate", "Cured Resin", "Live Resin"],
+    inputType: "units",
     theMath: calc => {
       calc.cartridges = calc.grams * 2;
       calc.price = calc.cartridges * 18;
@@ -93,6 +103,7 @@ const data = [
   {
     name: "Jarred Concentrates",
     parents: ["Cured Resin", "Live Resin"],
+    inputType: "units",
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.grams * 10;
@@ -102,6 +113,7 @@ const data = [
   {
     name: "Branded Distillate Cartridge",
     parents: ["Distillate Cartridge"],
+    inputType: "units",
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.cartridges * 17;
@@ -111,6 +123,7 @@ const data = [
   {
     name: "Branded Sauce Cartridge",
     parents: ["Sauce Cartridge"],
+    inputType: "units",
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.cartridges * 21;
@@ -120,6 +133,7 @@ const data = [
   {
     name: "Branded Jarred Concentrates",
     parents: ["Jarred Concentrates"],
+    inputType: "units",
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.grams * 15;

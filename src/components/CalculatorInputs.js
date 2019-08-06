@@ -1,5 +1,6 @@
 import React from "react";
 import RangeInput from "./RangeInput";
+import WeightInput from "./WeightInput";
 
 const CalculatorInputs = props => {
   const {
@@ -8,7 +9,8 @@ const CalculatorInputs = props => {
     grams,
     units,
     onPotencyChange,
-    potency
+    potency,
+    currentInputType
   } = props;
   return (
     <form
@@ -16,36 +18,13 @@ const CalculatorInputs = props => {
         e.preventDefault();
       }}
     >
-      <div>
-        <label htmlFor="trim">Pounds of $STUFF: </label>
-        <input
-          type="text"
-          name="trim"
-          value={pounds}
-          onChange={onTrimAmountChange}
-        />
-        &nbsp;lbs.
-      </div>
-      <div>
-        <label htmlFor="grams">Grams of $STUFF: </label>
-        <input
-          type="text"
-          name="grams"
-          value={grams}
-          onChange={onTrimAmountChange}
-        />
-        &nbsp;g.
-      </div>
-      <div>
-        <label htmlFor="units">Units of $STUFF: </label>
-        <input
-          type="text"
-          name="units"
-          value={units}
-          onChange={onTrimAmountChange}
-        />
-        &nbsp;carts.
-      </div>
+      <WeightInput
+        pounds={pounds}
+        grams={grams}
+        units={units}
+        onTrimAmountChange={onTrimAmountChange}
+        currentInputType={currentInputType}
+      />
       <RangeInput
         name="potency"
         displayValue={potency}
