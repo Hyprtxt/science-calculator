@@ -7,6 +7,7 @@ const data = [
     parents: [],
     inputType: "pounds",
     theMath: calc => {
+      calc.grams = poundsToGrams(calc.input.pounds) * calc.potency;
       calc.price = poundsToGrams(calc.input.pounds) * 10 * calc.potency;
       return calc;
     }
@@ -16,8 +17,12 @@ const data = [
     parents: ["Trim"],
     inputType: "grams",
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds) * 0.2;
-      calc.price = calc.grams * 3;
+      if ( calc.grams !== undefined ) {
+        calc.price = calc.grams *3.5;
+      }
+      else {
+          calc.price = calc.input.grams * 3;
+      }
       return calc;
     }
   },
