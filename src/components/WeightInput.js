@@ -5,59 +5,37 @@ const Capitalize = str => {
 };
 
 const WeightInput = props => {
-  const { onAmountChange, currentInputType } = props;
+  const { onAmountChange, currentInputType, inputItem } = props;
   console.log("WeightInput", currentInputType);
-  let theGoods = <h1>NOTHING</h1>;
+  let theHelperText = <h1>NOTHING</h1>;
   if (currentInputType === "grams") {
-    theGoods = (
-      <React.Fragment>
-        <label htmlFor="grams">Grams of $STUFF: </label>
-        <input
-          type="text"
-          name="grams"
-          // value={grams}
-          onChange={e => {
-            onAmountChange(e, "grams");
-          }}
-        />
-        &nbsp;g.
-      </React.Fragment>
-    );
+    theHelperText = "\u00A0g.";
   }
   if (currentInputType === "units") {
-    theGoods = (
-      <React.Fragment>
-        <label htmlFor="units">Units of $STUFF: </label>
-        <input
-          type="text"
-          name="units"
-          // value={units}
-          onChange={e => {
-            onAmountChange(e, "units");
-          }}
-        />
-        &nbsp;carts.
-      </React.Fragment>
-    );
+    theHelperText = "\u00A0carts.";
   }
   if (currentInputType === "pounds") {
-    theGoods = (
-      <React.Fragment>
+    theHelperText = "\u00A0lbs.";
+  }
+  if (currentInputType !== undefined) {
+    return (
+      <div>
         <label htmlFor={currentInputType}>
-          {`${Capitalize(currentInputType)} of $STUFF:`}
+          {`${Capitalize(currentInputType)} of ${inputItem}:`}
         </label>
         <input
           type="text"
           name={currentInputType}
           onChange={e => {
-            onAmountChange(e, "pounds");
+            onAmountChange(e, currentInputType);
           }}
         />
-        &nbsp;lbs.
-      </React.Fragment>
+        {theHelperText}
+      </div>
     );
+  } else {
+    return <div> {theHelperText}</div>;
   }
-  return <div>{theGoods}</div>;
 };
 
 export default WeightInput;

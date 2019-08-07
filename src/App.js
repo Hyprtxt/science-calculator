@@ -216,6 +216,7 @@ class Calculator extends React.Component {
         <div className="inputs">
           <h2>2. Input Starting Material</h2>
           <CalculatorInputs
+            inputItem={activeItems[0]}
             currentInputType={currentInputType}
             onAmountChange={onAmountChange}
             pounds={pounds}

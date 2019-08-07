@@ -4,6 +4,7 @@ import WeightInput from "./WeightInput";
 
 const CalculatorInputs = props => {
   const {
+    inputItem,
     currentInputType,
     pounds,
     grams,
@@ -25,6 +26,7 @@ const CalculatorInputs = props => {
         units={units}
         onAmountChange={onAmountChange}
         currentInputType={currentInputType}
+        inputItem={inputItem}
       />
       <RangeInput
         name="potency"

@@ -17,11 +17,10 @@ const data = [
     parents: ["Trim"],
     inputType: "grams",
     theMath: calc => {
-      if ( calc.grams !== undefined ) {
-        calc.price = calc.grams *3.5;
-      }
-      else {
-          calc.price = calc.input.grams * 3;
+      if (calc.grams !== undefined) {
+        calc.price = calc.grams * 3.5;
+      } else {
+        calc.price = calc.input.grams * 0.3 * calc.potency;
       }
       return calc;
     }
