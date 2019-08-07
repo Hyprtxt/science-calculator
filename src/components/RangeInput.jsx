@@ -1,10 +1,14 @@
 import React from "react";
 
 const RangeInput = props => {
-  const name = props.name;
-  const displayValue = props.displayValue;
-  const defaultValue = props.defaultValue;
-  const onChangeHandler = props.onChangeHandler;
+  const {
+    isReadonly,
+    name,
+    displayValue,
+    defaultValue,
+    onChangeHandler
+  } = props;
+  let disabled = isReadonly ? { disabled: "disabled" } : {};
   return (
     <div className="range-input">
       <label htmlFor="trim">Potency</label>
@@ -16,7 +20,9 @@ const RangeInput = props => {
         name={name}
         defaultValue={defaultValue}
         onChange={onChangeHandler}
+        {...disabled}
       />
+
       <span>{`${displayValue}%`}</span>
     </div>
   );

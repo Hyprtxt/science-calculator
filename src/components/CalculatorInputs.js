@@ -6,14 +6,13 @@ const CalculatorInputs = props => {
   const {
     inputItem,
     currentInputType,
-    pounds,
-    grams,
-    units,
     potency,
     onAmountChange,
     onPotencyChange
   } = props;
   // <h2>{`currentInputType:${currentInputType} potency:${potency}`}</h2>
+  let rangeInputActivated = true;
+  console.log(inputItem !== undefined ? true : false, "thing");
   return (
     <form
       onSubmit={e => {
@@ -21,14 +20,12 @@ const CalculatorInputs = props => {
       }}
     >
       <WeightInput
-        pounds={pounds}
-        grams={grams}
-        units={units}
         onAmountChange={onAmountChange}
         currentInputType={currentInputType}
         inputItem={inputItem}
       />
       <RangeInput
+        isReadonly={!rangeInputActivated}
         name="potency"
         displayValue={potency}
         value={10}

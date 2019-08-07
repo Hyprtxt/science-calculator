@@ -1,14 +1,18 @@
 import _ from "lodash";
 import poundsToGrams from "./poundsToGrams";
-
+const TRIM_EXTRACTION_EFFICENCY = 0.05;
+const TRIM_RESIN_PRICE_PER_GRAM = 10;
 const data = [
   {
     name: "Trim",
     parents: [],
     inputType: "pounds",
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.input.pounds) * calc.potency;
-      calc.price = poundsToGrams(calc.input.pounds) * 10 * calc.potency;
+      const grams_o_resin =
+        poundsToGrams(calc.input.pounds * TRIM_EXTRACTION_EFFICENCY) *
+        calc.potency;
+      calc.grams = grams_o_resin;
+      calc.price = poundsToGrams(grams_o_resin) * TRIM_RESIN_PRICE_PER_GRAM;
       return calc;
     }
   },
