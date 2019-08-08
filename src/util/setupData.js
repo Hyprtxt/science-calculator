@@ -1,66 +1,84 @@
-import _ from "lodash";
-import poundsToGrams from "./poundsToGrams";
-const TRIM_EXTRACTION_EFFICENCY = 0.05;
-const TRIM_RESIN_PRICE_PER_GRAM = 10;
+import _ from 'lodash';
+import poundsToGrams from './poundsToGrams';
+const TRIM_ETHANOL_EXTRACTION_EFFICENCY = 0.02;
+const TRIM_BUTANE_EXTRACTION_EFFICENCY = 0.025;
+const TRIM_RESIN_PRICE_PER_GRAM = 5;
+const ETHANOL_CRUDE_PRICE_PER_GRAM = 7;
+const BUTANE_CRUDE_PRICE_PER_GRAM = 9;
+const TRIM_BULK_PRICE_PER_LBS = 100;
 const data = [
   {
-    name: "Trim",
+    name: 'Trim',
     parents: [],
-    inputType: "pounds",
+    inputType: 'pounds',
     theMath: calc => {
-      const grams_o_resin =
-        poundsToGrams(calc.input.pounds * TRIM_EXTRACTION_EFFICENCY) *
-        calc.potency;
-      calc.grams = grams_o_resin;
-      calc.price = poundsToGrams(grams_o_resin) * TRIM_RESIN_PRICE_PER_GRAM;
+      calc.trimPounds = calc.input.pounds;
+      calc.price = calc.input.pounds * TRIM_BULK_PRICE_PER_LBS;
       return calc;
     }
   },
   {
-    name: "Ethanol Crude",
-    parents: ["Trim"],
-    inputType: "grams",
+    name: 'Ethanol Crude',
+    parents: ['Trim'],
+    inputType: 'grams',
     theMath: calc => {
-      if (calc.grams !== undefined) {
-        calc.price = calc.grams * 3.5;
+      if (calc.trimPounds !== undefined) {
+        calc.price =
+          poundsToGrams(calc.trimPounds) *
+          ETHANOL_CRUDE_PRICE_PER_GRAM *
+          (calc.potency * 0.01);
       } else {
-        calc.price = calc.input.grams * 0.3 * calc.potency;
+        calc.ethanolCrudeGrams = calc.input.grams;
+        calc.price =
+          calc.input.grams *
+          ETHANOL_CRUDE_PRICE_PER_GRAM *
+          (calc.potency * 0.01);
       }
       return calc;
     }
   },
   {
-    name: "Hydrocarbon Crude",
-    parents: ["Trim"],
-    inputType: "grams",
+    name: 'Hydrocarbon Crude',
+    parents: ['Trim'],
+    inputType: 'grams',
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds) * 0.2;
-      calc.price = calc.grams * 4;
+      if (calc.trimPounds !== undefined) {
+        calc.price =
+          poundsToGrams(calc.trimPounds * BUTANE_CRUDE_PRICE_PER_GRAM) *
+          calc.potency;
+      } else {
+        calc.butaneCrudeGrams = calc.input.grams;
+        calc.price =
+          calc.input.grams * BUTANE_CRUDE_PRICE_PER_GRAM * calc.potency;
+      }
       return calc;
+      // calc.grams = poundsToGrams(calc.pounds) * 0.2;
+      // calc.price = calc.grams * 4;
+      // return calc;
     }
   },
   {
-    name: "Dried Flower",
+    name: 'Dried Flower',
     parents: [],
-    inputType: "grams",
+    inputType: 'grams',
     theMath: calc => {
       calc.price = calc * 1000 + 10 * calc.potency;
       return calc;
     }
   },
   {
-    name: "Fresh Frozen",
+    name: 'Fresh Frozen',
     parents: [],
-    inputType: "pounds",
+    inputType: 'pounds',
     theMath: calc => {
       calc.price = calc.pounds * 300;
       return calc;
     }
   },
   {
-    name: "Cured Resin",
-    parents: ["Dried Flower"],
-    inputType: "grams",
+    name: 'Cured Resin',
+    parents: ['Dried Flower'],
+    inputType: 'grams',
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds);
       calc.price = calc.grams * 8;
@@ -68,9 +86,9 @@ const data = [
     }
   },
   {
-    name: "Live Resin",
-    parents: ["Fresh Frozen"],
-    inputType: "pounds",
+    name: 'Live Resin',
+    parents: ['Fresh Frozen'],
+    inputType: 'pounds',
     theMath: calc => {
       calc.grams = poundsToGrams(calc.pounds) * 0.04;
       calc.price = calc.grams * 8;
@@ -78,9 +96,9 @@ const data = [
     }
   },
   {
-    name: "Distillate",
-    parents: ["Ethanol Crude"],
-    inputType: "grams",
+    name: 'Distillate',
+    parents: ['Ethanol Crude'],
+    inputType: 'grams',
     theMath: calc => {
       calc.grams = calc.grams * 0.8;
       calc.price = calc.grams * 7;
@@ -88,9 +106,9 @@ const data = [
     }
   },
   {
-    name: "Distillate Cartridge",
-    parents: ["Distillate"],
-    inputType: "grams",
+    name: 'Distillate Cartridge',
+    parents: ['Distillate'],
+    inputType: 'grams',
     theMath: calc => {
       calc.price = calc.grams * 14;
       // calc.grams = calc.grams;
@@ -98,9 +116,9 @@ const data = [
     }
   },
   {
-    name: "Sauce Cartridge",
-    parents: ["Distillate", "Cured Resin", "Live Resin"],
-    inputType: "units",
+    name: 'Sauce Cartridge',
+    parents: ['Distillate', 'Cured Resin', 'Live Resin'],
+    inputType: 'units',
     theMath: calc => {
       calc.cartridges = calc.grams * 2;
       calc.price = calc.cartridges * 18;
@@ -108,9 +126,9 @@ const data = [
     }
   },
   {
-    name: "Jarred Concentrates",
-    parents: ["Cured Resin", "Live Resin"],
-    inputType: "units",
+    name: 'Jarred Concentrates',
+    parents: ['Cured Resin', 'Live Resin'],
+    inputType: 'units',
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.grams * 10;
@@ -118,9 +136,9 @@ const data = [
     }
   },
   {
-    name: "Branded Distillate Cartridge",
-    parents: ["Distillate Cartridge"],
-    inputType: "units",
+    name: 'Branded Distillate Cartridge',
+    parents: ['Distillate Cartridge'],
+    inputType: 'units',
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.cartridges * 17;
@@ -128,9 +146,9 @@ const data = [
     }
   },
   {
-    name: "Branded Sauce Cartridge",
-    parents: ["Sauce Cartridge"],
-    inputType: "units",
+    name: 'Branded Sauce Cartridge',
+    parents: ['Sauce Cartridge'],
+    inputType: 'units',
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.cartridges * 21;
@@ -138,9 +156,9 @@ const data = [
     }
   },
   {
-    name: "Branded Jarred Concentrates",
-    parents: ["Jarred Concentrates"],
-    inputType: "units",
+    name: 'Branded Jarred Concentrates',
+    parents: ['Jarred Concentrates'],
+    inputType: 'units',
     theMath: calc => {
       // calc.grams = calc.grams;
       calc.price = calc.grams * 15;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Capitalize = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -6,16 +6,16 @@ const Capitalize = str => {
 
 const WeightInput = props => {
   const { onAmountChange, currentInputType, inputItem } = props;
-  console.log("WeightInput", currentInputType);
+  // console.log("WeightInput", currentInputType);
   let theHelperText = <h1>NOTHING</h1>;
-  if (currentInputType === "grams") {
-    theHelperText = "\u00A0g.";
+  if (currentInputType === 'grams') {
+    theHelperText = '\u00A0g.';
   }
-  if (currentInputType === "units") {
-    theHelperText = "\u00A0carts.";
+  if (currentInputType === 'units') {
+    theHelperText = '\u00A0carts.';
   }
-  if (currentInputType === "pounds") {
-    theHelperText = "\u00A0lbs.";
+  if (currentInputType === 'pounds') {
+    theHelperText = '\u00A0lbs.';
   }
   if (currentInputType !== undefined) {
     return (
