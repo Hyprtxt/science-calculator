@@ -136,9 +136,9 @@ class Calculator extends React.Component {
     );
   };
 
-  onAmountChange = (e, thing) => {
+  onAmountChange = (newValue, thing) => {
     let { calculator } = this.state;
-    calculator.input[thing] = e.target.value;
+    calculator.input[thing] = newValue;
     this.setState(
       {
         calculator: calculator
@@ -149,12 +149,11 @@ class Calculator extends React.Component {
     );
   };
 
-  onPotencyChange = (e, newValue) => {
-    const { calculator } = this.state;
+  onPotencyChange = newValue => {
+    let { calculator } = this.state;
     calculator.potency = newValue;
     this.setState(
       {
-        potency: newValue,
         calculator: calculator
       },
       () => {
@@ -208,21 +207,21 @@ class Calculator extends React.Component {
     const { pounds, grams, units } = input;
     return (
       <div className="App">
-        <h2>1. Select Your Process</h2>
+        {/* <h2>1. Select Your Process</h2> */}
         <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
         <ResetButton onClick={onClickReset}>
           Reset Process Selection
         </ResetButton>
         <div className="inputs">
-          <h2>2. Input Starting Material</h2>
+          {/* <h2>2. Input Starting Material</h2> */}
           <CalculatorInputs
             inputItem={activeItems[0]}
             currentInputType={currentInputType}
             onAmountChange={onAmountChange}
+            onPotencyChange={onPotencyChange}
             pounds={pounds}
             grams={grams}
             units={units}
-            onPotencyChange={onPotencyChange}
             potency={potency}
           />
         </div>

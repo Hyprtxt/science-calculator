@@ -13,7 +13,8 @@ const data = [
     inputType: 'pounds',
     theMath: calc => {
       calc.trimPounds = calc.input.pounds;
-      calc.price = calc.input.pounds * TRIM_BULK_PRICE_PER_LBS;
+      calc.price =
+        calc.input.pounds * TRIM_BULK_PRICE_PER_LBS * (calc.potency * 0.01);
       return calc;
     }
   },
