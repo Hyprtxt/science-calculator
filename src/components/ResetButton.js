@@ -1,12 +1,18 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 
 const ResetButton = props => {
   const { onClick, children } = props;
   return (
     <div className="clearfix">
-      <button className="reset" onClick={onClick}>
+      <Button
+        variant="contained"
+        color="primary"
+        className="reset"
+        onClick={onClick}
+      >
         {children}
-      </button>
+      </Button>
     </div>
   );
 };

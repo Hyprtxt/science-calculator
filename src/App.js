@@ -1,15 +1,15 @@
-import React from "react";
-import setupData from "./util/setupData";
-import TechTree from "./components/TechTree";
-import Inspector from "./components/Inspector";
-import ResetButton from "./components/ResetButton";
-import CalculatorOutput from "./components/CalculatorOutput";
-import CalculatorInputs from "./components/CalculatorInputs";
-import _ from "lodash";
+import React from 'react';
+import setupData from './util/setupData';
+import TechTree from './components/TechTree';
+import Inspector from './components/Inspector';
+import ResetButton from './components/ResetButton';
+import CalculatorOutput from './components/CalculatorOutput';
+import CalculatorInputs from './components/CalculatorInputs';
+import _ from 'lodash';
 
-function App() {
+const App = () => {
   return <Calculator />;
-}
+};
 
 class Calculator extends React.Component {
   constructor(props) {
@@ -149,12 +149,12 @@ class Calculator extends React.Component {
     );
   };
 
-  onPotencyChange = e => {
+  onPotencyChange = (e, newValue) => {
     const { calculator } = this.state;
-    calculator.potency = e.target.value;
+    calculator.potency = newValue;
     this.setState(
       {
-        potency: e.target.value,
+        potency: newValue,
         calculator: calculator
       },
       () => {

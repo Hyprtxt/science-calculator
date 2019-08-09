@@ -1,17 +1,25 @@
-import React from "react";
+import React from 'react';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 const Item = ({ name, onClick, active, enabled }) => {
-  let extraClassName = "";
+  let extraClassName = '';
   if (active) {
-    extraClassName += " active";
+    extraClassName += ' active';
   }
   if (enabled) {
-    extraClassName += " enabled";
+    extraClassName += ' enabled';
   }
+  let disableRipple = enabled
+    ? { disableRipple: false }
+    : { disableRipple: true };
   return (
-    <div className={`item ${extraClassName}`} onClick={onClick}>
+    <ButtonBase
+      className={`item ${extraClassName}`}
+      onClick={onClick}
+      {...disableRipple}
+    >
       {name}
-    </div>
+    </ButtonBase>
   );
 };
 
