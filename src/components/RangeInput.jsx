@@ -8,10 +8,37 @@ const valuetext = value => {
   return `${value}°C`;
 };
 
+const marks = [
+  {
+    value: 0,
+    label: '0%'
+  },
+  {
+    value: 20,
+    label: '20%'
+  },
+  {
+    value: 40,
+    label: '40%'
+  },
+  {
+    value: 60,
+    label: '60%'
+  },
+  {
+    value: 80,
+    label: '80%'
+  },
+  {
+    value: 100,
+    label: '100%'
+  }
+];
+
 const RangeInput = props => {
   const {
     isReadonly,
-    name,
+    // name,
     displayValue,
     defaultValue,
     onChangeHandler
@@ -21,22 +48,25 @@ const RangeInput = props => {
 
   // const [value, setValue] = React.useState(30);
   //
-  // const handleSliderChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
-  //
-  const handleInputChange = e => {
-    onChangeHandler(e, e.target.value);
-    setValue(e.target.value);
+  const handleSliderChange = (e, newValue) => {
+    setValue(newValue);
+    onChangeHandler(e, newValue);
   };
-  //
-  // const handleBlur = () => {
-  //   if (value < 0) {
-  //     setValue(0);
-  //   } else if (value > 100) {
-  //     setValue(100);
-  //   }
-  // };
+  const handleInputChange = e => {
+    setValue(e.target.value === '' ? '' : Number(e.target.value));
+    onChangeHandler(e, e.target.value);
+  };
+
+  const handleBlur = () => {
+    console.log(value, 'BLUR');
+    setValue(previousValue => {
+      if (previousValue < 0) {
+        return 0;
+      } else if (previousValue > 100) {
+        return 100;
+      }
+    });
+  };
 
   return (
     <div className="range-input">
@@ -44,35 +74,27 @@ const RangeInput = props => {
         <Grid item sm={10}>
           <label htmlFor="trim">Potency</label>
           <Slider
-            value={displayValue}
+            value={value}
             defaultValue={defaultValue}
             getAriaValueText={valuetext}
             valueLabelDisplay="auto"
-            inputProps={{
-              step: 1,
-              min: 1,
-              max: 100,
-              'aria-labelledby': 'discrete-slider'
-            }}
-            marks
-            onChange={onChangeHandler}
-            {...disabled}
+            marks={marks}
+            onChange={handleSliderChange}
+            // {...disabled}
           />
         </Grid>
         <Grid item sm={2}>
           <Input
             className={''}
-            value={displayValue}
+            value={value}
             margin="dense"
             onChange={handleInputChange}
-            // onBlur={handleBlur}
-            inputProps={{
-              step: 1,
-              min: 1,
-              max: 100,
-              type: 'number',
-              'aria-labelledby': 'input-slider'
-            }}
+            onBlur={handleBlur}
+            step={1}
+            min={1}
+            max={100}
+            type={'number'}
+            aria-labelledby={'input-slider'}
             endAdornment={<InputAdornment position="end">%</InputAdornment>}
           />
         </Grid>
