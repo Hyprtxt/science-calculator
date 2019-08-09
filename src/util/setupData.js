@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import poundsToGrams from './poundsToGrams';
-const TRIM_ETHANOL_EXTRACTION_EFFICENCY = 0.02;
-const TRIM_BUTANE_EXTRACTION_EFFICENCY = 0.025;
-const TRIM_RESIN_PRICE_PER_GRAM = 5;
+
+// const TRIM_ETHANOL_EXTRACTION_EFFICENCY = 0.02;
+// const TRIM_BUTANE_EXTRACTION_EFFICENCY = 0.025;
+// const TRIM_RESIN_PRICE_PER_GRAM = 5;
 const ETHANOL_CRUDE_PRICE_PER_GRAM = 7;
 const BUTANE_CRUDE_PRICE_PER_GRAM = 9;
 const TRIM_BULK_PRICE_PER_LBS = 100;
+
 const data = [
   {
     name: 'Trim',

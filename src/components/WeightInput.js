@@ -1,9 +1,9 @@
 import React from 'react';
 import RangeInput from './RangeInput';
 
-const Capitalize = str => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
+// const Capitalize = str => {
+//   return str.charAt(0).toUpperCase() + str.slice(1);
+// };
 
 const weightMarks = [
   { value: 0, label: '0' },
@@ -15,7 +15,7 @@ const weightMarks = [
 ];
 
 const WeightInput = props => {
-  const { onAmountChange, currentInputType, inputItem } = props;
+  const { onAmountChange, currentInputType } = props;
   // console.log("WeightInput", currentInputType);
   let theHelperText = <h1>NOTHING</h1>;
   if (currentInputType === 'grams') {
