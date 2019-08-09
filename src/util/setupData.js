@@ -1,12 +1,36 @@
 import _ from 'lodash';
 import poundsToGrams from './poundsToGrams';
 
-// const TRIM_ETHANOL_EXTRACTION_EFFICENCY = 0.02;
-// const TRIM_BUTANE_EXTRACTION_EFFICENCY = 0.025;
+const TRIM_ETHANOL_EXTRACTION_EFFICENCY = 0.2;
+const TRIM_BUTANE_EXTRACTION_EFFICENCY = 0.2;
 // const TRIM_RESIN_PRICE_PER_GRAM = 5;
-const ETHANOL_CRUDE_PRICE_PER_GRAM = 7;
-const BUTANE_CRUDE_PRICE_PER_GRAM = 9;
+const Ethanol_Crude_Price_From_Trim = pot => {
+  return pot * 0.01 * 10 * 2.5;
+};
+const Ethanol_Crude_Price_From_Ethanol_Crude = pot => {
+  return pot * 0.01 * 5;
+};
+const Hydrocarbon_Crude_Price_From_Trim = pot => {
+  return pot * 0.01 * 10 * 3;
+};
+const Hydrocarbon_Crude_Price_From_Hydrocarbon_Crude = pot => {
+  return pot * 0.01 * 5.5;
+};
+const Trim_Price = pot => {
+  return pot + 80;
+};
+const Dried_Flower_Price = pot => {
+  return pot * 10 + 1000;
+};
+const Distillate_Price_From_Distillate = pot => {
+  return 7 + pot * 0.01;
+};
+const SAUCE_CART_PRICE = 14;
+const LIVE_RESIN_PRICE_PER_GRAM = 8;
+const CURED_RESIN_PRICE_PER_GRAM = 8;
 const TRIM_BULK_PRICE_PER_LBS = 100;
+const PRICE_FRESH_FROZEN = 300;
+const DISTILLATE_CARTRIDGE_PRICE = 14;
 
 const data = [
   {
@@ -15,8 +39,7 @@ const data = [
     inputType: 'pounds',
     theMath: calc => {
       calc.trimPounds = calc.input.pounds;
-      calc.price =
-        calc.input.pounds * TRIM_BULK_PRICE_PER_LBS * (calc.potency * 0.01);
+      calc.price = calc.trimPounds * Trim_Price(calc.potency);
       return calc;
     }
   },
@@ -25,18 +48,18 @@ const data = [
     parents: ['Trim'],
     inputType: 'grams',
     theMath: calc => {
-      if (calc.trimPounds !== undefined) {
-        calc.price =
-          poundsToGrams(calc.trimPounds) *
-          ETHANOL_CRUDE_PRICE_PER_GRAM *
-          (calc.potency * 0.01);
-      } else {
-        calc.ethanolCrudeGrams = calc.input.grams;
-        calc.price =
-          calc.input.grams *
-          ETHANOL_CRUDE_PRICE_PER_GRAM *
-          (calc.potency * 0.01);
-      }
+      // if (calc.trimPounds !== undefined) {
+      //   calc.ethanolCrudeGrams =
+      //     poundsToGrams(calc.trimPounds) * TRIM_ETHANOL_EXTRACTION_EFFICENCY;
+      //   calc.price =
+      //     calc.ethanolCrudeGrams * Ethanol_Crude_Price_From_Trim(calc.potency);
+      // } else {
+      calc.ethanolCrudeGrams = calc.input.grams;
+      calc.price =
+        calc.ethanolCrudeGrams *
+        Ethanol_Crude_Price_From_Ethanol_Crude(calc.potency);
+      // }
+      console.log(calc);
       return calc;
     }
   },
@@ -45,27 +68,27 @@ const data = [
     parents: ['Trim'],
     inputType: 'grams',
     theMath: calc => {
-      if (calc.trimPounds !== undefined) {
-        calc.price =
-          poundsToGrams(calc.trimPounds * BUTANE_CRUDE_PRICE_PER_GRAM) *
-          calc.potency;
-      } else {
-        calc.butaneCrudeGrams = calc.input.grams;
-        calc.price =
-          calc.input.grams * BUTANE_CRUDE_PRICE_PER_GRAM * calc.potency;
-      }
+      // if (calc.trimPounds !== undefined) {
+      calc.butaneCrudeGrams =
+        poundsToGrams(calc.trimPounds) * TRIM_BUTANE_EXTRACTION_EFFICENCY;
+      console.log(calc.butaneCrudeGrams, 'butaneCrudeGrams');
+      calc.price =
+        calc.butaneCrudeGrams * Hydrocarbon_Crude_Price_From_Trim(calc.potency);
+      // } else {
+      //   calc.butaneCrudeGrams = calc.input.grams;
+      //   calc.price =
+      //     calc.butaneCrudeGrams *
+      //     Hydrocarbon_Crude_Price_From_Hydrocarbon_Crude(calc.potency);
+      // }
       return calc;
-      // calc.grams = poundsToGrams(calc.pounds) * 0.2;
-      // calc.price = calc.grams * 4;
-      // return calc;
     }
   },
   {
     name: 'Dried Flower',
     parents: [],
-    inputType: 'grams',
+    inputType: 'pounds',
     theMath: calc => {
-      calc.price = calc * 1000 + 10 * calc.potency;
+      calc.price = calc.input.pounds * Dried_Flower_Price(calc.potency);
       return calc;
     }
   },
@@ -74,7 +97,7 @@ const data = [
     parents: [],
     inputType: 'pounds',
     theMath: calc => {
-      calc.price = calc.pounds * 300;
+      calc.price = calc.input.pounds * PRICE_FRESH_FROZEN;
       return calc;
     }
   },
@@ -83,18 +106,18 @@ const data = [
     parents: ['Dried Flower'],
     inputType: 'grams',
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds);
-      calc.price = calc.grams * 8;
+      // calc.grams = poundsToGrams(calc.pounds);
+      calc.price = calc.input.grams * CURED_RESIN_PRICE_PER_GRAM;
       return calc;
     }
   },
   {
     name: 'Live Resin',
     parents: ['Fresh Frozen'],
-    inputType: 'pounds',
+    inputType: 'grams',
     theMath: calc => {
-      calc.grams = poundsToGrams(calc.pounds) * 0.04;
-      calc.price = calc.grams * 8;
+      // calc.grams = poundsToGrams(calc.pounds) * 0.04;
+      calc.price = calc.input.grams * LIVE_RESIN_PRICE_PER_GRAM;
       return calc;
     }
   },
@@ -103,8 +126,13 @@ const data = [
     parents: ['Ethanol Crude'],
     inputType: 'grams',
     theMath: calc => {
-      calc.grams = calc.grams * 0.8;
-      calc.price = calc.grams * 7;
+      // if (calc.ethanolCrudeGrams !== undefined) {
+      //   calc.grams = calc.ethanolCrudeGrams * 0.8;
+      //   calc.price = calc.grams * 7;
+      // } else {
+      calc.price =
+        calc.input.grams * Distillate_Price_From_Distillate(calc.potency);
+      // }
       return calc;
     }
   },
@@ -113,7 +141,7 @@ const data = [
     parents: ['Distillate'],
     inputType: 'grams',
     theMath: calc => {
-      calc.price = calc.grams * 14;
+      calc.price = calc.input.grams * DISTILLATE_CARTRIDGE_PRICE;
       // calc.grams = calc.grams;
       return calc;
     }
@@ -123,8 +151,8 @@ const data = [
     parents: ['Distillate', 'Cured Resin', 'Live Resin'],
     inputType: 'units',
     theMath: calc => {
-      calc.cartridges = calc.grams * 2;
-      calc.price = calc.cartridges * 18;
+      // calc.cartridges = calc.grams * 2;
+      calc.price = calc.input.units * SAUCE_CART_PRICE;
       return calc;
     }
   },
@@ -134,7 +162,7 @@ const data = [
     inputType: 'units',
     theMath: calc => {
       // calc.grams = calc.grams;
-      calc.price = calc.grams * 10;
+      calc.price = calc.input.grams * 10;
       return calc;
     }
   },
