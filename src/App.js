@@ -7,6 +7,8 @@ import CalculatorOutput from './components/CalculatorOutput';
 import CalculatorInputs from './components/CalculatorInputs';
 import _ from 'lodash';
 
+import 'array-flat-polyfill';
+
 const App = () => {
   return <Calculator />;
 };
