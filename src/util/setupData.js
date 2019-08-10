@@ -138,9 +138,11 @@ const data = [
         calc.grams = poundsToGrams(calc.pounds) * LIVE_RESIN_EFFICIENCY;
         calc.price =
           calc.grams * Live_Resin_Price_From_Fresh_Frozen(calc.potency);
+        calc.oilGrams = calc.grams;
       } else {
         // calc.grams = poundsToGrams(calc.pounds) * 0.04;
         calc.price = calc.input.grams * LIVE_RESIN_PRICE_PER_GRAM;
+        calc.input.grams = calc.distillateGrams;
       }
       return calc;
     }
@@ -154,10 +156,12 @@ const data = [
         calc.grams = calc.ethanolCrudeGrams * DISTILLATE_EFFICIENCY;
         calc.price = calc.grams * DISTILLATE_PRICE;
         calc.distillateGrams = calc.grams;
+        calc.oilGrams = calc.distillateGrams;
       } else {
         calc.price =
           calc.input.grams * Distillate_Price_From_Distillate(calc.potency);
-        calc.units = calc.input.grams;
+        calc.distillateGrams = calc.input.grams;
+        calc.oilGrams = calc.distillateGrams;
       }
       return calc;
     }
@@ -181,8 +185,12 @@ const data = [
     parents: ['Distillate', 'Cured Resin', 'Live Resin'],
     inputType: 'units',
     theMath: calc => {
-      // calc.cartridges = calc.grams * 2;
-      calc.price = calc.input.units * SAUCE_CART_PRICE;
+      if (calc.oilGrams !== undefined) {
+        calc.units = calc.oilGrams * 2;
+        calc.price = calc.units * SAUCE_CART_PRICE;
+      } else {
+        calc.price = calc.input.units * SAUCE_CART_PRICE;
+      }
       return calc;
     }
   },
@@ -191,7 +199,8 @@ const data = [
     parents: ['Cured Resin', 'Live Resin'],
     inputType: 'units',
     theMath: calc => {
-      calc.price = calc.input.grams * 10;
+      // calc.price = calc.input.grams * 10;
+      calc.price = calc.input.units * 14;
       return calc;
     }
   },
