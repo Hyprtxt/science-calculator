@@ -5,17 +5,14 @@ import RangeInput from './RangeInput';
 //   return str.charAt(0).toUpperCase() + str.slice(1);
 // };
 
-const weightMarks = [
-  { value: 0, label: '0' },
-  { value: 200, label: '200' },
-  { value: 400, label: '400' },
-  { value: 600, label: '600' },
-  { value: 800, label: '800' },
-  { value: 1000, label: '1000' }
-];
-
 const WeightInput = props => {
-  const { onAmountChange, currentInputType, weightMin, weightMax } = props;
+  const {
+    onAmountChange,
+    currentInputType,
+    weightMin,
+    weightMax,
+    weightMarks
+  } = props;
   // console.log("WeightInput", currentInputType);
   const className = 'weight-input';
   let theHelperText = <h1>NOTHING</h1>;

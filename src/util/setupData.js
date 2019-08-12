@@ -43,37 +43,181 @@ const LIVE_RESIN_EFFICIENCY = 0.03;
 const DISTILLATE_EFFICIENCY = 0.8;
 const DISTILLATE_PRICE = 7;
 
+// const potencyMarks = [
+//   {
+//     value: 0,
+//     label: '0%'
+//   },
+//   {
+//     value: 20,
+//     label: '20%'
+//   },
+//   {
+//     value: 40,
+//     label: '40%'
+//   },
+//   {
+//     value: 60,
+//     label: '60%'
+//   },
+//   {
+//     value: 80,
+//     label: '80%'
+//   },
+//   {
+//     value: 100,
+//     label: '100%'
+//   }
+// ];
+
+const unitsMarks = [
+  {
+    value: 50,
+    label: '50%'
+  },
+  {
+    value: 60,
+    label: '60%'
+  },
+  {
+    value: 70,
+    label: '70%'
+  },
+  {
+    value: 80,
+    label: '80%'
+  },
+  {
+    value: 90,
+    label: '90%'
+  },
+  {
+    value: 100,
+    label: '100%'
+  }
+];
+const crudeMarks = [
+  {
+    value: 50,
+    label: '50%'
+  },
+  {
+    value: 60,
+    label: '60%'
+  },
+  {
+    value: 70,
+    label: '70%'
+  },
+  {
+    value: 80,
+    label: '80%'
+  },
+  {
+    value: 90,
+    label: '90%'
+  }
+];
+
+const poundPotencyMarks = [
+  {
+    value: 0,
+    label: '0%'
+  },
+  {
+    value: 5,
+    label: '5%'
+  },
+  {
+    value: 10,
+    label: '10%'
+  },
+  {
+    value: 15,
+    label: '15%'
+  },
+  {
+    value: 20,
+    label: '20%'
+  },
+  {
+    value: 25,
+    label: '25%'
+  },
+  {
+    value: 30,
+    label: '30%'
+  }
+];
+
+const poundMarks = [
+  { value: 0, label: '0' },
+  { value: 200, label: '200' },
+  { value: 400, label: '400' },
+  { value: 600, label: '600' },
+  { value: 800, label: '800' },
+  { value: 1000, label: '1000' },
+  { value: 1200, label: '1200' },
+  { value: 1400, label: '1400' },
+  { value: 1600, label: '1600' },
+  { value: 1800, label: '1800' },
+  { value: 2000, label: '2000' }
+];
+
+const tenKGramsMarks = [
+  { value: 0, label: '0' },
+  { value: 1000, label: '1000' },
+  { value: 2000, label: '2000' },
+  { value: 3000, label: '3000' },
+  { value: 4000, label: '4000' },
+  { value: 5000, label: '5000' },
+  { value: 6000, label: '6000' },
+  { value: 7000, label: '7000' },
+  { value: 8000, label: '8000' },
+  { value: 9000, label: '9000' },
+  { value: 10000, label: '10000' }
+];
+
 const unitsDefault = {
   weight: 1000,
   weightMin: 0,
   weightMax: 2000,
+  weightMarks: poundMarks,
   potency: 75,
-  potMax: 50,
-  potMin: 100
+  potMin: 50,
+  potMax: 100,
+  potMarks: unitsMarks
 };
+
 const gramsDefault = {
   weight: 5000,
   weightMin: 0,
   weightMax: 10000,
+  weightMarks: tenKGramsMarks,
   potency: 75,
-  potMax: 50,
-  potMin: 100
+  potMin: 50,
+  potMax: 100,
+  potMarks: unitsMarks
 };
 const crudeDefault = {
   weight: 5000,
   weightMin: 0,
   weightMax: 10000,
+  weightMarks: tenKGramsMarks,
   potency: 70,
+  potMin: 50,
   potMax: 90,
-  potMin: 50
+  potMarks: crudeMarks
 };
 const poundsDefault = {
   weight: 1000,
   weightMin: 0,
   weightMax: 2000,
+  weightMarks: poundMarks,
   potency: 15,
+  potMin: 0,
   potMax: 30,
-  potMin: 0
+  potMarks: poundPotencyMarks
 };
 
 const data = [
