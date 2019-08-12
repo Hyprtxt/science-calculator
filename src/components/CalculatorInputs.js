@@ -1,6 +1,7 @@
 import React from 'react';
 import RangeInput from './RangeInput';
 import WeightInput from './WeightInput';
+import PropTypes from 'prop-types';
 
 const potencyMarks = [
   {
@@ -33,15 +34,13 @@ const CalculatorInputs = props => {
   const {
     inputItem,
     currentInputType,
-    weightMin,
-    weightMax,
+    inputDefaults,
     potency,
     onAmountChange,
     onPotencyChange
   } = props;
   // <h2>{`currentInputType:${currentInputType} potency:${potency}`}</h2>
   let rangeInputActivated = true;
-  // console.log(inputItem !== undefined ? true : false, "thing");
   return (
     <form
       onSubmit={e => {
@@ -52,8 +51,8 @@ const CalculatorInputs = props => {
         onAmountChange={onAmountChange}
         currentInputType={currentInputType}
         inputItem={inputItem}
-        weightMin={weightMin}
-        weightMax={weightMax}
+        weightMin={inputDefaults.weightMin}
+        weightMax={inputDefaults.weightMax}
       />
       <RangeInput
         isReadonly={!rangeInputActivated}
@@ -64,11 +63,28 @@ const CalculatorInputs = props => {
         marks={potencyMarks}
         unitLabel={'%'}
         stepValue={1}
-        minimumValue={0}
-        maximumValue={100}
+        minimumValue={inputDefaults.potMin}
+        maximumValue={inputDefaults.potMax}
       />
     </form>
   );
 };
 
+CalculatorInputs.defaultProps = {
+  inputDefaults: {
+    weightMax: 1000,
+    weightMin: 0,
+    potMax: 100,
+    potMin: 0
+  }
+};
+
+CalculatorInputs.propTypes = {
+  inputDefaults: PropTypes.shape({
+    weightMax: PropTypes.number,
+    weightMin: PropTypes.number,
+    potMax: PropTypes.number,
+    potMin: PropTypes.number
+  })
+};
 export default CalculatorInputs;

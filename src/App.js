@@ -211,24 +211,22 @@ class Calculator extends React.Component {
     const { calculator, techTreeBlocks, activeItems, currentInputType } = state;
     const { input, potency } = calculator;
     const { pounds, grams, units } = input;
-
-    let stuff = _.find(techTreeBlocks, {
+    const inputDefaultDefaults = {
+      weightMin: 0,
+      weightMax: 2000,
+      potMin: 0,
+      potMax: 100
+    };
+    let inputDefaults = _.find(techTreeBlocks, {
       name: activeItems[0]
     });
-    if (stuff !== undefined) {
-      stuff = _.find(techTreeBlocks, {
+    if (inputDefaults !== undefined) {
+      inputDefaults = _.find(techTreeBlocks, {
         name: activeItems[0]
       }).defaults;
     } else {
-      stuff = {
-        weightMin: 0,
-        weightMax: 2000,
-        potMin: 0,
-        potMax: 100
-      };
+      inputDefaults = inputDefaultDefaults;
     }
-    console.log(stuff);
-
     return (
       <div className="App">
         {/* <h2>1. Select Your Process</h2> */}
@@ -247,8 +245,7 @@ class Calculator extends React.Component {
             grams={grams}
             units={units}
             potency={potency}
-            weightMin={stuff.weightMin}
-            weightMax={stuff.weightMax}
+            defaults={inputDefaults}
           />
         </div>
         <CalculatorOutput
