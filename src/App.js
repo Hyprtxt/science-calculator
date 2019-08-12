@@ -179,6 +179,7 @@ class Calculator extends React.Component {
       }, []);
     });
     let mutableCalc = calculator;
+    let inputPriceCalculator = {};
     if (stuff.length > 1) {
       stuff.forEach((thing, index) => {
         // console.log(thing, typeof thing, index, calculator);
@@ -186,10 +187,13 @@ class Calculator extends React.Component {
         mutableCalc = thing[0](calculator, potency);
       });
     }
-    if (stuff.length === 1) {
+    // Shuck off non-input values to simulate first run and (re)calculate inputItemPrice
+    inputPriceCalculator.input = calculator.input;
+    inputPriceCalculator.potency = calculator.potency;
+    if (stuff.length >= 1) {
       mutableCalc.inputItemPrice = _.find(techTreeBlocks, {
         name: activeItems[0]
-      }).theMath(calculator).price;
+      }).theMath(inputPriceCalculator).price;
     }
     this.setState({
       calculator: mutableCalc
@@ -207,6 +211,24 @@ class Calculator extends React.Component {
     const { calculator, techTreeBlocks, activeItems, currentInputType } = state;
     const { input, potency } = calculator;
     const { pounds, grams, units } = input;
+
+    let stuff = _.find(techTreeBlocks, {
+      name: activeItems[0]
+    });
+    if (stuff !== undefined) {
+      stuff = _.find(techTreeBlocks, {
+        name: activeItems[0]
+      }).defaults;
+    } else {
+      stuff = {
+        weightMin: 0,
+        weightMax: 2000,
+        potMin: 0,
+        potMax: 100
+      };
+    }
+    console.log(stuff);
+
     return (
       <div className="App">
         {/* <h2>1. Select Your Process</h2> */}
@@ -225,6 +247,8 @@ class Calculator extends React.Component {
             grams={grams}
             units={units}
             potency={potency}
+            weightMin={stuff.weightMin}
+            weightMax={stuff.weightMax}
           />
         </div>
         <CalculatorOutput

@@ -15,7 +15,7 @@ const weightMarks = [
 ];
 
 const WeightInput = props => {
-  const { onAmountChange, currentInputType } = props;
+  const { onAmountChange, currentInputType, weightMin, weightMax } = props;
   // console.log("WeightInput", currentInputType);
   const className = 'weight-input';
   let theHelperText = <h1>NOTHING</h1>;
@@ -36,8 +36,8 @@ const WeightInput = props => {
           name={currentInputType}
           displayValue={10}
           value={10}
-          maximumValue={1000}
-          minimumValue={0}
+          minimumValue={weightMin}
+          maximumValue={weightMax}
           stepValue={1}
           onChangeHandler={value => {
             onAmountChange(value, currentInputType);

@@ -33,6 +33,8 @@ const CalculatorInputs = props => {
   const {
     inputItem,
     currentInputType,
+    weightMin,
+    weightMax,
     potency,
     onAmountChange,
     onPotencyChange
@@ -50,6 +52,8 @@ const CalculatorInputs = props => {
         onAmountChange={onAmountChange}
         currentInputType={currentInputType}
         inputItem={inputItem}
+        weightMin={weightMin}
+        weightMax={weightMax}
       />
       <RangeInput
         isReadonly={!rangeInputActivated}
