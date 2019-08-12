@@ -43,11 +43,45 @@ const LIVE_RESIN_EFFICIENCY = 0.03;
 const DISTILLATE_EFFICIENCY = 0.8;
 const DISTILLATE_PRICE = 7;
 
+const unitsDefault = {
+  weight: 1000,
+  weightMin: 0,
+  weightMax: 2000,
+  potency: 75,
+  potMax: 50,
+  potMin: 100
+};
+const gramsDefault = {
+  weight: 5000,
+  weightMin: 0,
+  weightMax: 10000,
+  potency: 75,
+  potMax: 50,
+  potMin: 100
+};
+const crudeDefault = {
+  weight: 5000,
+  weightMin: 0,
+  weightMax: 10000,
+  potency: 70,
+  potMax: 90,
+  potMin: 50
+};
+const poundsDefault = {
+  weight: 1000,
+  weightMin: 0,
+  weightMax: 2000,
+  potency: 15,
+  potMax: 30,
+  potMin: 0
+};
+
 const data = [
   {
     name: 'Trim',
     parents: [],
     inputType: 'pounds',
+    defaults: poundsDefault,
     theMath: calc => {
       calc.trimPounds = calc.input.pounds;
       calc.price = calc.trimPounds * Trim_Price(calc.potency);
@@ -58,6 +92,7 @@ const data = [
     name: 'Ethanol Crude',
     parents: ['Trim'],
     inputType: 'grams',
+    defaults: crudeDefault,
     theMath: calc => {
       if (calc.trimPounds !== undefined) {
         calc.ethanolCrudeGrams =
@@ -77,6 +112,7 @@ const data = [
     name: 'Hydrocarbon Crude',
     parents: ['Trim'],
     inputType: 'grams',
+    defaults: crudeDefault,
     theMath: calc => {
       // if (calc.trimPounds !== undefined) {
       calc.butaneCrudeGrams =
@@ -97,6 +133,7 @@ const data = [
     name: 'Dried Flower',
     parents: [],
     inputType: 'pounds',
+    defaults: poundsDefault,
     theMath: calc => {
       calc.pounds = calc.input.pounds;
       calc.price = calc.input.pounds * Dried_Flower_Price(calc.potency);
@@ -107,6 +144,7 @@ const data = [
     name: 'Fresh Frozen',
     parents: [],
     inputType: 'pounds',
+    defaults: poundsDefault,
     theMath: calc => {
       calc.pounds = calc.input.pounds;
       calc.price = calc.input.pounds * PRICE_FRESH_FROZEN;
@@ -116,7 +154,8 @@ const data = [
   {
     name: 'Cured Resin',
     parents: ['Dried Flower'],
-    inputType: 'pounds',
+    inputType: 'grams',
+    defaults: gramsDefault,
     theMath: calc => {
       if (calc.pounds !== undefined) {
         calc.grams = poundsToGrams(calc.pounds) * CURED_RESIN_EFFICIENCY;
@@ -131,7 +170,8 @@ const data = [
   {
     name: 'Live Resin',
     parents: ['Fresh Frozen'],
-    inputType: 'pounds',
+    inputType: 'grams',
+    defaults: gramsDefault,
     theMath: calc => {
       if (calc.pounds !== undefined) {
         calc.grams = poundsToGrams(calc.pounds) * LIVE_RESIN_EFFICIENCY;
@@ -150,6 +190,7 @@ const data = [
     name: 'Distillate',
     parents: ['Ethanol Crude'],
     inputType: 'grams',
+    defaults: gramsDefault,
     theMath: calc => {
       if (calc.ethanolCrudeGrams !== undefined) {
         calc.grams = calc.ethanolCrudeGrams * DISTILLATE_EFFICIENCY;
@@ -169,6 +210,7 @@ const data = [
     name: 'Distillate Cartridge',
     parents: ['Distillate'],
     inputType: 'units',
+    defaults: unitsDefault,
     theMath: calc => {
       if (calc.distillateGrams !== undefined) {
         calc.units = calc.distillateGrams * 2;
@@ -183,6 +225,7 @@ const data = [
     name: 'Sauce Cartridge',
     parents: ['Distillate', 'Cured Resin', 'Live Resin'],
     inputType: 'units',
+    defaults: unitsDefault,
     theMath: calc => {
       if (calc.oilGrams !== undefined) {
         calc.units = calc.oilGrams * 2;
@@ -197,6 +240,7 @@ const data = [
     name: 'Jarred Concentrates',
     parents: ['Cured Resin', 'Live Resin'],
     inputType: 'units',
+    defaults: unitsDefault,
     theMath: calc => {
       // calc.price = calc.input.grams * 10;
       calc.price = calc.input.units * 14;
@@ -207,6 +251,7 @@ const data = [
     name: 'Branded Distillate Cartridge',
     parents: ['Distillate Cartridge'],
     inputType: 'units',
+    defaults: unitsDefault,
     theMath: calc => {
       calc.price = calc.price * BRAND_FACTOR;
       // calc.price = calc.cartridges * 17;
@@ -217,6 +262,7 @@ const data = [
     name: 'Branded Sauce Cartridge',
     parents: ['Sauce Cartridge'],
     inputType: 'units',
+    defaults: unitsDefault,
     theMath: calc => {
       calc.price = calc.price * BRAND_FACTOR;
       return calc;
@@ -226,6 +272,7 @@ const data = [
     name: 'Branded Jarred Concentrates',
     parents: ['Jarred Concentrates'],
     inputType: 'units',
+    defaults: unitsDefault,
     theMath: calc => {
       calc.price = calc.price * BRAND_FACTOR;
       return calc;

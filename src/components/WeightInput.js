@@ -17,6 +17,7 @@ const weightMarks = [
 const WeightInput = props => {
   const { onAmountChange, currentInputType } = props;
   // console.log("WeightInput", currentInputType);
+  const className = 'weight-input';
   let theHelperText = <h1>NOTHING</h1>;
   if (currentInputType === 'grams') {
     theHelperText = '\u00A0g.';
@@ -29,7 +30,7 @@ const WeightInput = props => {
   }
   if (currentInputType !== undefined) {
     return (
-      <div>
+      <div className={className}>
         <RangeInput
           isReadonly={false}
           name={currentInputType}
@@ -47,7 +48,7 @@ const WeightInput = props => {
       </div>
     );
   } else {
-    return <div> {theHelperText}</div>;
+    return <div className={className}>{theHelperText}</div>;
   }
 };
 

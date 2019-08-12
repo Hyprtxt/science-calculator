@@ -47,6 +47,7 @@ const RangeInput = props => {
         <Grid item xs={12} sm={10}>
           <label htmlFor="trim">{name}</label>
           <Slider
+            name={`${name}-slider`}
             value={value}
             defaultValue={defaultValue}
             valueLabelDisplay="auto"
@@ -60,6 +61,7 @@ const RangeInput = props => {
         </Grid>
         <Grid item xs={12} sm={2}>
           <Input
+            name={`${name}-input`}
             className={''}
             value={value}
             margin="dense"
