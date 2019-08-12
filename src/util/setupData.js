@@ -70,7 +70,6 @@ const data = [
           calc.ethanolCrudeGrams *
           Ethanol_Crude_Price_From_Ethanol_Crude(calc.potency);
       }
-      console.log(calc);
       return calc;
     }
   },
