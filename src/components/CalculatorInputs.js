@@ -18,10 +18,9 @@ const CalculatorInputs = props => {
     potMin,
     potMax,
     potMarks,
-    weight,
     potency
   } = inputDefaults;
-  console.log(inputDefaults, 'CalculatorInputs');
+  // console.log(inputDefaults, 'CalculatorInputs');
   // <h2>{`currentInputType:${currentInputType} potency:${potency}`}</h2>
   let rangeInputActivated = true;
   return (

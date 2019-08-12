@@ -14,9 +14,9 @@ const Ethanol_Crude_Price_From_Ethanol_Crude = pot => {
 const Hydrocarbon_Crude_Price_From_Trim = pot => {
   return pot * 0.01 * 10 * 3;
 };
-const Hydrocarbon_Crude_Price_From_Hydrocarbon_Crude = pot => {
-  return pot * 0.01 * 5.5;
-};
+// const Hydrocarbon_Crude_Price_From_Hydrocarbon_Crude = pot => {
+//   return pot * 0.01 * 5.5;
+// };
 const Trim_Price = pot => {
   return pot + 80;
 };

@@ -38,13 +38,19 @@ class Calculator extends React.Component {
   }
 
   onClickItemTechTree = e => {
-    const { activeItems, techTreeBlocks } = this.state;
+    const {
+      activeItems,
+      techTreeBlocks,
+      currentInputType,
+      calculator
+    } = this.state;
     const clickedItemString = e.target.innerText;
     let newActiveItems;
     let newBlocks;
     let resetBlockString;
     let activeBlockString;
     let theInputType;
+    let mutableCalc = calculator;
     // check if (this) TechTree is empty, need to setupData() to get START_DISABLED stuff
     if (clickedItemString === activeItems[activeItems.length - 1]) {
       // console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
@@ -67,6 +73,10 @@ class Calculator extends React.Component {
         return;
       }
     } else {
+      if (activeItems.length === 1) {
+        console.log('First Tech Tree Click, Setup Default State Controls');
+        mutableCalc.input[currentInputType] = 1099;
+      }
       newActiveItems = activeItems.concat([clickedItemString]);
       activeBlockString = clickedItemString;
     }
@@ -117,7 +127,8 @@ class Calculator extends React.Component {
       {
         currentInputType: theInputType,
         activeItems: newActiveItems,
-        techTreeBlocks: newBlocks
+        techTreeBlocks: newBlocks,
+        calculator: mutableCalc
       },
       () => {
         this.recalculate();
@@ -166,7 +177,13 @@ class Calculator extends React.Component {
 
   recalculate = () => {
     const { state } = this;
-    const { calculator, activeItems, techTreeBlocks, potency } = state;
+    const {
+      calculator,
+      activeItems,
+      techTreeBlocks,
+      potency,
+      currentInputType
+    } = state;
     // Put all the functions we need into an array.
     const stuff = activeItems.map(itemName => {
       return techTreeBlocks.reduce((result, element, index) => {
@@ -180,6 +197,7 @@ class Calculator extends React.Component {
     });
     let mutableCalc = calculator;
     let inputPriceCalculator = {};
+
     if (stuff.length > 1) {
       stuff.forEach((thing, index) => {
         // console.log(thing, typeof thing, index, calculator);
@@ -209,7 +227,7 @@ class Calculator extends React.Component {
       onPotencyChange
     } = this;
     const { calculator, techTreeBlocks, activeItems, currentInputType } = state;
-    const { input, potency } = calculator;
+    const { input } = calculator;
     const { pounds, grams, units } = input;
     let inputDefaults = _.find(techTreeBlocks, {
       name: activeItems[0]
@@ -219,7 +237,7 @@ class Calculator extends React.Component {
         name: activeItems[0]
       }).defaults;
     }
-    console.log(inputDefaults, 'inputDefaults');
+    // console.log(inputDefaults, 'inputDefaults');
     return (
       <div className="App">
         {/* <h2>1. Select Your Process</h2> */}

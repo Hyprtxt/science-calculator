@@ -6,11 +6,9 @@ import Grid from '@material-ui/core/Grid';
 
 const RangeInput = props => {
   const {
-    // isReadonly,
     name,
     marks,
     unitLabel,
-    // displayValue,
     defaultValue,
     onChangeHandler,
     maximumValue,
@@ -18,10 +16,11 @@ const RangeInput = props => {
     stepValue
   } = props;
   const [value, setValue] = React.useState(30);
+  console.log(value);
   // const disabled = isReadonly ? { disabled: 'disabled' } : {};
 
   const handleSliderChange = (e, newValue) => {
-    setValue(newValue);
+    setValue(newValue === '' ? '' : Number(newValue));
     onChangeHandler(newValue);
   };
 
@@ -31,7 +30,7 @@ const RangeInput = props => {
   };
 
   const handleBlur = () => {
-    console.log(value, 'BLUR');
+    // console.log(value, 'BLUR');
     setValue(previousValue => {
       if (previousValue < minimumValue) {
         return minimumValue;
@@ -56,7 +55,6 @@ const RangeInput = props => {
             step={stepValue}
             min={minimumValue}
             max={maximumValue}
-            // {...disabled}
           />
         </Grid>
         <Grid item xs={12} sm={2}>
