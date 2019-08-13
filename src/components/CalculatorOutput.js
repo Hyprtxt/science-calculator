@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const CalculatorOutput = props => {
   const { inputItem, inputItemPrice, outputItem, outputItemPrice } = props;
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD"
+  const formatter = new Intl.NumberFormat('en-US', {
+    currency: 'USD'
   });
   return (
     <form
@@ -15,23 +16,27 @@ const CalculatorOutput = props => {
     >
       <div>
         <label htmlFor="trim">
-          Market Value of <strong>{inputItem}</strong>:{" "}
+          Market Value of <strong>{inputItem}</strong>:{' '}
         </label>
-        <input
-          type="text"
-          name="trim"
-          value={formatter.format(inputItemPrice)}
+        <Input
+          className={''}
+          value={formatter.format(inputItemPrice) || 0}
+          margin="dense"
+          type={'text'}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
           readOnly
         />
       </div>
       <div>
         <label htmlFor="trim">
-          Market Value of <strong>{outputItem}</strong>:{" "}
+          Market Value of <strong>{outputItem}</strong>:{' '}
         </label>
-        <input
-          type="text"
-          name="trim"
-          value={formatter.format(outputItemPrice)}
+        <Input
+          className={''}
+          value={formatter.format(outputItemPrice) || 0}
+          margin="dense"
+          type={'text'}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
           readOnly
         />
       </div>
