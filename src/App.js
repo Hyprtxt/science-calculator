@@ -336,44 +336,46 @@ class Calculator extends React.Component {
         break;
     }
     return (
-      <div className="App">
-        {/* <h2>1. Select Your Process</h2> */}
-        <div className="scrollable">
-          <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
-          <div className="clearfix"></div>
-        </div>
-        <div className="fixed-bottom">
-          <div className="inputs">
-            {/* <h2>2. Input Starting Material</h2> */}
-            {HelperText}
+      <div className="wordpress">
+        <div className="App">
+          {/* <h2>1. Select Your Process</h2> */}
+          <div className="scrollable">
+            <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
+            <div className="clearfix"></div>
+          </div>
+          <div className="fixed-bottom">
+            <div className="inputs">
+              {/* <h2>2. Input Starting Material</h2> */}
+              {HelperText}
 
-            <CalculatorInputs
-              inputItem={activeItems[0]}
-              currentInputType={currentInputType}
-              onAmountChange={onAmountChange}
-              onPotencyChange={onPotencyChange}
-              pounds={pounds}
-              grams={grams}
-              units={units}
-              potency={potency}
-              inputDefaults={inputDefaults}
-              inputValues={input}
-              inputItemPrice={calculator.inputItemPrice}
+              <CalculatorInputs
+                inputItem={activeItems[0]}
+                currentInputType={currentInputType}
+                onAmountChange={onAmountChange}
+                onPotencyChange={onPotencyChange}
+                pounds={pounds}
+                grams={grams}
+                units={units}
+                potency={potency}
+                inputDefaults={inputDefaults}
+                inputValues={input}
+                inputItemPrice={calculator.inputItemPrice}
+              />
+            </div>
+            <CalculatorOutput
+              activeItemsLength={activeItems.length}
+              outputItem={activeItems[activeItems.length - 1]}
+              outputItemPrice={calculator.price}
             />
           </div>
-          <CalculatorOutput
-            activeItemsLength={activeItems.length}
-            outputItem={activeItems[activeItems.length - 1]}
-            outputItemPrice={calculator.price}
-          />
+          <Hide>
+            <br />
+            <ResetButton onClick={onClickReset}>
+              Reset Process Selection
+            </ResetButton>
+            <Inspector data={state} disable={true} />
+          </Hide>
         </div>
-        <Hide>
-          <br />
-          <ResetButton onClick={onClickReset}>
-            Reset Process Selection
-          </ResetButton>
-          <Inspector data={state} disable={true} />
-        </Hide>
       </div>
     );
   }

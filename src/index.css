@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -25,15 +25,29 @@ form {
   text-align: left;
 }
 
+.wordpress {
+  max-width: 1210px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #0fc;
+  height: 100%;
+}
+
 .scrollable {
-  display: scrollable;
   margin-bottom: 100px;
+  background: lightYellow;
+  max-height: 60vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .fixed-bottom {
   position: fixed;
   bottom: 0;
-  /* display: block; */
   width: 100%;
+  max-width: 1210px;
+  max-height: 40vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 form.y-hidden,
 .y-hidden {
