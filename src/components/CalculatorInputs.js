@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const CalculatorInputs = props => {
   const {
-    inputItem,
     inputValues,
     inputDefaults,
     onAmountChange,
@@ -12,16 +11,15 @@ const CalculatorInputs = props => {
     currentInputType,
     potency
   } = props;
-  const {} = props;
   const {
     weightMin,
     weightMax,
     weightMarks,
-    weightDefault,
+    weightStep,
     potMin,
     potMax,
     potMarks,
-    potencyDefault
+    potencyStep
   } = inputDefaults;
 
   // console.log("WeightInput", currentInputType);
@@ -51,7 +49,7 @@ const CalculatorInputs = props => {
             value={inputValues[currentInputType]}
             minimumValue={weightMin}
             maximumValue={weightMax}
-            stepValue={1}
+            stepValue={weightStep || 1}
             onChangeHandler={(value, source) => {
               onAmountChange(value, source, currentInputType);
             }}
@@ -67,7 +65,7 @@ const CalculatorInputs = props => {
           onChangeHandler={onPotencyChange}
           marks={potMarks}
           unitLabel={'%'}
-          stepValue={1}
+          stepValue={potencyStep || 1}
           minimumValue={potMin}
           maximumValue={potMax}
         />

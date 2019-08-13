@@ -3,7 +3,6 @@ import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Grid from '@material-ui/core/Grid';
-import _ from 'lodash';
 
 const RangeInput = props => {
   const {

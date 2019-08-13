@@ -63,7 +63,7 @@ class Calculator extends React.Component {
   };
 
   onClickItemTechTree = e => {
-    const { activeItems, techTreeBlocks, currentInputType } = this.state;
+    const { activeItems, techTreeBlocks } = this.state;
     const clickedItemString = e.target.innerText;
     let newActiveItems;
     let newBlocks;
@@ -229,13 +229,7 @@ class Calculator extends React.Component {
 
   recalculate = () => {
     const { state } = this;
-    const {
-      calculator,
-      activeItems,
-      techTreeBlocks,
-      potency,
-      currentInputType
-    } = state;
+    const { calculator, activeItems, techTreeBlocks, potency } = state;
     // Put all the functions we need into an array.
     const stuff = activeItems.map(itemName => {
       return techTreeBlocks.reduce((result, element, index) => {
