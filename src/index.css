@@ -60,11 +60,18 @@ button.item {
   font-weight: 700;
 }
 
+button.item {
+  display: none;
+}
+
 .item.active {
+  float: none;
+  display: block;
   border: 3px solid black;
 }
 
 .item.enabled {
+  display: block;
   opacity: 1;
   cursor: pointer;
 }

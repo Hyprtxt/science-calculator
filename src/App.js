@@ -5,11 +5,12 @@ import Inspector from './components/Inspector';
 import ResetButton from './components/ResetButton';
 import CalculatorOutput from './components/CalculatorOutput';
 import CalculatorInputs from './components/CalculatorInputs';
+import Hide from './components/Hide';
 import _ from 'lodash';
 
 import 'array-flat-polyfill';
 
-const DEBOUNCE_TIME = 0;
+const DEBOUNCE_TIME = 5;
 
 const App = () => {
   return <Calculator />;
@@ -288,9 +289,7 @@ class Calculator extends React.Component {
       <div className="App">
         {/* <h2>1. Select Your Process</h2> */}
         <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
-        <ResetButton onClick={onClickReset}>
-          Reset Process Selection
-        </ResetButton>
+
         <div className="inputs">
           {/* <h2>2. Input Starting Material</h2> */}
           <CalculatorInputs
@@ -312,7 +311,13 @@ class Calculator extends React.Component {
           outputItem={activeItems[activeItems.length - 1]}
           outputItemPrice={calculator.price}
         />
-        <Inspector data={state} />
+        <Hide>
+          <br />
+          <ResetButton onClick={onClickReset}>
+            Reset Process Selection
+          </ResetButton>
+          <Inspector data={state} disable={true} />
+        </Hide>
       </div>
     );
   }

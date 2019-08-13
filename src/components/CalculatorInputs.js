@@ -24,7 +24,8 @@ const CalculatorInputs = props => {
 
   // console.log("WeightInput", currentInputType);
   const className = 'weight-input';
-  let theHelperText = <h1>NOTHING</h1>;
+  let theHelperText;
+  //  = <h1>NOTHING</h1>;
   if (currentInputType === 'grams') {
     theHelperText = '\u00A0g.';
   }
