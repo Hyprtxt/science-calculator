@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 const RangeInput = props => {
   const {
-    currentValue,
+    value,
     name,
     marks,
     unitLabel,
@@ -16,53 +16,6 @@ const RangeInput = props => {
     minimumValue,
     stepValue
   } = props;
-  const [value, setValue] = React.useState(7);
-  // console.log(value, onChangeHandler);
-  // const disabled = isReadonly ? { disabled: 'disabled' } : {};
-  // const debounce  = (newValue) => {
-  //     value={value}
-  // }
-  // const updateParent = value => {
-  //   // console.log('PARENT UPDATE BOUNCE SUCCESS');
-  //   onChangeHandler(value);
-  //   // updateParentDebounced.cancel();
-  // };
-  // const updateParentDebounced = _.debounce(updateParent, 1200);
-
-  const updateComboSlider = newValue => {
-    setValue(newValue);
-  };
-
-  const handleSliderChange = (e, newValue) => {
-    setValue(newValue === '' ? '' : Number(newValue));
-    onChangeHandler(newValue);
-    // console.log('DEBOUNCE HERE');
-    // updateParent(newValue);
-  };
-
-  const handleInputChange = e => {
-    setValue(e.target.value === '' ? '' : Number(e.target.value));
-    // _.debounce(() => {    }, 500);
-    onChangeHandler(e.target.value);
-  };
-
-  const handleBlur = e => {
-    // console.log('BLUR', e.target.value);
-
-    setValue(
-      previousValue => {
-        if (previousValue < minimumValue) {
-          return minimumValue;
-        } else if (previousValue > maximumValue) {
-          return maximumValue;
-        }
-      },
-      () => {
-        onChangeHandler(e.target.value);
-      }
-    );
-  };
-
   return (
     <div className="range-input">
       <Grid container spacing={2} alignItems="center">
@@ -73,7 +26,9 @@ const RangeInput = props => {
             value={value}
             valueLabelDisplay="auto"
             marks={marks}
-            onChange={handleSliderChange}
+            onChange={(e, newValue) => {
+              onChangeHandler(newValue, 'slider');
+            }}
             step={stepValue}
             min={minimumValue}
             max={maximumValue}
@@ -85,8 +40,12 @@ const RangeInput = props => {
             className={''}
             value={value}
             margin="dense"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
+            onChange={e => {
+              onChangeHandler(e.target.value, 'input');
+            }}
+            onBlur={e => {
+              onChangeHandler(e.target.value, 'input-blur');
+            }}
             step={stepValue}
             min={minimumValue}
             max={maximumValue}

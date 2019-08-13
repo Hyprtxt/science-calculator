@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 import 'array-flat-polyfill';
 
-const DEBOUNCE_TIME = 200;
+const DEBOUNCE_TIME = 0;
 
 const App = () => {
   return <Calculator />;
@@ -92,8 +92,10 @@ class Calculator extends React.Component {
         //   currentInputDefaults.weight;
         this.onAmountChange(
           currentInputDefaults.defaults.weight,
+          'code-trigger',
           currentInputDefaults.inputType
         );
+        // RangeInput.updateComboSlider();
       }
       newActiveItems = activeItems.concat([clickedItemString]);
       activeBlockString = clickedItemString;
@@ -145,8 +147,8 @@ class Calculator extends React.Component {
       {
         currentInputType: theInputType,
         activeItems: newActiveItems,
-        techTreeBlocks: newBlocks,
-        calculator: mutableCalc
+        techTreeBlocks: newBlocks
+        // calculator: mutableCalc
       },
       () => {
         this.recalculate();
@@ -167,9 +169,10 @@ class Calculator extends React.Component {
     );
   };
 
-  onAmountChange = _.debounce((newValue, thing) => {
+  onAmountChange = _.debounce((newValue, source, currentInputType) => {
+    console.log('onAmountChange', newValue, source, currentInputType);
     let { calculator } = this.state;
-    calculator.input[thing] = newValue;
+    calculator.input[currentInputType] = newValue;
     this.setState(
       {
         calculator: calculator
@@ -192,6 +195,39 @@ class Calculator extends React.Component {
       }
     );
   }, DEBOUNCE_TIME);
+
+  // const [value, setValue] = React.useState(7);
+  // // const disabled = isReadonly ? { disabled: 'disabled' } : {};
+  //
+  // const handleSliderChange = (e, newValue) => {
+  //   setValue(newValue === '' ? '' : Number(newValue));
+  //   onChangeHandler(newValue);
+  //   // console.log('DEBOUNCE HERE');
+  //   // updateParent(newValue);
+  // };
+  //
+  // const handleInputChange = e => {
+  //   setValue(e.target.value === '' ? '' : Number(e.target.value));
+  //   // _.debounce(() => {    }, 500);
+  //   onChangeHandler(e.target.value);
+  // };
+  //
+  // const handleBlur = e => {
+  //   // console.log('BLUR', e.target.value);
+  //
+  //   setValue(
+  //     previousValue => {
+  //       if (previousValue < minimumValue) {
+  //         return minimumValue;
+  //       } else if (previousValue > maximumValue) {
+  //         return maximumValue;
+  //       }
+  //     },
+  //     () => {
+  //       onChangeHandler(e.target.value);
+  //     }
+  //   );
+  // };
 
   recalculate = () => {
     const { state } = this;
@@ -245,7 +281,7 @@ class Calculator extends React.Component {
       onPotencyChange
     } = this;
     const { calculator, techTreeBlocks, activeItems, currentInputType } = state;
-    const { input } = calculator;
+    const { input, potency } = calculator;
     const { pounds, grams, units } = input;
     let inputDefaults = _.find(techTreeBlocks, {
       name: activeItems[0]
@@ -273,6 +309,7 @@ class Calculator extends React.Component {
             pounds={pounds}
             grams={grams}
             units={units}
+            potency={potency}
             inputDefaults={inputDefaults}
             inputValues={input}
           />

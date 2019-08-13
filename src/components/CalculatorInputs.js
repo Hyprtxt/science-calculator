@@ -1,17 +1,18 @@
 import React from 'react';
 import RangeInput from './RangeInput';
-import WeightInput from './WeightInput';
 import PropTypes from 'prop-types';
 
 const CalculatorInputs = props => {
   const {
     inputItem,
     inputValues,
-    currentInputType,
     inputDefaults,
     onAmountChange,
-    onPotencyChange
+    onPotencyChange,
+    currentInputType,
+    potency
   } = props;
+  const {} = props;
   const {
     weightMin,
     weightMax,
@@ -19,40 +20,62 @@ const CalculatorInputs = props => {
     potMin,
     potMax,
     potMarks,
-    potency
+    pot
+    // potency
   } = inputDefaults;
-  // console.log(onAmountChange(50, currentInputType));
-  // console.log(inputDefaults, 'CalculatorInputs');
-  // <h2>{`currentInputType:${currentInputType} potency:${potency}`}</h2>
-  let rangeInputActivated = true;
-  return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-      }}
-    >
-      <WeightInput
-        inputValues={inputValues}
-        onAmountChange={onAmountChange}
-        currentInputType={currentInputType}
-        inputItem={inputItem}
-        weightMin={weightMin}
-        weightMax={weightMax}
-        weightMarks={weightMarks}
-      />
-      <RangeInput
-        isReadonly={!rangeInputActivated}
-        name="potency"
-        currentValue={potency}
-        onChangeHandler={onPotencyChange}
-        marks={potMarks}
-        unitLabel={'%'}
-        stepValue={1}
-        minimumValue={potMin}
-        maximumValue={potMax}
-      />
-    </form>
-  );
+
+  // console.log("WeightInput", currentInputType);
+  const className = 'weight-input';
+  let theHelperText = <h1>NOTHING</h1>;
+  if (currentInputType === 'grams') {
+    theHelperText = '\u00A0g.';
+  }
+  if (currentInputType === 'units') {
+    theHelperText = '\u00A0carts.';
+  }
+  if (currentInputType === 'pounds') {
+    theHelperText = '\u00A0lbs.';
+  }
+  if (currentInputType !== undefined) {
+    let rangeInputActivated = true;
+    return (
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+        }}
+      >
+        <div className={className}>
+          <RangeInput
+            isReadonly={false}
+            name={currentInputType}
+            value={inputValues[currentInputType]}
+            minimumValue={weightMin}
+            maximumValue={weightMax}
+            stepValue={1}
+            onChangeHandler={(value, source) => {
+              onAmountChange(value, source, currentInputType);
+            }}
+            marks={weightMarks}
+            unitLabel={theHelperText}
+          />
+        </div>
+
+        <RangeInput
+          isReadonly={!rangeInputActivated}
+          name="potency"
+          value={potency}
+          onChangeHandler={onPotencyChange}
+          marks={potMarks}
+          unitLabel={'%'}
+          stepValue={1}
+          minimumValue={potMin}
+          maximumValue={potMax}
+        />
+      </form>
+    );
+  } else {
+    return <div className={className}>{theHelperText}</div>;
+  }
 };
 
 CalculatorInputs.defaultProps = {
