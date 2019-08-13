@@ -325,7 +325,7 @@ const data = [
       } else {
         // calc.grams = poundsToGrams(calc.pounds) * 0.04;
         calc.price = calc.input.grams * LIVE_RESIN_PRICE_PER_GRAM;
-        calc.input.grams = calc.distillateGrams;
+        calc.distillateGrams = calc.input.grams;
       }
       return calc;
     }
