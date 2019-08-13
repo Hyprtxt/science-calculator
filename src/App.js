@@ -39,20 +39,37 @@ class Calculator extends React.Component {
     // console.log(names, parent, startDisable, data);
   }
 
+  setupDefaults = (techTreeBlocks, clickedItemString) => {
+    const currentInputDefaults = _.find(techTreeBlocks, {
+      name: clickedItemString
+    });
+    // console.log(
+    //   'First Tech Tree Click, Setup Default State Controls',
+    //   // _.find(techTreeBlocks, {
+    //   //   name: clickedItemString
+    //   // }).defaults
+    //   currentInputDefaults.defaults.weightDefault,
+    //   currentInputDefaults.defaults.potencyDefault,
+    //   currentInputDefaults.inputType,
+    //   clickedItemString
+    // );
+    this.onAmountChange(
+      currentInputDefaults.defaults.weightDefault,
+      'code-trigger',
+      currentInputDefaults.inputType
+    );
+    this.onPotencyChange(currentInputDefaults.defaults.potencyDefault);
+    return;
+  };
+
   onClickItemTechTree = e => {
-    const {
-      activeItems,
-      techTreeBlocks,
-      currentInputType,
-      calculator
-    } = this.state;
+    const { activeItems, techTreeBlocks, currentInputType } = this.state;
     const clickedItemString = e.target.innerText;
     let newActiveItems;
     let newBlocks;
     let resetBlockString;
     let activeBlockString;
     let theInputType;
-    let mutableCalc = calculator;
     // check if (this) TechTree is empty, need to setupData() to get START_DISABLED stuff
     if (clickedItemString === activeItems[activeItems.length - 1]) {
       // console.log("ACTIVE ITEM CLICK - STEP BACK", newActiveItems, activeItems);
@@ -76,28 +93,7 @@ class Calculator extends React.Component {
       }
     } else {
       if (activeItems.length === 0) {
-        const currentInputDefaults = _.find(techTreeBlocks, {
-          name: clickedItemString
-        });
-        console.log(
-          'First Tech Tree Click, Setup Default State Controls',
-          // _.find(techTreeBlocks, {
-          //   name: clickedItemString
-          // }).defaults
-          currentInputDefaults.defaults.weightDefault,
-          currentInputDefaults.defaults.potencyDefault,
-          currentInputDefaults.inputType,
-          clickedItemString
-        );
-        // mutableCalc.input[currentInputDefaults.inputType] =
-        //   currentInputDefaults.weight;
-        this.onAmountChange(
-          currentInputDefaults.defaults.weightDefault,
-          'code-trigger',
-          currentInputDefaults.inputType
-        );
-        this.onPotencyChange(currentInputDefaults.defaults.potencyDefault);
-        // RangeInput.updateComboSlider();
+        this.setupDefaults(techTreeBlocks, clickedItemString);
       }
       newActiveItems = activeItems.concat([clickedItemString]);
       activeBlockString = clickedItemString;
@@ -150,7 +146,6 @@ class Calculator extends React.Component {
         currentInputType: theInputType,
         activeItems: newActiveItems,
         techTreeBlocks: newBlocks
-        // calculator: mutableCalc
       },
       () => {
         this.recalculate();
@@ -160,6 +155,7 @@ class Calculator extends React.Component {
   };
 
   onClickReset = e => {
+    // @TODO Inputs & Sliders Don't Get Hidden
     this.setState(
       {
         techTreeBlocks: setupData(),
@@ -172,7 +168,7 @@ class Calculator extends React.Component {
   };
 
   onAmountChange = _.debounce((newValue, source, currentInputType) => {
-    console.log('onAmountChange', newValue, source, currentInputType);
+    // console.log('onAmountChange', newValue, source, currentInputType);
     let { calculator } = this.state;
     calculator.input[currentInputType] = newValue;
     this.setState(
