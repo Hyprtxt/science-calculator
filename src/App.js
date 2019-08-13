@@ -32,6 +32,7 @@
 // }
 
 import React from 'react';
+import _ from 'lodash';
 import setupData from './util/setupData';
 import TechTree from './components/TechTree';
 import Inspector from './components/Inspector';
@@ -39,7 +40,6 @@ import ResetButton from './components/ResetButton';
 import CalculatorOutput from './components/CalculatorOutput';
 import CalculatorInputs from './components/CalculatorInputs';
 import Hide from './components/Hide';
-import _ from 'lodash';
 
 import 'array-flat-polyfill';
 

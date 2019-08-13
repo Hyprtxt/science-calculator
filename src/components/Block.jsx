@@ -1,8 +1,8 @@
 import React from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-const Item = ({ name, onClick, active, enabled }) => {
-  let extraClassName = '';
+const Item = ({ name, onClick, active, enabled, className }) => {
+  let extraClassName = className;
   if (active) {
     extraClassName += ' active';
   }
@@ -24,7 +24,7 @@ const Item = ({ name, onClick, active, enabled }) => {
 };
 
 const Block = props => {
-  const { name, enabled, active, onClickItem } = props;
+  const { name, enabled, active, onClickItem, className } = props;
   return (
     <Item
       onClick={e => {
@@ -35,6 +35,7 @@ const Block = props => {
       name={name}
       active={active}
       enabled={enabled}
+      className={className}
     />
   );
 };
