@@ -9,6 +9,8 @@ import _ from 'lodash';
 
 import 'array-flat-polyfill';
 
+const DEBOUNCE_TIME = 200;
+
 const App = () => {
   return <Calculator />;
 };
@@ -73,9 +75,25 @@ class Calculator extends React.Component {
         return;
       }
     } else {
-      if (activeItems.length === 1) {
-        console.log('First Tech Tree Click, Setup Default State Controls');
-        mutableCalc.input[currentInputType] = 1099;
+      if (activeItems.length === 0) {
+        const currentInputDefaults = _.find(techTreeBlocks, {
+          name: clickedItemString
+        });
+        console.log(
+          'First Tech Tree Click, Setup Default State Controls',
+          // _.find(techTreeBlocks, {
+          //   name: clickedItemString
+          // }).defaults
+          currentInputDefaults.defaults.weight,
+          currentInputDefaults.inputType,
+          clickedItemString
+        );
+        // mutableCalc.input[currentInputDefaults.inputType] =
+        //   currentInputDefaults.weight;
+        this.onAmountChange(
+          currentInputDefaults.defaults.weight,
+          currentInputDefaults.inputType
+        );
       }
       newActiveItems = activeItems.concat([clickedItemString]);
       activeBlockString = clickedItemString;
@@ -149,7 +167,7 @@ class Calculator extends React.Component {
     );
   };
 
-  onAmountChange = (newValue, thing) => {
+  onAmountChange = _.debounce((newValue, thing) => {
     let { calculator } = this.state;
     calculator.input[thing] = newValue;
     this.setState(
@@ -160,9 +178,9 @@ class Calculator extends React.Component {
         this.recalculate();
       }
     );
-  };
+  }, DEBOUNCE_TIME);
 
-  onPotencyChange = newValue => {
+  onPotencyChange = _.debounce(newValue => {
     let { calculator } = this.state;
     calculator.potency = newValue;
     this.setState(
@@ -173,7 +191,7 @@ class Calculator extends React.Component {
         this.recalculate();
       }
     );
-  };
+  }, DEBOUNCE_TIME);
 
   recalculate = () => {
     const { state } = this;
@@ -256,6 +274,7 @@ class Calculator extends React.Component {
             grams={grams}
             units={units}
             inputDefaults={inputDefaults}
+            inputValues={input}
           />
         </div>
         <CalculatorOutput

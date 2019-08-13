@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const CalculatorInputs = props => {
   const {
     inputItem,
+    inputValues,
     currentInputType,
     inputDefaults,
     onAmountChange,
@@ -20,6 +21,7 @@ const CalculatorInputs = props => {
     potMarks,
     potency
   } = inputDefaults;
+  // console.log(onAmountChange(50, currentInputType));
   // console.log(inputDefaults, 'CalculatorInputs');
   // <h2>{`currentInputType:${currentInputType} potency:${potency}`}</h2>
   let rangeInputActivated = true;
@@ -30,6 +32,7 @@ const CalculatorInputs = props => {
       }}
     >
       <WeightInput
+        inputValues={inputValues}
         onAmountChange={onAmountChange}
         currentInputType={currentInputType}
         inputItem={inputItem}
@@ -40,8 +43,7 @@ const CalculatorInputs = props => {
       <RangeInput
         isReadonly={!rangeInputActivated}
         name="potency"
-        displayValue={potency}
-        value={10}
+        currentValue={potency}
         onChangeHandler={onPotencyChange}
         marks={potMarks}
         unitLabel={'%'}

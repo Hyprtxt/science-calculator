@@ -7,6 +7,7 @@ import RangeInput from './RangeInput';
 
 const WeightInput = props => {
   const {
+    inputValues,
     onAmountChange,
     currentInputType,
     weightMin,
@@ -31,8 +32,7 @@ const WeightInput = props => {
         <RangeInput
           isReadonly={false}
           name={currentInputType}
-          displayValue={10}
-          value={10}
+          value={inputValues[currentInputType]}
           minimumValue={weightMin}
           maximumValue={weightMax}
           stepValue={1}
