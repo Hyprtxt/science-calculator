@@ -23,7 +23,7 @@ const RangeInput = props => {
           <label htmlFor="trim">{name}</label>
           <Slider
             name={`${name}-slider`}
-            value={value}
+            value={Number(value) || 0}
             valueLabelDisplay="auto"
             marks={marks}
             onChange={(e, newValue) => {
@@ -38,13 +38,13 @@ const RangeInput = props => {
           <Input
             name={`${name}-input`}
             className={''}
-            value={value}
+            value={Number(value) || 0}
             margin="dense"
             onChange={e => {
-              onChangeHandler(e.target.value, 'input');
+              onChangeHandler(Number(e.target.value), 'input');
             }}
             onBlur={e => {
-              onChangeHandler(e.target.value, 'input-blur');
+              onChangeHandler(Number(e.target.value), 'input-blur');
             }}
             step={stepValue}
             min={minimumValue}

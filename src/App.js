@@ -84,17 +84,19 @@ class Calculator extends React.Component {
           // _.find(techTreeBlocks, {
           //   name: clickedItemString
           // }).defaults
-          currentInputDefaults.defaults.weight,
+          currentInputDefaults.defaults.weightDefault,
+          currentInputDefaults.defaults.potencyDefault,
           currentInputDefaults.inputType,
           clickedItemString
         );
         // mutableCalc.input[currentInputDefaults.inputType] =
         //   currentInputDefaults.weight;
         this.onAmountChange(
-          currentInputDefaults.defaults.weight,
+          currentInputDefaults.defaults.weightDefault,
           'code-trigger',
           currentInputDefaults.inputType
         );
+        this.onPotencyChange(currentInputDefaults.defaults.potencyDefault);
         // RangeInput.updateComboSlider();
       }
       newActiveItems = activeItems.concat([clickedItemString]);

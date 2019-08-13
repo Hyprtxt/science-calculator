@@ -17,11 +17,11 @@ const CalculatorInputs = props => {
     weightMin,
     weightMax,
     weightMarks,
+    weightDefault,
     potMin,
     potMax,
     potMarks,
-    pot
-    // potency
+    potencyDefault
   } = inputDefaults;
 
   // console.log("WeightInput", currentInputType);
@@ -82,10 +82,12 @@ CalculatorInputs.defaultProps = {
   inputDefaults: {
     weightMax: 100,
     weightMin: 0,
-    weight: 50,
+    weightDefault: 50,
+    weightMarks: [],
     potMax: 100,
     potMin: 0,
-    potency: 50
+    potencyDefault: 50,
+    potMarks: []
   }
 };
 

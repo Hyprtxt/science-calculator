@@ -179,42 +179,46 @@ const tenKGramsMarks = [
 ];
 
 const unitsDefault = {
-  weight: 1000,
+  weightDefault: 1000,
   weightMin: 0,
   weightMax: 2000,
+  weightStep: 10,
   weightMarks: poundMarks,
-  potency: 75,
+  potencyDefault: 75,
   potMin: 50,
   potMax: 100,
   potMarks: unitsMarks
 };
 
 const gramsDefault = {
-  weight: 5000,
+  weightDefault: 5000,
   weightMin: 0,
   weightMax: 10000,
+  weightStep: 100,
   weightMarks: tenKGramsMarks,
-  potency: 75,
+  potencyDefault: 75,
   potMin: 50,
   potMax: 100,
   potMarks: unitsMarks
 };
 const crudeDefault = {
-  weight: 5000,
+  weightDefault: 5000,
   weightMin: 0,
   weightMax: 10000,
+  weightStep: 100,
   weightMarks: tenKGramsMarks,
-  potency: 70,
+  potencyDefault: 70,
   potMin: 50,
   potMax: 90,
   potMarks: crudeMarks
 };
 const poundsDefault = {
-  weight: 1000,
+  weightDefault: 1000,
   weightMin: 0,
   weightMax: 2000,
+  weightStep: 10,
   weightMarks: poundMarks,
-  potency: 15,
+  potencyDefault: 15,
   potMin: 0,
   potMax: 30,
   potMarks: poundPotencyMarks
