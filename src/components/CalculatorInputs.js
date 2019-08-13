@@ -1,9 +1,14 @@
 import React from 'react';
 import RangeInput from './RangeInput';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import formatter from '../util/formatter';
 import PropTypes from 'prop-types';
 
 const CalculatorInputs = props => {
   const {
+    inputItem,
+    inputItemPrice,
     inputValues,
     inputDefaults,
     onAmountChange,
@@ -70,6 +75,20 @@ const CalculatorInputs = props => {
           minimumValue={potMin}
           maximumValue={potMax}
         />
+
+        <div>
+          <label htmlFor="trim">
+            Market Value of <strong>{inputItem}</strong>:{' '}
+          </label>
+          <Input
+            className={''}
+            value={formatter.format(inputItemPrice) || 0}
+            margin="dense"
+            type={'text'}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            readOnly
+          />
+        </div>
       </form>
     );
   } else {

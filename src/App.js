@@ -288,29 +288,33 @@ class Calculator extends React.Component {
     return (
       <div className="App">
         {/* <h2>1. Select Your Process</h2> */}
-        <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
-
-        <div className="inputs">
-          {/* <h2>2. Input Starting Material</h2> */}
-          <CalculatorInputs
-            inputItem={activeItems[0]}
-            currentInputType={currentInputType}
-            onAmountChange={onAmountChange}
-            onPotencyChange={onPotencyChange}
-            pounds={pounds}
-            grams={grams}
-            units={units}
-            potency={potency}
-            inputDefaults={inputDefaults}
-            inputValues={input}
+        <div className="scrollable">
+          <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
+          <div className="clearfix"></div>
+        </div>
+        <div className="fixed-bottom">
+          <div className="inputs">
+            {/* <h2>2. Input Starting Material</h2> */}
+            <CalculatorInputs
+              inputItem={activeItems[0]}
+              currentInputType={currentInputType}
+              onAmountChange={onAmountChange}
+              onPotencyChange={onPotencyChange}
+              pounds={pounds}
+              grams={grams}
+              units={units}
+              potency={potency}
+              inputDefaults={inputDefaults}
+              inputValues={input}
+              inputItem={activeItems[0]}
+              inputItemPrice={calculator.inputItemPrice}
+            />
+          </div>
+          <CalculatorOutput
+            outputItem={activeItems[activeItems.length - 1]}
+            outputItemPrice={calculator.price}
           />
         </div>
-        <CalculatorOutput
-          inputItem={activeItems[0]}
-          inputItemPrice={calculator.inputItemPrice}
-          outputItem={activeItems[activeItems.length - 1]}
-          outputItemPrice={calculator.price}
-        />
         <Hide>
           <br />
           <ResetButton onClick={onClickReset}>

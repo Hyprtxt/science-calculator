@@ -25,13 +25,25 @@ form {
   text-align: left;
 }
 
+.scrollable {
+  display: scrollable;
+  margin-bottom: 100px;
+}
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  /* display: block; */
+  width: 100%;
+}
+
 .inputs {
   clear: both;
   padding: 10px;
+  background: lightGreen;
 }
 .outputs {
   padding: 10px;
-  background: lightGreen;
+  background: pink;
 }
 label {
   margin-top: 10px;
