@@ -1,3 +1,36 @@
+// function init(initialCount) {
+//   return { count: initialCount };
+// }
+//
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case 'increment':
+//       return { count: state.count + 1 };
+//     case 'decrement':
+//       return { count: state.count - 1 };
+//     case 'reset':
+//       return init(action.payload);
+//     default:
+//       throw new Error();
+//   }
+// }
+//
+// function Counter({ initialCount }) {
+//   const [state, dispatch] = useReducer(reducer, initialCount, init);
+//   return (
+//     <>
+//       Count: {state.count}
+//       <button
+//         onClick={() => dispatch({ type: 'reset', payload: initialCount })}
+//       >
+//         Reset
+//       </button>
+//       <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+//       <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+//     </>
+//   );
+// }
+
 import React from 'react';
 import setupData from './util/setupData';
 import TechTree from './components/TechTree';
@@ -285,6 +318,23 @@ class Calculator extends React.Component {
       }).defaults;
     }
     // console.log(inputDefaults, 'inputDefaults');
+    let HelperText;
+    switch (activeItems.length) {
+      case 0:
+        HelperText = <p>Please select your input material above.</p>;
+        break;
+      case 1:
+        HelperText = (
+          <p>Adjust the amount and potencty of your starting material.</p>
+        );
+        break;
+      case 2:
+        HelperText = <p>Profit!</p>;
+        break;
+      default:
+        HelperText = <React.Fragment />;
+        break;
+    }
     return (
       <div className="App">
         {/* <h2>1. Select Your Process</h2> */}
@@ -295,6 +345,8 @@ class Calculator extends React.Component {
         <div className="fixed-bottom">
           <div className="inputs">
             {/* <h2>2. Input Starting Material</h2> */}
+            {HelperText}
+
             <CalculatorInputs
               inputItem={activeItems[0]}
               currentInputType={currentInputType}
@@ -306,11 +358,11 @@ class Calculator extends React.Component {
               potency={potency}
               inputDefaults={inputDefaults}
               inputValues={input}
-              inputItem={activeItems[0]}
               inputItemPrice={calculator.inputItemPrice}
             />
           </div>
           <CalculatorOutput
+            activeItemsLength={activeItems.length}
             outputItem={activeItems[activeItems.length - 1]}
             outputItemPrice={calculator.price}
           />

@@ -35,15 +35,30 @@ form {
   /* display: block; */
   width: 100%;
 }
+form.y-hidden,
+.y-hidden {
+  transform: scaleY(0);
+  padding: 0;
+  transform-origin: top;
+}
 
+.inputs.collapsed {
+  transform: scaleY(0);
+}
 .inputs {
   clear: both;
   padding: 10px;
   background: lightGreen;
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: all 0.26s ease;
+  /* transition: height 0.26s ease; */
 }
 .outputs {
   padding: 10px;
   background: pink;
+  transform: scaleY(1);
+  transition: transform 0.26s ease;
 }
 label {
   margin-top: 10px;

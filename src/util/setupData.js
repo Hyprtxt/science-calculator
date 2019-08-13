@@ -265,7 +265,7 @@ const data = [
       // if (calc.trimPounds !== undefined) {
       calc.butaneCrudeGrams =
         poundsToGrams(calc.trimPounds) * TRIM_BUTANE_EXTRACTION_EFFICENCY;
-      console.log(calc.butaneCrudeGrams, 'butaneCrudeGrams');
+      // console.log(calc.butaneCrudeGrams, 'butaneCrudeGrams');
       calc.price =
         calc.butaneCrudeGrams * Hydrocarbon_Crude_Price_From_Trim(calc.potency);
       // } else {
