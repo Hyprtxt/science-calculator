@@ -1,7 +1,7 @@
 import React from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-const Item = ({ name, onClick, active, enabled, className }) => {
+const Item = ({ children, onClick, active, enabled, className }) => {
   let extraClassName = className;
   if (active) {
     extraClassName += ' active';
@@ -14,17 +14,17 @@ const Item = ({ name, onClick, active, enabled, className }) => {
     : { disableRipple: true };
   return (
     <ButtonBase
-      className={`item ${extraClassName}`}
+      className={`${extraClassName}`}
       onClick={onClick}
       {...disableRipple}
     >
-      {name}
+      {children}
     </ButtonBase>
   );
 };
 
 const Block = props => {
-  const { name, enabled, active, onClickItem, className } = props;
+  const { children, name, enabled, active, onClickItem, className } = props;
   return (
     <Item
       onClick={e => {
@@ -36,7 +36,9 @@ const Block = props => {
       active={active}
       enabled={enabled}
       className={className}
-    />
+    >
+      {children}
+    </Item>
   );
 };
 

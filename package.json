@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.3.1",
     "array-flat-polyfill": "^1.0.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "puppeteer": "^1.19.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

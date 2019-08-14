@@ -40,6 +40,9 @@ import ResetButton from './components/ResetButton';
 import CalculatorOutput from './components/CalculatorOutput';
 import CalculatorInputs from './components/CalculatorInputs';
 import Hide from './components/Hide';
+import FlowChart from './components/FlowChart';
+
+import flochart from './calculator-flowchart.svg';
 
 import 'array-flat-polyfill';
 
@@ -335,12 +338,22 @@ class Calculator extends React.Component {
         HelperText = <React.Fragment />;
         break;
     }
+    let scrollableStyle = { marginBottom: '70px' };
+    if (document.querySelector('.fixed-bottom') !== null) {
+      scrollableStyle.marginBottom =
+        document.querySelector('.fixed-bottom').scrollHeight + 'px';
+      // console.log(document.querySelector('.fixed-bottom').scrollHeight);
+    }
     return (
       <div className="wordpress">
         <div className="App">
           {/* <h2>1. Select Your Process</h2> */}
-          <div className="scrollable">
-            <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} />
+          <div className="scrollable" style={scrollableStyle}>
+            <FlowChart
+              data={techTreeBlocks}
+              onClickItem={onClickItemTechTree}
+            />
+            {/* <TechTree data={techTreeBlocks} onClickItem={onClickItemTechTree} /> */}
             <div className="clearfix"></div>
           </div>
           <div className="fixed-bottom">
@@ -368,6 +381,7 @@ class Calculator extends React.Component {
               outputItemPrice={calculator.price}
             />
           </div>
+
           <Hide>
             <br />
             <ResetButton onClick={onClickReset}>
