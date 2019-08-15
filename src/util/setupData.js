@@ -295,7 +295,7 @@ const data = [
   },
   {
     name: 'Distillate',
-    parents: ['Ethanol Crude', 'Hydrocarbon Crude'],
+    parents: ['Ethanol Crude'],
     inputType: 'grams',
     group: 'refined-extract',
     defaults: gramsDefault,

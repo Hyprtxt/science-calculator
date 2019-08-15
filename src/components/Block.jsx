@@ -23,23 +23,20 @@ const Item = ({ children, onClick, active, enabled, className }) => {
   );
 };
 
-const Block = props => {
-  const { children, name, enabled, active, onClickItem, className } = props;
-  return (
-    <Item
-      onClick={e => {
-        if (enabled) {
-          onClickItem(e);
-        }
-      }}
-      name={name}
-      active={active}
-      enabled={enabled}
-      className={className}
-    >
-      {children}
-    </Item>
-  );
-};
+const Block = ({ children, name, enabled, active, onClickItem, className }) => (
+  <Item
+    onClick={e => {
+      if (enabled) {
+        onClickItem(e);
+      }
+    }}
+    name={name}
+    active={active}
+    enabled={enabled}
+    className={className}
+  >
+    {children}
+  </Item>
+);
 
 export default Block;
