@@ -37,7 +37,7 @@ form {
   width: 100%;
   height: 100%;
   /* background: purple; */
-  background-image: url('/lines.svg');
+  background-image: url('./lines.svg');
   background-position: -6px -3px;
 }
 button.box {

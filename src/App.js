@@ -1,49 +1,13 @@
-// function init(initialCount) {
-//   return { count: initialCount };
-// }
-//
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case 'increment':
-//       return { count: state.count + 1 };
-//     case 'decrement':
-//       return { count: state.count - 1 };
-//     case 'reset':
-//       return init(action.payload);
-//     default:
-//       throw new Error();
-//   }
-// }
-//
-// function Counter({ initialCount }) {
-//   const [state, dispatch] = useReducer(reducer, initialCount, init);
-//   return (
-//     <>
-//       Count: {state.count}
-//       <button
-//         onClick={() => dispatch({ type: 'reset', payload: initialCount })}
-//       >
-//         Reset
-//       </button>
-//       <button onClick={() => dispatch({ type: 'increment' })}>+</button>
-//       <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-//     </>
-//   );
-// }
-
 import React from 'react';
 import _ from 'lodash';
 import setupData from './util/setupData';
-import TechTree from './components/TechTree';
+// import TechTree from './components/TechTree';
 import Inspector from './components/Inspector';
 import ResetButton from './components/ResetButton';
 import CalculatorOutput from './components/CalculatorOutput';
 import CalculatorInputs from './components/CalculatorInputs';
 import Hide from './components/Hide';
 import FlowChart from './components/FlowChart';
-
-import flochart from './calculator-flowchart.svg';
-
 import 'array-flat-polyfill';
 
 const DEBOUNCE_TIME = 5;
