@@ -72,7 +72,7 @@ class Calculator extends React.Component {
 
   onClickItemTechTree = e => {
     const { activeItems, techTreeBlocks } = this.state;
-    const clickedItemString = e.target.innerText;
+    const clickedItemString = e.target.innerText.trim();
     let newActiveItems;
     let newBlocks;
     let resetBlockString;
