@@ -38,7 +38,8 @@ const Block = ({ children, name, enabled, active, onClickItem, className }) => {
   let blockTextStyle = { fontSize: '18px', lineHeight: '22px' };
   const styleRef = React.useCallback(node => {
     if (node !== null) {
-      // console.log(node);
+      // console.log(node.children[0].children[0].scrollHeight);
+      // console.log(node.getBoundingClientRect(), window.devicePixelRatio);
       setWidth(node.getBoundingClientRect().width);
     }
   }, []);

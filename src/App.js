@@ -244,12 +244,15 @@ class Calculator extends React.Component {
     });
     let mutableCalc = calculator;
     let inputPriceCalculator = {};
-
+    console.log(stuff);
     if (stuff.length > 1) {
       stuff.forEach((thing, index) => {
-        // console.log(thing, typeof thing, index, calculator);
+        console.log(thing, typeof thing[0], index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
-        mutableCalc = thing[0](calculator, potency);
+        if (typeof thing[0] === 'function') {
+          mutableCalc = thing[0](calculator, potency);
+        }
+        return;
       });
     }
     // Shuck off non-input values to simulate first run and (re)calculate inputItemPrice
