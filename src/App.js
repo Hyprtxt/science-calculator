@@ -1,3 +1,4 @@
+import 'react-app-polyfill/stable';
 import React from 'react';
 import _ from 'lodash';
 import setupData from './util/setupData';
@@ -8,7 +9,7 @@ import CalculatorOutput from './components/CalculatorOutput';
 import CalculatorInputs from './components/CalculatorInputs';
 import Hide from './components/Hide';
 import FlowChart from './components/FlowChart';
-import 'array-flat-polyfill';
+// import 'array-flat-polyfill';
 
 const DEBOUNCE_TIME = 5;
 
@@ -44,6 +45,12 @@ class Calculator extends React.Component {
     const currentInputDefaults = _.find(techTreeBlocks, {
       name: clickedItemString
     });
+    console.log(
+      techTreeBlocks,
+      clickedItemString,
+      clickedItemString.trim(),
+      currentInputDefaults
+    );
     // console.log(
     //   'First Tech Tree Click, Setup Default State Controls',
     //   // _.find(techTreeBlocks, {
@@ -249,10 +256,7 @@ class Calculator extends React.Component {
       stuff.forEach((thing, index) => {
         console.log(thing, typeof thing[0], index, calculator);
         // The [0] is cause the pushed functions get an array wrapper... magic?
-        if (typeof thing[0] === 'function') {
-          mutableCalc = thing[0](calculator, potency);
-        }
-        return;
+        mutableCalc = thing[0](calculator, potency);
       });
     }
     // Shuck off non-input values to simulate first run and (re)calculate inputItemPrice
