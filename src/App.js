@@ -1,8 +1,8 @@
 import 'react-app-polyfill/stable';
 import React from 'react';
 import _ from 'lodash';
-import setupData from './util/setupData';
-// import TechTree from './components/TechTree';
+import setupData from 'util/setupData';
+// import TechTree from 'components/TechTree';
 import Inspector from 'components/Inspector';
 import ResetButton from 'components/ResetButton';
 import CalculatorOutput from 'components/CalculatorOutput';

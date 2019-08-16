@@ -14,12 +14,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-button {
-  border: none;
-}
-button:focus {
-  outline: 0;
-}
 
 form {
   text-align: left;
@@ -36,6 +30,13 @@ form {
   /* background: purple; */
   background-image: url('lines.svg');
   background-position: -6px -3px;
+}
+
+button {
+  border: none;
+}
+button:focus {
+  outline: 0;
 }
 button.box.enabled:active {
   box-shadow: 0 0 2px;
@@ -99,7 +100,6 @@ button.box.active .box-content {
   background-color: #99c794;
   border-color: #99c794;
 }
-
 .box-content {
   /* margin: 2px 0 0 2px; */
   box-sizing: border-box;
