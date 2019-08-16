@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import useResizeRect from '../hooks/useResizeRect';
+import useResizeRect from 'hooks/useResizeRect';
 
 const Block = ({ children, onClickItem, active, enabled, className }) => {
   const buttonRef = React.useRef(null);

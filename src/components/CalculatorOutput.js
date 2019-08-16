@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import formatter from '../util/formatter';
+import formatter from 'util/formatter';
 
 const CalculatorOutput = props => {
   const { outputItem, outputItemPrice, activeItemsLength } = props;

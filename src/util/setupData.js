@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import poundsToGrams from './poundsToGrams';
+import poundsToGrams from 'util/poundsToGrams';
 
 const TRIM_ETHANOL_EXTRACTION_EFFICENCY = 0.2;
 const TRIM_BUTANE_EXTRACTION_EFFICENCY = 0.2;

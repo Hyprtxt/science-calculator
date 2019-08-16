@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Block from './Block';
+import Block from 'components/Block';
 
 const FlowChart = ({ data, onClickItem }) => {
   // const numberOfBoxes = [...Array(16).keys()];

@@ -1,8 +1,8 @@
 import React from 'react';
-import RangeInput from './RangeInput';
+import RangeInput from 'components/RangeInput';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import formatter from '../util/formatter';
+import formatter from 'util/formatter';
 import PropTypes from 'prop-types';
 
 const CalculatorInputs = props => {

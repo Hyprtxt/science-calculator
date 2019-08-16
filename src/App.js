@@ -3,12 +3,12 @@ import React from 'react';
 import _ from 'lodash';
 import setupData from './util/setupData';
 // import TechTree from './components/TechTree';
-import Inspector from './components/Inspector';
-import ResetButton from './components/ResetButton';
-import CalculatorOutput from './components/CalculatorOutput';
-import CalculatorInputs from './components/CalculatorInputs';
-import Hide from './components/Hide';
-import FlowChart from './components/FlowChart';
+import Inspector from 'components/Inspector';
+import ResetButton from 'components/ResetButton';
+import CalculatorOutput from 'components/CalculatorOutput';
+import CalculatorInputs from 'components/CalculatorInputs';
+import Hide from 'components/Hide';
+import FlowChart from 'components/FlowChart';
 // import 'array-flat-polyfill';
 
 const DEBOUNCE_TIME = 5;
