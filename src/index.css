@@ -17,9 +17,6 @@ code {
 button {
   border: none;
 }
-button:active {
-  box-shadow: inset 2px 2px 0;
-}
 button:focus {
   outline: 0;
 }
@@ -39,6 +36,11 @@ form {
   /* background: purple; */
   background-image: url('lines.svg');
   background-position: -6px -3px;
+}
+button.box.enabled:active {
+  box-shadow: 0 0 2px;
+  transform: translate(1px, 1px);
+  box-shadow: inset 2px 2px 0;
 }
 button.box {
   /* text-transform: uppercase; */
@@ -109,10 +111,6 @@ button.box.active .box-content {
   top: 0;
   width: 100%;
   padding: 20% 0;
-}
-.box:active {
-  box-shadow: 0 0 2px;
-  transform: translate(1px, 1px);
 }
 
 .wordpress {
