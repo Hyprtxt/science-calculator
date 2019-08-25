@@ -27,7 +27,6 @@ form {
   position: absolute;
   width: 100%;
   height: 100%;
-  /* background: purple; */
   background-image: url('lines.svg');
   background-position: -6px -3px;
 }

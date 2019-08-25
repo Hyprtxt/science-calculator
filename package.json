@@ -60,7 +60,9 @@
     "stylelint-config-recommended": "^2.2.0"
   },
   "bit": {
-    "env": {},
+    "env": {
+      "compiler": "bit.envs/compilers/react@1.0.2"
+    },
     "componentsDefaultDirectory": "components/{name}",
     "packageManager": "npm"
   }
